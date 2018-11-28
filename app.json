@@ -1,15 +1,6 @@
 {
   "name": "selene-ah-backend",
-  "scripts": {
-  },
-  "env": {
-  },
-  "formation": {
-  },
   "addons": [
     "heroku-postgresql"
-  ],
-  "buildpacks": [
-
   ]
 }
