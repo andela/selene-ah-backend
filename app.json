@@ -1,0 +1,6 @@
+{
+  "name": "selene-ah-backend",
+  "addons": [
+    "heroku-postgresql"
+  ]
+}
