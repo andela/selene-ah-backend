@@ -1,0 +1,12 @@
+language: "node_js"
+node_js:
+  - "node"
+cache:
+  directories:
+    - node_modules
+services:
+  - postgresql
+before_script:
+  - psql -c 'create database selene_ah_test;' -U postgres
+after_success:
+    - npm run coverage
