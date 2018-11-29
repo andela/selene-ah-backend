@@ -4,7 +4,10 @@
   "description": "A Social platform for the creative at heart",
   "main": "index.js",
   "scripts": {
-    "coverage": "nyc report --reporter=text-lcov | coveralls"
+    "coverage": "nyc report --reporter=text-lcov | coveralls",
+    "linter": "eslint **/*.js",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index.js"
   },
   "author": "Andela Simulations Programme",
   "license": "MIT",
@@ -30,7 +33,11 @@
     "underscore": "^1.9.1"
   },
   "devDependencies": {
+    "babel-eslint": "^10.0.1",
     "coveralls": "^3.0.2",
+    "eslint": "^5.9.0",
+    "eslint-config-airbnb": "^17.1.0",
+    "eslint-plugin-import": "^2.14.0",
     "nyc": "^13.1.0"
   }
 }
