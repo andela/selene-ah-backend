@@ -8,7 +8,6 @@ const session = require('express-session');
 const cors = require('cors');
 const passport = require('passport');
 const errorhandler = require('errorhandler');
-const mongoose = require('mongoose');
 
 const isProduction = process.env.NODE_ENV === 'production';
 
@@ -38,13 +37,6 @@ app.use(
 
 if (!isProduction) {
   app.use(errorhandler());
-}
-
-if (isProduction) {
-  mongoose.connect(process.env.MONGODB_URI);
-} else {
-  mongoose.connect('mongodb://localhost/conduit');
-  mongoose.set('debug', true);
 }
 
 app.use(require('./routes'));
