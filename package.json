@@ -4,6 +4,7 @@
   "description": "A Social platform for the creative at heart",
   "main": "index.js",
   "scripts": {
+    "linter": "eslint **/*.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Andela Simulations Programme",
@@ -28,5 +29,11 @@
     "request": "^2.87.0",
     "slug": "^0.9.1",
     "underscore": "^1.9.1"
+  },
+  "devDependencies": {
+    "babel-eslint": "^10.0.1",
+    "eslint": "^5.9.0",
+    "eslint-config-airbnb": "^17.1.0",
+    "eslint-plugin-import": "^2.14.0"
   }
 }
