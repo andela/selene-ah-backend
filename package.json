@@ -5,9 +5,14 @@
   "main": "index.js",
   "scripts": {
     "coverage": "nyc report --reporter=text-lcov | coveralls",
-    "linter": "eslint **/*.js",
+    "linter": "./node_modules/eslint/bin/eslint.js './**/*.js'",
     "start": "node index.js",
     "test": "mocha tests/index.js --require babel-polyfill --require babel-register --exit"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "npm run linter"
+    }
   },
   "author": "Andela Simulations Programme",
   "license": "MIT",
@@ -44,6 +49,9 @@
     "eslint": "^5.9.0",
     "eslint-config-airbnb-base": "^13.1.0",
     "eslint-plugin-import": "^2.14.0",
+    "eslint-plugin-jsx-a11y": "^6.1.2",
+    "eslint-plugin-react": "^7.11.1",
+    "husky": "^1.2.0",
     "mocha": "^5.2.0",
     "nyc": "^13.1.0",
     "sequelize-cli": "^5.3.0"
