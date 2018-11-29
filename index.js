@@ -7,8 +7,7 @@ const fs = require("fs"),
   session = require("express-session"),
   cors = require("cors"),
   passport = require("passport"),
-  errorhandler = require("errorhandler"),
-  mongoose = require("mongoose");
+  errorhandler = require("errorhandler");
 
 const isProduction = process.env.NODE_ENV === "production";
 
@@ -37,8 +36,6 @@ app.use(
 if (!isProduction) {
   app.use(errorhandler());
 }
-
-require("./models/User");
 
 app.use(require("./routes"));
 
