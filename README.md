@@ -1,5 +1,8 @@
 [![Coverage Status](https://coveralls.io/repos/github/andela/selene-ah-backend/badge.svg?branch=master)](https://coveralls.io/github/andela/selene-ah-backend?branch=develop)
 
+[![Build Status](https://travis-ci.org/andela/selene-ah-backend.svg?branch=develop)](https://travis-ci.org/andela/selene-ah-backend)
+
+
 Authors Haven - A Social platform for the creative at heart.
 =======
 
