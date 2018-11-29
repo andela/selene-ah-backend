@@ -4,13 +4,9 @@
   "description": "A Social platform for the creative at heart",
   "main": "index.js",
   "scripts": {
-<<<<<<< HEAD
     "linter": "eslint **/*.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
-=======
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node index.js"
->>>>>>> chore(heroku): set up base application to heroku
   },
   "author": "Andela Simulations Programme",
   "license": "MIT",
