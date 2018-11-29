@@ -18,6 +18,6 @@ export default {
     "dialect": process.env.DIALECT,
   },
   "production": {
-    DB_URL = process.env.DB_URL,
+    DB_URL: process.env.DATABASE_URL,
   }
 };
