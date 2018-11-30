@@ -6,7 +6,7 @@
   "scripts": {
     "coverage": "nyc report --reporter=text-lcov | coveralls",
     "linter": "./node_modules/eslint/bin/eslint.js './**/*.js'",
-    "start": "node index.js",
+    "start": "node --require babel-register index.js",
     "test": "mocha tests/index.js --require babel-polyfill --require babel-register --exit"
   },
   "husky": {
@@ -38,6 +38,7 @@
     "underscore": "^1.9.1"
   },
   "devDependencies": {
+    "@babel/node": "^7.0.0",
     "babel-cli": "^6.26.0",
     "babel-eslint": "^10.0.1",
     "babel-polyfill": "^6.26.0",

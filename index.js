@@ -1,13 +1,10 @@
-const fs = require('fs');
-const http = require('http');
-const path = require('path');
-const methods = require('methods');
-const express = require('express');
-const bodyParser = require('body-parser');
-const session = require('express-session');
-const cors = require('cors');
-const passport = require('passport');
-const errorhandler = require('errorhandler');
+import express from 'express';
+import bodyParser from 'body-parser';
+import session from 'express-session';
+import cors from 'cors';
+import errorhandler from 'errorhandler';
+import morgan from 'morgan';
+import methodOverride from 'method-override';
 
 const isProduction = process.env.NODE_ENV === 'production';
 
@@ -17,12 +14,12 @@ const app = express();
 app.use(cors());
 
 // Normal express config defaults
-app.use(require('morgan')('dev'));
+app.use(morgan('dev'));
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
-app.use(require('method-override')());
+app.use(methodOverride());
 
 app.use(express.static(`${__dirname}/public`));
 
@@ -49,13 +46,9 @@ app.use((req, res, next) => {
 });
 
 // / error handlers
-
-// development error handler
-// will print stacktrace
 if (!isProduction) {
+  /* eslint-disable-next-line */
   app.use((err, req, res, next) => {
-    console.log(err.stack);
-
     res.status(err.status || 500);
 
     res.json({
@@ -67,8 +60,7 @@ if (!isProduction) {
   });
 }
 
-// production error handler
-// no stacktraces leaked to user
+/* eslint-disable-next-line */
 app.use((err, req, res, next) => {
   res.status(err.status || 500);
   res.json({
@@ -80,6 +72,4 @@ app.use((err, req, res, next) => {
 });
 
 // finally, let's start our server...
-const server = app.listen(process.env.PORT || 3000, () => {
-  console.log(`Listening on port ${server.address().port}`);
-});
+app.listen(process.env.PORT || 3000);
