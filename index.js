@@ -12,7 +12,6 @@ const isProduction = process.env.NODE_ENV === 'production';
 const app = express();
 
 app.use(cors());
-
 // Normal express config defaults
 app.use(morgan('dev'));
 
@@ -21,7 +20,7 @@ app.use(bodyParser.json());
 
 app.use(methodOverride());
 
-app.use(express.static(`${__dirname}/public`));
+app.use(express.static('public'));
 
 app.use(
   session({

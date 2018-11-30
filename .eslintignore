@@ -3,3 +3,4 @@ tests
 
 # Ignoring all our node_modules folder
 node_modules
+dist
