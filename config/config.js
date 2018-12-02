@@ -1,4 +1,6 @@
-import dotenv from 'dotenv';
+require('babel-core/register');
+
+const dotenv = require('dotenv');
 
 dotenv.config();
 
