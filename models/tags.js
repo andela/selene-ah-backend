@@ -7,7 +7,8 @@
  */
 const tags = (sequelize, DataTypes) => {
   const Tags = sequelize.define('Tags', {
-    tag: DataTypes.STRING
+    tag: DataTypes.STRING,
+    allowNull: false
   });
   Tags.associate = (models) => {
     Tags.belongsToMany(models.articles, {
