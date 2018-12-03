@@ -8,7 +8,7 @@ const category = (sequelize, DataTypes) => {
     title: DataTypes.STRING,
     validate: {
       isEmpty: {
-        msg: 'Empty firstname. The firstname is required.'
+        msg: 'Empty title. The title is required.'
       }
     }
   }, {});
