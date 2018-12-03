@@ -1,3 +1,8 @@
+/**
+* @param {object} sequelize
+* @param {object} DataTypes
+* @returns {object} Comment model
+*/
 const comment = (sequelize, DataTypes) => {
   const Comment = sequelize.define('Comment', {
     id: {
@@ -10,28 +15,19 @@ const comment = (sequelize, DataTypes) => {
       allowNull: false,
       validate: {
         notEmpty: {
-          args: true,
           msg: 'Invalid comment. comment field is required.'
         }
       }
-    },
-    createdAt: {
-      type: DataTypes.DATE,
-      allowNull: false,
-      default: DataTypes.now
-    },
-    updatedAt: {
-      type: DataTypes.DATE,
-      allowNull: false,
-      default: DataTypes.now
     }
   });
   Comment.associate = (models) => {
     Comment.belongsTo(models.User, {
       foreignKey: 'userId',
+      onDelete: 'CASCADE'
     });
     Comment.belongsTo(models.Article, {
       foreignKey: 'articleId',
+      onDelete: 'CASCADE'
     });
   };
   return Comment;
