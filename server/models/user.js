@@ -10,7 +10,7 @@ const user = (sequelize, DataTypes) => {
       id: {
         type: DataTypes.UUID,
         primaryKey: true,
-        default: DataTypes.UUIDV4
+        defaultValue: DataTypes.UUIDV4
       },
       firstname: {
         type: DataTypes.STRING,
@@ -66,7 +66,7 @@ const user = (sequelize, DataTypes) => {
       },
       verified: {
         type: DataTypes.BOOLEAN,
-        default: false,
+        defaultValue: false,
         validate: {
           isBoolean: {
             args: [true, false],
@@ -76,7 +76,7 @@ const user = (sequelize, DataTypes) => {
       },
       blocked: {
         type: DataTypes.BOOLEAN,
-        default: false,
+        defaultValue: false,
         validate: {
           isBoolean: {
             args: [true, false],
@@ -86,7 +86,7 @@ const user = (sequelize, DataTypes) => {
       },
       email_notification: {
         type: DataTypes.BOOLEAN,
-        default: false,
+        defaultValue: false,
         unique: {
           msg: 'This username has been taken.'
         },

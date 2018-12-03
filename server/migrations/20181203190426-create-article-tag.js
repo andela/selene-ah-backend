@@ -1,30 +1,26 @@
-const CommentExpressions = {
-  up: (queryInterface, Sequelize) => queryInterface.createTable('CommentExpressions', {
+export default {
+  up: (queryInterface, Sequelize) => queryInterface.createTable('ArticleTags', {
     id: {
       allowNull: false,
       primaryKey: true,
       type: Sequelize.UUID,
       defaultValue: Sequelize.UUIDV4
     },
-    emotion: {
-      type: Sequelize.STRING,
-      allowNull: false
-    },
-    userId: {
+    articleId: {
       type: Sequelize.UUID,
       onDelete: 'CASCADE',
       references: {
-        model: 'User',
+        model: 'Articles',
         key: 'id'
-      }
+      },
     },
-    commentId: {
+    tagId: {
       type: Sequelize.UUID,
       onDelete: 'CASCADE',
       references: {
-        model: 'Comment',
+        model: 'Tags',
         key: 'id'
-      }
+      },
     },
     createdAt: {
       allowNull: false,
@@ -35,7 +31,5 @@ const CommentExpressions = {
       type: Sequelize.DATE
     }
   }),
-  down: queryInterface => queryInterface.dropTable('CommentExpressions')
+  down: queryInterface => queryInterface.dropTable('ArticleTags')
 };
-
-export default CommentExpressions;

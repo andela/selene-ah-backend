@@ -8,7 +8,7 @@ const comment = (sequelize, DataTypes) => {
     id: {
       type: DataTypes.UUID,
       primaryKey: true,
-      default: DataTypes.UUIDV4
+      defaultValue: DataTypes.UUIDV4
     },
     comment: {
       type: DataTypes.TEXT,

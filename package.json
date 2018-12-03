@@ -8,9 +8,9 @@
     "linter": "./node_modules/eslint/bin/eslint.js './**/*.js'",
     "start": "npm run build && npm run serve",
     "serve": "node ./dist/index.js",
-    "test": "nyc mocha tests/index.js --require babel-polyfill --require babel-register --exit",
-    "build": "rm -rf dist/ && babel ./ --out-dir dist/ --ignore ./node_modules",
-    "start:dev": "babel-watch index.js"
+    "test": "nyc mocha server/tests --require babel-polyfill --require babel-register --exit",
+    "build": "rm -rf dist/ && babel ./server --out-dir dist/ --ignore ./node_modules",
+    "start:dev": "babel-watch server/index.js"
   },
   "husky": {
     "hooks": {

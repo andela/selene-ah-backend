@@ -3,7 +3,7 @@
  */
 
 export default {
-  up: (queryInterface, Sequelize) => queryInterface.createTable('followers', {
+  up: (queryInterface, Sequelize) => queryInterface.createTable('Followers', {
     id: {
       allowNull: false,
       primaryKey: true,
@@ -27,11 +27,11 @@ export default {
       type: Sequelize.UUID,
       onDelete: 'CASCADE',
       references: {
-        model: 'User',
+        model: 'Users',
         key: 'id',
         as: 'userId',
       },
     },
   }),
-  down: queryInterface => queryInterface.dropTable('followers')
+  down: queryInterface => queryInterface.dropTable('Followers')
 };

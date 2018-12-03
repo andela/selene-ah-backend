@@ -1,10 +1,10 @@
 export default {
-  up: (queryInterface, Sequelize) => queryInterface.createTable('commentHistories', {
+  up: (queryInterface, Sequelize) => queryInterface.createTable('CommentHistories', {
     id: {
       allowNull: false,
       primaryKey: true,
       type: Sequelize.UUID,
-      default: Sequelize.UUIDV4
+      defaultValue: Sequelize.UUIDV4
     },
     commentId: {
       allowNull: false,
@@ -23,5 +23,5 @@ export default {
       type: Sequelize.DATE
     }
   }),
-  down: queryInterface => queryInterface.dropTable('commentHistories')
+  down: queryInterface => queryInterface.dropTable('CommentHistories')
 };

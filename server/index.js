@@ -7,7 +7,7 @@ import morgan from 'morgan';
 import methodOverride from 'method-override';
 
 const isProduction = process.env.NODE_ENV === 'production';
-
+const port = process.env.PORT || 3000;
 // Create global app object
 const app = express();
 
@@ -69,6 +69,6 @@ app.use((err, req, res, next) => {
     }
   });
 });
-
 // finally, let's start our server...
-app.listen(process.env.PORT || 3000);
+/* eslint-disable-next-line */
+app.listen(port, () => console.log(`App Listening on port ${port}`));

@@ -13,7 +13,7 @@ const tags = (sequelize, DataTypes) => {
   Tags.associate = (models) => {
     Tags.belongsToMany(models.articles, {
       as: 'Articles',
-      through: 'ArticleTags',
+      through: 'ArticleTag',
       foreignKey: 'tagId',
       onDelete: 'Cascade'
     });
