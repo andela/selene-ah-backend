@@ -1,3 +1,10 @@
+/**
+ * @description this creates the CommentHistory Model
+ * @param {Object} sequelize
+ * @param {Object} DataTypes
+ * @returns {Object} CommentHistory
+ */
+
 const commentHistory = (sequelize, DataTypes) => {
   const CommentHistory = sequelize.define('CommentHistory', {
     id: {
@@ -28,11 +35,7 @@ const commentHistory = (sequelize, DataTypes) => {
           msg: 'The comment is required. Please supply a valid comment'
         }
       }
-    },
-    createdAt: {
-      type: DataTypes.DATE,
-      defaultValue: DataTypes.NOW
-    },
+    }
   }, { tableName: 'commentHistory' });
 
   return CommentHistory;
