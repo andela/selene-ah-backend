@@ -1,9 +1,7 @@
-
-const Profile = {
+export default {
   up: (queryInterface, Sequelize) => queryInterface.createTable('Profiles', {
     id: {
       allowNull: false,
-      autoIncrement: true,
       primaryKey: true,
       type: Sequelize.UUID,
       defaultValue: Sequelize.UUIDV4,
@@ -36,6 +34,14 @@ const Profile = {
       type: Sequelize.DATE,
       allowNull: false,
     },
+    userId: {
+      type: Sequelize.UUID,
+      references: {
+        model: 'Users',
+        key: 'id',
+        as: 'userId'
+      }
+    },
     createdAt: {
       allowNull: false,
       type: Sequelize.DATE
@@ -47,5 +53,3 @@ const Profile = {
   }),
   down: queryInterface => queryInterface.dropTable('Profiles')
 };
-
-export default Profile;
