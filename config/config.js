@@ -1,8 +1,9 @@
-import dotenv from 'dotenv';
+const dotenv = require('dotenv');
+require('babel-core/register');
 
 dotenv.config();
 
-export default {
+module.exports = {
   development: {
     username: process.env.DB_USERNAME,
     password: process.env.DB_PASSWORD,
