@@ -1,5 +1,10 @@
-/* Our ArticleExpression Model */
-export default (sequelize, DataTypes) => {
+/**
+ * @param {*} sequelize
+ * @param {*} DataTypes
+ *
+ * @returns {object} LoginMethod
+ */
+const loginMethod = (sequelize, DataTypes) => {
   const LoginMethod = sequelize.define(
     'LoginMethod',
     {
@@ -22,16 +27,16 @@ export default (sequelize, DataTypes) => {
     }
   );
 
-  // Our LoginMethod assocation
   LoginMethod.associate = (models) => {
-    // Users association
     LoginMethod.belongsTo(
       models.Users,
       {
-        foreignKey: 'userId'
+        foriegnKey: 'userId'
       }
     );
   };
 
   return LoginMethod;
 };
+
+export default loginMethod;
