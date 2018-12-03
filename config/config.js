@@ -1,7 +1,6 @@
 require('babel-core/register');
 const dotenv = require('dotenv');
 
-
 dotenv.config();
 
 module.exports = {
