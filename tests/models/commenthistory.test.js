@@ -1,10 +1,5 @@
-import {
-  expect
-} from 'chai';
-import {
-  sequelize,
-  dataTypes,
-} from 'sequelize-test-helpers';
+import { expect } from 'chai';
+import { sequelize, dataTypes } from 'sequelize-test-helpers';
 import CommentHistoryModel from '../../server/models/commenthistory';
 import Comment from '../../server/models/comment';
 
