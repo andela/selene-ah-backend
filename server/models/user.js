@@ -104,7 +104,7 @@ const user = (sequelize, DataTypes) => {
   );
 
   User.associate = (models) => {
-    User.hasMany(models.Article, {
+    User.hasMany(models.Articles, {
       foreignKey: 'userId',
       as: 'articles'
     });
@@ -112,15 +112,12 @@ const user = (sequelize, DataTypes) => {
       foreignKey: 'userId',
       as: 'com'
     });
-    User.hasMany(models.Expression, {
-      foreignKey: 'userId',
-      as: 'exp'
-    });
-    User.hasMany(models.Follower, {
+
+    User.hasMany(models.Followers, {
       foreignKey: 'userId',
       as: 'fol'
     });
-    User.hasMany(models.Tag, {
+    User.hasMany(models.Tags, {
       foreignKey: 'userId',
       as: 'tags'
     });
@@ -143,6 +140,16 @@ const user = (sequelize, DataTypes) => {
     User.hasOne(models.Profile, {
       foreignKey: 'userId',
       as: 'profile'
+    });
+
+    User.hasMany(models.Bookmark, {
+      foreignKey: 'userId',
+      as: 'book'
+    });
+
+    User.hasMany(models.ReportArticles, {
+      foreignKey: 'userId',
+      as: 'report'
     });
   };
   return User;
