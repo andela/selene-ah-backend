@@ -7,7 +7,6 @@ import Articles from '../../server/models/articles';
 import Comment from '../../server/models/comment';
 import ArticleExpression from '../../server/models/articleExpression';
 import CommentExpression from '../../server/models/commentExpression';
-import CommentHistory from '../../server/models/commenthistory';
 import Followers from '../../server/models/followers';
 import Bookmark from '../../server/models/bookmark';
 import ReportArticles from '../../server/models/reportarticles';

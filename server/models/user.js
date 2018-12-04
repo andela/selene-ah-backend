@@ -97,8 +97,7 @@ const user = (sequelize, DataTypes) => {
           }
         }
       }
-    },
-    {
+    }, {
       tableName: 'users'
     }
   );
@@ -120,10 +119,6 @@ const user = (sequelize, DataTypes) => {
     User.hasMany(models.Tags, {
       foreignKey: 'userId',
       as: 'tags'
-    });
-    User.hasMany(models.CommentHistory, {
-      foreignKey: 'userId',
-      as: 'comhis'
     });
     User.hasMany(models.ArticleExpression, {
       foreignKey: 'userId',
