@@ -1,6 +1,5 @@
 import chaiHttp from 'chai-http';
 import chai, { expect } from 'chai';
-import server from '../server/index';
 
 chai.use(chaiHttp);
 describe('#sample test', () => {

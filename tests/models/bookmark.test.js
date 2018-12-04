@@ -1,8 +1,8 @@
 import { sequelize, dataTypes } from 'sequelize-test-helpers';
+import { expect } from 'chai';
 import BookmarkModel from '../../server/models/bookmark';
 import UserModel from '../../server/models/user';
 import ArticleModel from '../../server/models/articles';
-import { expect } from 'chai';
 
 describe('models/bookmark', () => {
   const Bookmark = BookmarkModel(sequelize, dataTypes);
@@ -11,16 +11,16 @@ describe('models/bookmark', () => {
   const bookmark = new Bookmark();
 
   before(() => {
-    Bookmark.associate({ User })
-    Bookmark.associate({ Article })
+    Bookmark.associate({ User });
+    Bookmark.associate({ Article });
   });
 
-  it('should have a valid model name ', () => {       
-    expect(Bookmark.modelName).to.equal('Bookmark')
+  it('should have a valid model name ', () => {
+    expect(Bookmark.modelName).to.equal('Bookmark');
   });
-  
+
   it('should have property id', () => {
-    expect(bookmark).to.have.property('id')
+    expect(bookmark).to.have.property('id');
   });
 
   it('should have an association with UserModel', () => {

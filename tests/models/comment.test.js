@@ -1,8 +1,8 @@
 import { sequelize, dataTypes } from 'sequelize-test-helpers';
+import { expect } from 'chai';
 import CommentModel from '../../server/models/comment';
 import UserModel from '../../server/models/user';
 import ArticleModel from '../../server/models/articles';
-import { expect } from 'chai';
 
 describe('models/comment', () => {
   const Comment = CommentModel(sequelize, dataTypes);
@@ -14,11 +14,11 @@ describe('models/comment', () => {
     Comment.associate({ User });
     Comment.associate({ Article });
   });
-  
-  it('should have a valid model name', () => { 
+
+  it('should have a valid model name', () => {
     expect(Comment.modelName).to.equal('Comment');
   });
-  
+
   it('should have a property id', () => {
     expect(comment).to.have.property('id');
   });
