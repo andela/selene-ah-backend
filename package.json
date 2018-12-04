@@ -62,6 +62,8 @@
     "husky": "^1.2.0",
     "mocha": "^5.2.0",
     "nyc": "^13.1.0",
-    "sequelize-cli": "^5.3.0"
+    "sequelize-cli": "^5.3.0",
+    "sequelize-test-helpers": "^1.0.6",
+    "sinon": "^7.1.1"
   }
 }
