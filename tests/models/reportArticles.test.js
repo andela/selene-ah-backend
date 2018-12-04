@@ -8,13 +8,11 @@ import articles from '../../server/models/articles';
 const {
     sequelize,
     dataTypes,
-    checkModelName,
 } = sequelizeHelper;
 
 describe('## Report Articles model', () => {
     const ReportArticleModel = ReportArticles(sequelize, dataTypes)
     const instance = new ReportArticleModel()
-    checkModelName(ReportArticleModel)('ReportArticles')
     context('properties tests', () => {
         it('should have a property of report', () => {
             expect(instance).to.have.property('report');
@@ -23,13 +21,13 @@ describe('## Report Articles model', () => {
     context('Report Articles associations should', () => {
         const User = user(sequelize, dataTypes);
         before(() => {
-            ReportArticleModel.associate({ User })
-        })
+            ReportArticleModel.associate({ User });
+        });
         it('should have a belongsTo relationship with user model', () => {
-            expect(ReportArticleModel.belongsTo.calledWith(User)).to.equal(true)
-        })
-    })
+            expect(ReportArticleModel.belongsTo.calledWith(User)).to.equal(true);
+        });
+    });
 
 
-})
+});
 
