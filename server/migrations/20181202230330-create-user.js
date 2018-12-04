@@ -1,10 +1,10 @@
 export default {
-  up: (queryInterface, Sequelize) => queryInterface.createTable('users', {
+  up: (queryInterface, Sequelize) => queryInterface.createTable('Users', {
     id: {
       allowNull: false,
       primaryKey: true,
       type: Sequelize.UUID,
-      default: Sequelize.UUIDV4
+      defaultValue: Sequelize.UUIDV4
     },
     firstname: {
       type: Sequelize.STRING,
@@ -30,17 +30,17 @@ export default {
     },
     verified: {
       type: Sequelize.BOOLEAN,
-      default: false,
+      defaultValue: false,
       allowNull: false
     },
     blocked: {
       type: Sequelize.BOOLEAN,
-      default: false,
+      defaultValue: false,
       allowNull: false
     },
     email_notification: {
       type: Sequelize.BOOLEAN,
-      default: false,
+      defaultValue: false,
       allowNull: false
     },
     createdAt: {
@@ -52,5 +52,5 @@ export default {
       type: Sequelize.DATE
     }
   }),
-  down: queryInterface => queryInterface.dropTable('users')
+  down: queryInterface => queryInterface.dropTable('Users')
 };

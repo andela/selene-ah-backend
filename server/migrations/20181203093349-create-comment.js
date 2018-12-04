@@ -1,13 +1,17 @@
 /**
- * @description migration for bookmark model
+ * @description migration for comment model
  */
 export default {
-  up: (queryInterface, Sequelize) => queryInterface.createTable('Bookmarks', {
+  up: (queryInterface, Sequelize) => queryInterface.createTable('Comments', {
     id: {
       allowNull: false,
       primaryKey: true,
       type: Sequelize.UUID,
-      default: Sequelize.UUIDV4
+      defaultValue: Sequelize.UUIDV4
+    },
+    comment: {
+      allowNull: false,
+      type: Sequelize.TEXT
     },
     createdAt: {
       allowNull: false,
@@ -21,18 +25,18 @@ export default {
       type: Sequelize.UUID,
       onDelete: 'CASCADE',
       references: {
-        model: 'User',
-        key: 'id'
+        model: 'Users',
+        key: 'id',
       },
     },
     articleId: {
       type: Sequelize.UUID,
       onDelete: 'CASCADE',
       references: {
-        model: 'Article',
+        model: 'Articles',
         key: 'id'
       }
     }
   }),
-  down: queryInterface => queryInterface.dropTable('Bookmarks')
+  down: queryInterface => queryInterface.dropTable('Comments')
 };

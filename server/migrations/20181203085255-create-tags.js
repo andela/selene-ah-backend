@@ -5,7 +5,7 @@ const tags = {
       allowNull: false,
       type: Sequelize.UUID,
       primaryKey: true,
-      default: Sequelize.UUIDV4
+      defaultValue: Sequelize.UUIDV4
     },
     tag: {
       allowNull: false,

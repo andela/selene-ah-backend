@@ -1,26 +1,28 @@
-const reportArticles = {
-  up: (queryInterface, Sequelize) => queryInterface.createTable('ReportArticles', {
+const CommentExpressions = {
+  up: (queryInterface, Sequelize) => queryInterface.createTable('CommentExpressions', {
     id: {
       allowNull: false,
       primaryKey: true,
       type: Sequelize.UUID,
       defaultValue: Sequelize.UUIDV4
     },
-    report: {
+    emotion: {
       type: Sequelize.STRING,
-      allowNull: false,
+      allowNull: false
     },
     userId: {
       type: Sequelize.UUID,
+      onDelete: 'CASCADE',
       references: {
-        model: 'User',
+        model: 'Users',
         key: 'id'
       }
     },
-    articleId: {
+    commentId: {
       type: Sequelize.UUID,
+      onDelete: 'CASCADE',
       references: {
-        model: 'Article',
+        model: 'Comments',
         key: 'id'
       }
     },
@@ -33,6 +35,7 @@ const reportArticles = {
       type: Sequelize.DATE
     }
   }),
-  down: queryInterface => queryInterface.dropTable('ReportArticles')
+  down: queryInterface => queryInterface.dropTable('CommentExpressions')
 };
-export default reportArticles;
+
+export default CommentExpressions;

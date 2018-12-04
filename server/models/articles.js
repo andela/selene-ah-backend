@@ -10,17 +10,17 @@ const articles = (sequelize, DataTypes) => {
     title: DataTypes.STRING,
     body: DataTypes.TEXT,
     published: DataTypes.BOOLEAN
-  }, {});
+  });
   Articles.associate = (models) => {
     Articles.belongsTo(models.User, {
       foreignKey: 'userId',
       as: 'articles',
     });
 
-    Articles.belongsToMany(models.Tags, {
+    Articles.belongsToMany(models.Tag, {
       foreignKey: 'articleId',
       as: 'Tags',
-      through: 'ArticleTags'
+      through: 'ArticleTag'
     });
   };
   return Articles;

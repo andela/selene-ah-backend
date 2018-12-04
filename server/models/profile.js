@@ -15,7 +15,7 @@ const profile = (sequelize, DataTypes) => {
         }
       }
     }
-  }, {});
+  });
   Profile.associate = (models) => {
     Profile.belongsTo(models.User, {
       foreignKey: 'userId',

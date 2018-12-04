@@ -35,7 +35,7 @@ export default (sequelize, DataTypes) => {
 
     // Users association
     ArticleExpression.belongsTo(
-      models.Users,
+      models.User,
       {
         foriegnKey: 'userId',
         onDelete: 'CASCADE'

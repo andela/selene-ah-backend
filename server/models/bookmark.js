@@ -9,7 +9,7 @@ export default (sequelize, DataTypes) => {
       allowNull: false,
       type: DataTypes.UUID,
       primaryKey: true,
-      default: DataTypes.UUIDV4
+      defaultValue: DataTypes.UUIDV4
     }
   });
   Bookmark.associate = (models) => {

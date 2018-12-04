@@ -1,5 +1,5 @@
 export default {
-  up: (queryInterface, Sequelize) => queryInterface.createTable('LoginMethod', {
+  up: (queryInterface, Sequelize) => queryInterface.createTable('LoginMethods', {
     id: {
       type: Sequelize.UUID,
       primaryKey: true,
@@ -13,7 +13,7 @@ export default {
     userId: {
       type: Sequelize.UUID,
       references: {
-        model: 'User',
+        model: 'Users',
         key: 'id'
       }
     },
@@ -25,5 +25,5 @@ export default {
     }
   }),
 
-  down: queryInterface => queryInterface.dropTable('LoginMethod')
+  down: queryInterface => queryInterface.dropTable('LoginMethods')
 };

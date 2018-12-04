@@ -11,7 +11,7 @@ const category = (sequelize, DataTypes) => {
         msg: 'Empty title. The title is required.'
       }
     }
-  }, {});
+  });
   Category.associate = (models) => {
     Category.hasMany(models.Article, {
       foreignKey: 'categoryId',
