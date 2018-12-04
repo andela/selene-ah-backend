@@ -4,7 +4,7 @@ export default {
       type: Sequelize.UUID,
       primaryKey: true,
       allowNull: false,
-      defaultValue: Sequelize.UUID
+      defaultValue: Sequelize.UUIDV4
     },
     authMethodUsed: {
       type: Sequelize.STRING,
