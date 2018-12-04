@@ -1,7 +1,7 @@
 import { expect } from 'chai';
 import { sequelize, dataTypes } from 'sequelize-test-helpers';
-import category from '../server/models/category';
-import Articles from '../server/models/articles';
+import category from '../../server/models/category';
+import Articles from '../../server/models/articles';
 
 describe('models/category', () => {
   const categories = category(sequelize, dataTypes);

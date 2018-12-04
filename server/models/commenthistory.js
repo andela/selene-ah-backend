@@ -38,6 +38,13 @@ const commentHistory = (sequelize, DataTypes) => {
     }
   }, { tableName: 'commentHistory' });
 
+  CommentHistory.associate = (models) => {
+    CommentHistory.belongsTo(models.Comment, {
+      foreignKey: 'commentId',
+      as: 'comhis'
+    });
+  };
+
   return CommentHistory;
 };
 export default commentHistory;
