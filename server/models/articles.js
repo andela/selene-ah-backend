@@ -6,7 +6,7 @@
  * @returns {object}
  */
 const articles = (sequelize, DataTypes) => {
-  const Articles = sequelize.define('Articles', {
+  const Articles = sequelize.define('Article', {
     title: DataTypes.STRING,
     body: DataTypes.TEXT,
     published: DataTypes.BOOLEAN
@@ -16,7 +16,9 @@ const articles = (sequelize, DataTypes) => {
       foreignKey: 'userId',
       as: 'articles',
     });
-
+    Articles.belongsTo(models.Category, {
+      foreignKey: 'categoryId',
+    });
     Articles.belongsToMany(models.Tag, {
       foreignKey: 'articleId',
       as: 'Tags',
