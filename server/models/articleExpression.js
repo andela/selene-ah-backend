@@ -7,7 +7,7 @@ export default (sequelize, DataTypes) => {
         type: DataTypes.UUID,
         primaryKey: true,
         allowNull: false,
-        defaultValue: DataTypes.UUID
+        defaultValue: DataTypes.UUIDV4
       },
       emotion: {
         type: DataTypes.STRING,
