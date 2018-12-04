@@ -12,10 +12,10 @@ export default (sequelize, DataTypes) => {
     }
   });
   ArticleTag.associate = (models) => {
-    ArticleTag.belongsTo(models.Articles, {
+    ArticleTag.belongsTo(models.Article, {
       foreignKey: 'articleId'
     });
-    ArticleTag.belongsTo(models.Tags, {
+    ArticleTag.belongsTo(models.Tag, {
       foreignKey: 'tagId'
     });
   };

@@ -104,23 +104,23 @@ const user = (sequelize, DataTypes) => {
   );
 
   User.associate = (models) => {
-    User.hasMany(models.Articles, {
+    User.hasMany(models.Article, {
       foreignKey: 'userId',
       as: 'articles'
     });
-    User.hasMany(models.Comments, {
+    User.hasMany(models.Comment, {
       foreignKey: 'userId',
       as: 'com'
     });
-    User.hasMany(models.Expressions, {
+    User.hasMany(models.Expression, {
       foreignKey: 'userId',
       as: 'exp'
     });
-    User.hasMany(models.Followers, {
+    User.hasMany(models.Follower, {
       foreignKey: 'userId',
       as: 'fol'
     });
-    User.hasMany(models.Tags, {
+    User.hasMany(models.Tag, {
       foreignKey: 'userId',
       as: 'tags'
     });
@@ -128,15 +128,15 @@ const user = (sequelize, DataTypes) => {
       foreignKey: 'userId',
       as: 'comhis'
     });
-    User.hasMany(models.ArticleExpressions, {
+    User.hasMany(models.ArticleExpression, {
       foreignKey: 'userId',
       as: 'artex'
     });
-    User.hasMany(models.CommentExpressions, {
+    User.hasMany(models.CommentExpression, {
       foreignKey: 'userId',
       as: 'comex'
     });
-    User.hasOne(models.Login, {
+    User.hasOne(models.LoginMethod, {
       foreignKey: 'userId',
       as: 'login'
     });

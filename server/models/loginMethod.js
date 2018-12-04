@@ -29,7 +29,7 @@ const loginMethod = (sequelize, DataTypes) => {
 
   LoginMethod.associate = (models) => {
     LoginMethod.belongsTo(
-      models.Users,
+      models.User,
       {
         foriegnKey: 'userId'
       }
