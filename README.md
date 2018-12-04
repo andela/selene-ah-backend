@@ -396,3 +396,23 @@ No additional parameters required
 
 `GET /api/tags`
 
+### Project Setup
+
+```
+- git clone develop branch
+- npm install
+- create .env file using .env.sample file
+- create a database
+
+To migrate database
+- npm run db:migrate
+
+To reset database
+- npm run db:reset
+
+To run test
+- npm run test
+
+To run project
+- npm start
+```
