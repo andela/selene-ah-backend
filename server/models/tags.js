@@ -10,14 +10,6 @@ const tags = (sequelize, DataTypes) => {
     tag: DataTypes.STRING,
     allowNull: false
   });
-  Tags.associate = (models) => {
-    Tags.belongsToMany(models.Article, {
-      as: 'Articles',
-      through: 'ArticleTag',
-      foreignKey: 'tagId',
-      onDelete: 'Cascade'
-    });
-  };
   return Tags;
 };
 
