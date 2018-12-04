@@ -61,7 +61,6 @@ describe('User Model', () => {
         Comment,
         ArticleExpression,
         CommentExpression,
-        CommentHistory,
         Followers,
         Bookmark,
         ReportArticles,
@@ -100,10 +99,6 @@ describe('User Model', () => {
 
     it('The user model has a one-to-many association with the CommentExpression Model as "comex"', () => {
       expect(User.hasMany.calledWith(CommentExpression)).to.equal(true);
-    });
-
-    it('The user model has a one-to-many association with the CommentHistory Model as "comhis"', () => {
-      expect(User.hasMany.calledWith(CommentHistory)).to.equal(true);
     });
 
     it('The user model has a one-to-many association with the Followers Model as "fol"', () => {
