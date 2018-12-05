@@ -6,15 +6,15 @@ export default {
       type: Sequelize.UUID,
       defaultValue: Sequelize.UUIDV4
     },
-    firstname: {
+    firstName: {
       type: Sequelize.STRING,
       allowNull: false
     },
-    lastname: {
+    lastName: {
       type: Sequelize.STRING,
       allowNull: false
     },
-    username: {
+    userName: {
       type: Sequelize.STRING,
       allowNull: false,
       unique: true
@@ -38,7 +38,7 @@ export default {
       defaultValue: false,
       allowNull: false
     },
-    email_notification: {
+    emailNotification: {
       type: Sequelize.BOOLEAN,
       defaultValue: false,
       allowNull: false

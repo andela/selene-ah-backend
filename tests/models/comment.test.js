@@ -2,7 +2,7 @@ import { sequelize, dataTypes } from 'sequelize-test-helpers';
 import { expect } from 'chai';
 import CommentModel from '../../server/models/comment';
 import UserModel from '../../server/models/user';
-import ArticleModel from '../../server/models/articles';
+import ArticleModel from '../../server/models/article';
 
 describe('models/comment', () => {
   const Comment = CommentModel(sequelize, dataTypes);

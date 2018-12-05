@@ -1,6 +1,10 @@
 import { expect } from 'chai';
 import { sequelize, dataTypes, checkModelName } from 'sequelize-test-helpers';
+<<<<<<< HEAD
 import ArticleModel from '../../server/models/articles';
+=======
+import ArticleModel from '../../server/models/article';
+>>>>>>> fix(model): fix bug on models
 import UserModel from '../../server/models/user';
 import CategoryModel from '../../server/models/category';
 

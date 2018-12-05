@@ -1,7 +1,7 @@
 import { sequelize, dataTypes, checkModelName } from 'sequelize-test-helpers';
 import { expect } from 'chai';
 import ArticeExpression from '../../server/models/articleExpression';
-import Article from '../../server/models/articles';
+import Article from '../../server/models/article';
 import User from '../../server/models/user';
 
 describe('ArticleExpression', () => {

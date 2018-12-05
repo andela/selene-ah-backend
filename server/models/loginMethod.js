@@ -4,28 +4,19 @@
  *
  * @returns {object} LoginMethod
  */
-const loginMethod = (sequelize, DataTypes) => {
-  const LoginMethod = sequelize.define(
-    'LoginMethod',
-    {
-      id: {
-        type: DataTypes.UUID,
-        primaryKey: true,
-        allowNull: false,
-        defaultValue: DataTypes.UUIDV4
-      },
-      authMethodUsed: {
-        type: DataTypes.STRING,
-        allowNull: true
-      },
-      createdAt: {
-        type: DataTypes.DATE
-      },
-      updatedAt: {
-        type: DataTypes.DATE
-      }
+export default (sequelize, DataTypes) => {
+  const LoginMethod = sequelize.define('LoginMethod', {
+    id: {
+      type: DataTypes.UUID,
+      primaryKey: true,
+      allowNull: false,
+      defaultValue: DataTypes.UUIDV4
+    },
+    authMethodUsed: {
+      type: DataTypes.STRING,
+      allowNull: true
     }
-  );
+  });
 
   LoginMethod.associate = (models) => {
     LoginMethod.belongsTo(
@@ -38,5 +29,3 @@ const loginMethod = (sequelize, DataTypes) => {
 
   return LoginMethod;
 };
-
-export default loginMethod;

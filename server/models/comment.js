@@ -3,7 +3,7 @@
 * @param {object} DataTypes
 * @returns {object} Comment model
 */
-const comment = (sequelize, DataTypes) => {
+export default (sequelize, DataTypes) => {
   const Comment = sequelize.define('Comment', {
     id: {
       type: DataTypes.UUID,
@@ -32,5 +32,3 @@ const comment = (sequelize, DataTypes) => {
   };
   return Comment;
 };
-
-export default comment;

@@ -1,6 +1,6 @@
 import { expect } from 'chai';
 import { sequelize, dataTypes } from 'sequelize-test-helpers';
-import CommentHistoryModel from '../../server/models/commenthistory';
+import CommentHistoryModel from '../../server/models/commentHistory';
 import Comment from '../../server/models/comment';
 
 describe('CommentHistory Model', () => {
@@ -23,7 +23,7 @@ describe('CommentHistory Model', () => {
     });
 
     it('The CommentHistory model should have the property "comment_history"', () => {
-      expect(commentHistory).to.have.property('comment_history');
+      expect(commentHistory).to.have.property('commentHistory');
     });
   });
 

@@ -1,6 +1,6 @@
 import sequelizeTestHelper from 'sequelize-test-helpers';
 import { expect } from 'chai';
-import tags from '../../server/models/tags';
+import tags from '../../server/models/tag';
 
 const {
   sequelize,
@@ -12,7 +12,7 @@ describe('Model for Tags', () => {
   const newTag = new tagModel();
   context('Tag properties', () => {
     it('should have model name of Tags', () => {
-      expect(tagModel.modelName).to.equal('Tags');
+      expect(tagModel.modelName).to.equal('Tag');
     });
     it('should have property tag', () => {
       expect(newTag).to.have.property('tag');

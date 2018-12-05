@@ -10,7 +10,7 @@ export default {
       type: Sequelize.STRING,
       allowNull: false,
     },
-    imageurl: {
+    imageUrl: {
       type: Sequelize.TEXT,
       allowNull: false,
     },
