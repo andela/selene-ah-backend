@@ -1,8 +1,8 @@
 import sequelizeTestHelper from 'sequelize-test-helpers';
 import { expect } from 'chai';
 import articleTag from '../../server/models/articleTag';
-import article from '../../server/models/article';
-import tags from '../../server/models/tag';
+import articleModel from '../../server/models/article';
+import tagModel from '../../server/models/tag';
 
 const {
   sequelize,
@@ -12,8 +12,8 @@ const {
 describe('Models for ArticleTag', () => {
   const ArticleTag = articleTag(sequelize, dataTypes);
   context('associations', () => {
-    const Article = article(sequelize, dataTypes);
-    const Tag = tags(sequelize, dataTypes);
+    const Article = articleModel(sequelize, dataTypes);
+    const Tag = tagModel(sequelize, dataTypes);
     before(() => {
       ArticleTag.associate({ Article });
       ArticleTag.associate({ Tag });

@@ -1,5 +1,5 @@
 export default (sequelize, DataTypes) => {
-  const ReportArticles = sequelize.define('ReportArticle', {
+  const ReportArticle = sequelize.define('ReportArticle', {
     report: {
       type: DataTypes.STRING,
       validate: {
@@ -10,13 +10,13 @@ export default (sequelize, DataTypes) => {
       }
     },
   });
-  ReportArticles.associate = (models) => {
-    ReportArticles.belongsTo(models.User, {
+  ReportArticle.associate = (models) => {
+    ReportArticle.belongsTo(models.User, {
       foreignKey: 'userId',
     });
-    ReportArticles.belongsTo(models.Article, {
+    ReportArticle.belongsTo(models.Article, {
       foreignKey: 'articleId',
     });
   };
-  return ReportArticles;
+  return ReportArticle;
 };

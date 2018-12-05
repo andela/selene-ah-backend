@@ -14,18 +14,17 @@ describe('CommentHistory Model', () => {
   });
 
   context('Check the properties of the User Model', () => {
-    it('The CommentHistory model should have the property "id"', () => {
+    it('should have the property "id"', () => {
       expect(commentHistory).to.have.property('id');
     });
 
-    it('The CommentHistory model should have the property "commentId"', () => {
+    it('should have the property "commentId"', () => {
       expect(commentHistory).to.have.property('commentId');
     });
 
-    it('The CommentHistory model should have the property "comment_history"',
-      () => {
-        expect(commentHistory).to.have.property('commentHistory');
-      });
+    it('should have the property "comment_history"',() => {
+      expect(commentHistory).to.have.property('commentHistory');
+    });
   });
 
   context('Check the CommentHistory Model associations', () => {

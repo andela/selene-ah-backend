@@ -1,6 +1,6 @@
 import sequelizeTestHelper from 'sequelize-test-helpers';
 import { expect } from 'chai';
-import notification from '../../server/models/notification';
+import notificationModel from '../../server/models/notification';
 import user from '../../server/models/user';
 
 const {
@@ -9,12 +9,12 @@ const {
 } = sequelizeTestHelper;
 
 describe('Notification models', () => {
-  const notificationModel = notification(sequelize, dataTypes);
-  const newNotification = new notificationModel();
+  const Notification = notificationModel(sequelize, dataTypes);
+  const newNotification = new Notification();
 
   context('properties', () => {
     it('shouold have model name property of Notification', () => {
-      expect(notificationModel.modelName).to.equal('Notification');
+      expect(Notification.modelName).to.equal('Notification');
     });
     it('should have property isSeen', () => {
       expect(newNotification).to.have.property('isSeen');
@@ -35,11 +35,11 @@ describe('Notification models', () => {
   context('Notification associations', () => {
     const User = user(sequelize, dataTypes);
     before(() => {
-      notificationModel.associate({ User });
+      Notification.associate({ User });
     });
 
-    it('should define a belongsTo association with User', () => {
-      expect(notificationModel.belongsTo.calledWith(User)).to.equal(true);
+    it('should have a belongsTo association with User', () => {
+      expect(Notification.belongsTo.calledWith(User)).to.equal(true);
     });
   });
 });
