@@ -1,11 +1,11 @@
 import { sequelize, dataTypes, checkModelName } from 'sequelize-test-helpers';
 import { expect } from 'chai';
-import ArticeExpression from '../../server/models/articleExpression';
-import Article from '../../server/models/articles';
+import ArticleExpressionModel from '../../server/models/articleExpression';
+import Article from '../../server/models/article';
 import User from '../../server/models/user';
 
 describe('ArticleExpression', () => {
-  const ArticleExpression = ArticeExpression(sequelize, dataTypes);
+  const ArticleExpression = ArticleExpressionModel(sequelize, dataTypes);
   checkModelName(ArticleExpression)('ArticleExpression');
   const instance = new ArticleExpression();
 
@@ -14,7 +14,6 @@ describe('ArticleExpression', () => {
       expect(instance).to.have.property('emotion');
     });
   });
-
   context('assocations', () => {
     before(() => {
       ArticleExpression.associate({ Article, User });

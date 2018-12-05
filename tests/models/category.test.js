@@ -1,13 +1,13 @@
 import { expect } from 'chai';
 import { sequelize, dataTypes } from 'sequelize-test-helpers';
-import category from '../../server/models/category';
-import Articles from '../../server/models/articles';
+import categoryModel from '../../server/models/category';
+import Article from '../../server/models/article';
 
 describe('models/category', () => {
-  const categories = category(sequelize, dataTypes);
-  const categoryInstance = new categories();
+  const Category = categoryModel(sequelize, dataTypes);
+  const categoryInstance = new Category();
   it('should have valid model name ', () => {
-    expect(categories.modelName).to.equal('Category');
+    expect(Category.modelName).to.equal('Category');
   });
   it('should have property title', () => {
     expect(categoryInstance).to.have.property('title');
@@ -15,12 +15,12 @@ describe('models/category', () => {
 
   context('category associations with articles model', () => {
     before(() => {
-      categories.associate({
-        Articles
+      Category.associate({
+        Article
       });
     });
     it('should define a hasMany association with articles', () => {
-      expect(categories.hasMany.calledWith(Articles)).to.equal(true);
+      expect(Category.hasMany.calledWith(Article)).to.equal(true);
     });
   });
 });

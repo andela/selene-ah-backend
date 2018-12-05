@@ -15,17 +15,18 @@ describe('## Comment Expression model', () => {
     });
   });
 
-  context('Comment Expression associations should', () => {
+  context('Comment Expression associations', () => {
     const Comment = comment(sequelize, dataTypes);
     before(() => {
       CommentExpressionModel.associate({ Comment });
     });
     it('should have a belongsTo relationship with comment model', () => {
-      expect(CommentExpressionModel.belongsTo.calledWith(Comment)).to.equal(true);
+      expect(CommentExpressionModel.belongsTo.calledWith(Comment))
+        .to.equal(true);
     });
   });
 
-  context('Comment Expression associations should', () => {
+  context('Comment Expression associations', () => {
     const User = user(sequelize, dataTypes);
     before(() => {
       CommentExpressionModel.associate({ User });

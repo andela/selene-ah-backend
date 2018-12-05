@@ -3,21 +3,16 @@
  * @param {object} DataTypes
  * @returns {object} Category
  */
-const category = (sequelize, DataTypes) => {
+export default (sequelize, DataTypes) => {
   const Category = sequelize.define('Category', {
-    title: DataTypes.STRING,
-    validate: {
-      isEmpty: {
-        msg: 'Empty title. The title is required.'
-      }
+    title: {
+      type: DataTypes.STRING
     }
   });
   Category.associate = (models) => {
-    Category.hasMany(models.Articles, {
+    Category.hasMany(models.Article, {
       foreignKey: 'categoryId',
     });
   };
   return Category;
 };
-
-export default category;

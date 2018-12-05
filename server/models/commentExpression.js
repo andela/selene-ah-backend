@@ -5,14 +5,15 @@
  * @returns {object} - CommentExpression
  */
 
-const commentExpression = (sequelize, DataTypes) => {
+export default (sequelize, DataTypes) => {
   const CommentExpression = sequelize.define('CommentExpression', {
     emotion: {
       type: DataTypes.STRING,
       validate: {
         isIn: {
           args: [['sad', 'excited', 'like', 'dislike', 'indifferent']],
-          msg: 'must be one of these (sad, excited, like, dislike, indifferent)',
+          msg: `must be one of these (sad, excited, 
+            like, dislike, indifferent)`,
         }
       }
     }
@@ -29,5 +30,3 @@ const commentExpression = (sequelize, DataTypes) => {
   };
   return CommentExpression;
 };
-
-export default commentExpression;

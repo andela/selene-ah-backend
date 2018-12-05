@@ -5,6 +5,7 @@ import cors from 'cors';
 import errorhandler from 'errorhandler';
 import morgan from 'morgan';
 import methodOverride from 'method-override';
+import routes from './routes/index';
 
 const isProduction = process.env.NODE_ENV === 'production';
 const port = process.env.PORT || 3000;
@@ -35,7 +36,7 @@ if (!isProduction) {
   app.use(errorhandler());
 }
 
-app.use(require('./routes'));
+app.use(routes);
 
 // / catch 404 and forward to error handler
 app.use((req, res, next) => {

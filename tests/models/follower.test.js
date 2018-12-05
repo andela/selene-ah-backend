@@ -3,14 +3,14 @@ import {
   sequelize,
   dataTypes,
 } from 'sequelize-test-helpers';
-import followers from '../../server/models/followers';
+import followerModel from '../../server/models/follower';
 import user from '../../server/models/user';
 
 describe('models/followers', () => {
-  const follower = followers(sequelize, dataTypes);
-  const followerInstance = new follower();
+  const Follower = followerModel(sequelize, dataTypes);
+  const followerInstance = new Follower();
   it('should have valid model name ', () => {
-    expect(follower.modelName).to.equal('Followers');
+    expect(Follower.modelName).to.equal('Follower');
   });
   it('should have property of followerId', () => {
     expect(followerInstance).to.have.property('followerId');
@@ -19,10 +19,10 @@ describe('models/followers', () => {
   context('should have followers associations', () => {
     const User = user;
     before(() => {
-      follower.associate({ User });
+      Follower.associate({ User });
     });
     it('should defined a belongsTo association with user', () => {
-      expect(follower.belongsTo.calledWith(User)).to.equal(true);
+      expect(Follower.belongsTo.calledWith(User)).to.equal(true);
     });
   });
 });

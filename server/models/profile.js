@@ -1,8 +1,8 @@
 
-const profile = (sequelize, DataTypes) => {
+export default (sequelize, DataTypes) => {
   const Profile = sequelize.define('Profile', {
     role: DataTypes.STRING,
-    imageurl: DataTypes.TEXT,
+    imageUrl: DataTypes.TEXT,
     bio: DataTypes.TEXT,
     gender: DataTypes.STRING,
     twitterUrl: DataTypes.STRING,
@@ -23,5 +23,3 @@ const profile = (sequelize, DataTypes) => {
   };
   return Profile;
 };
-
-export default profile;

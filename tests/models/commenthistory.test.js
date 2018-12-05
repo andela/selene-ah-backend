@@ -1,6 +1,6 @@
 import { expect } from 'chai';
 import { sequelize, dataTypes } from 'sequelize-test-helpers';
-import CommentHistoryModel from '../../server/models/commenthistory';
+import CommentHistoryModel from '../../server/models/commentHistory';
 import Comment from '../../server/models/comment';
 
 describe('CommentHistory Model', () => {
@@ -14,16 +14,16 @@ describe('CommentHistory Model', () => {
   });
 
   context('Check the properties of the User Model', () => {
-    it('The CommentHistory model should have the property "id"', () => {
+    it('should have the property "id"', () => {
       expect(commentHistory).to.have.property('id');
     });
 
-    it('The CommentHistory model should have the property "commentId"', () => {
+    it('should have the property "commentId"', () => {
       expect(commentHistory).to.have.property('commentId');
     });
 
-    it('The CommentHistory model should have the property "comment_history"', () => {
-      expect(commentHistory).to.have.property('comment_history');
+    it('should have the property "comment_history"',() => {
+      expect(commentHistory).to.have.property('commentHistory');
     });
   });
 
@@ -34,8 +34,9 @@ describe('CommentHistory Model', () => {
       });
     });
 
-    it('The CommentHistory model has a many-to-one association with the Comment Model as "comhis"', () => {
-      expect(CommentHistory.belongsTo.calledWith(Comment)).to.equal(true);
-    });
+    it('should have a many-to-one association with the Comment',
+      () => {
+        expect(CommentHistory.belongsTo.calledWith(Comment)).to.equal(true);
+      });
   });
 });
