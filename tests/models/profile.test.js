@@ -10,11 +10,7 @@ describe('Model for Profile', () => {
   const profile = new Profile();
   checkModelName(Profile)('Profile');
   context('properties', () => {
-<<<<<<< HEAD
-    ['gender', 'twitterUrl', 'role', 'imageurl', 'facebookUrl', 'bio', 'dateOfBirth'].forEach(checkPropertyExists(profile));
-=======
     ['gender', 'twitterUrl', 'role', 'imageUrl', 'facebookUrl', 'bio', 'dateOfBirth'].forEach(checkPropertyExists(profile));
->>>>>>> fix(model): fix bug on models
   });
   context('should check associations', () => {
     const User = UserModel(sequelize, dataTypes);
