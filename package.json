@@ -8,6 +8,7 @@
     "linter": "./node_modules/eslint/bin/eslint.js './**/*.js'",
     "start": "npm run build && npm run serve",
     "serve": "node ./dist/index.js",
+    "postinstall": "npm run  db:migrate",
     "test": "nyc mocha ./tests --require babel-polyfill --require babel-register --exit --recursive",
     "build": "rm -rf dist/ && babel ./server --out-dir dist/ --ignore ./node_modules",
     "start:dev": "babel-watch server/index.js",
@@ -24,8 +25,6 @@
   "dependencies": {
     "babel-cli": "^6.26.0",
     "babel-preset-env": "^1.7.0",
-    "babel-register": "^6.26.0",
-    "body-parser": "^1.18.3",
     "cors": "^2.8.4",
     "dotenv": "^6.0.0",
     "errorhandler": "^1.5.0",
@@ -42,6 +41,7 @@
     "pg-hstore": "^2.3.2",
     "request": "^2.87.0",
     "sequelize": "^4.41.2",
+    "sequelize-cli": "^5.4.0",
     "sequelize-test-helpers": "^1.0.6",
     "slug": "^0.9.2",
     "underscore": "^1.9.1"
@@ -64,7 +64,6 @@
     "husky": "^1.2.0",
     "mocha": "^5.2.0",
     "nyc": "^13.1.0",
-    "sequelize-cli": "^5.3.0",
     "sequelize-test-helpers": "^1.0.6",
     "sinon": "^7.1.1"
   }
