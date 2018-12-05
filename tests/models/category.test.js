@@ -1,7 +1,7 @@
 import { expect } from 'chai';
 import { sequelize, dataTypes } from 'sequelize-test-helpers';
 import category from '../../server/models/category';
-import Articles from '../../server/models/articles';
+import Article from '../../server/models/article';
 
 describe('models/category', () => {
   const categories = category(sequelize, dataTypes);
@@ -16,11 +16,11 @@ describe('models/category', () => {
   context('category associations with articles model', () => {
     before(() => {
       categories.associate({
-        Articles
+        Article
       });
     });
     it('should define a hasMany association with articles', () => {
-      expect(categories.hasMany.calledWith(Articles)).to.equal(true);
+      expect(categories.hasMany.calledWith(Article)).to.equal(true);
     });
   });
 });

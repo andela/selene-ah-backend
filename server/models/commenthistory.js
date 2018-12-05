@@ -4,8 +4,7 @@
  * @param {Object} DataTypes
  * @returns {Object} CommentHistory
  */
-
-const commentHistory = (sequelize, DataTypes) => {
+export default (sequelize, DataTypes) => {
   const CommentHistory = sequelize.define('CommentHistory', {
     id: {
       type: DataTypes.UUID,
@@ -17,26 +16,23 @@ const commentHistory = (sequelize, DataTypes) => {
       isNull: false,
       validate: {
         notEmpty: {
-          args: true,
           msg: 'The commentId is required. Please supply a valid commentId'
         },
         isInt: {
-          args: true,
           msg: 'the commentId must be an Integer'
         }
       }
     },
-    comment_history: {
+    commentHistory: {
       type: DataTypes.STRING,
       isNull: false,
       validate: {
         notEmpty: {
-          args: true,
           msg: 'The comment is required. Please supply a valid comment'
         }
       }
     }
-  }, { tableName: 'commentHistory' });
+  });
 
   CommentHistory.associate = (models) => {
     CommentHistory.belongsTo(models.Comment, {
@@ -47,4 +43,3 @@ const commentHistory = (sequelize, DataTypes) => {
 
   return CommentHistory;
 };
-export default commentHistory;

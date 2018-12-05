@@ -3,14 +3,14 @@ import { sequelize, dataTypes } from 'sequelize-test-helpers';
 import UserModel from '../../server/models/user';
 import LoginMethod from '../../server/models/loginMethod';
 import Profile from '../../server/models/profile';
-import Articles from '../../server/models/articles';
+import Article from '../../server/models/article';
 import Comment from '../../server/models/comment';
 import ArticleExpression from '../../server/models/articleExpression';
 import CommentExpression from '../../server/models/commentExpression';
-import Followers from '../../server/models/followers';
+import Follower from '../../server/models/follower';
 import Bookmark from '../../server/models/bookmark';
-import ReportArticles from '../../server/models/reportarticles';
-import Tags from '../../server/models/tags';
+import ReportArticle from '../../server/models/reportArticle';
+import Tag from '../../server/models/tag';
 
 describe('User Model', () => {
   const User = UserModel(sequelize, dataTypes);
@@ -24,11 +24,11 @@ describe('User Model', () => {
 
   context('Check the properties of the User Model', () => {
     it('The User model should have the property "firstname"', () => {
-      expect(user).to.have.property('firstname');
+      expect(user).to.have.property('firstName');
     });
 
     it('The User model should have the property "lastname"', () => {
-      expect(user).to.have.property('lastname');
+      expect(user).to.have.property('lastName');
     });
 
     it('The User model should have the property "email"', () => {
@@ -48,7 +48,7 @@ describe('User Model', () => {
     });
 
     it('The User model should have the property "email_notification"', () => {
-      expect(user).to.have.property('email_notification');
+      expect(user).to.have.property('emailNotification');
     });
   });
 
@@ -57,19 +57,19 @@ describe('User Model', () => {
       User.associate({
         LoginMethod,
         Profile,
-        Articles,
+        Article,
         Comment,
         ArticleExpression,
         CommentExpression,
-        Followers,
+        Follower,
         Bookmark,
-        ReportArticles,
-        Tags
+        ReportArticle,
+        Tag
       });
     });
     context('Check the uniqueness of emails and usernames', () => {
       it('check if the username is unique', () => {
-        expect(user.username).to.have.property('unique');
+        expect(user.userName).to.have.property('unique');
       });
 
       it('check if the email is unique', () => {
@@ -86,7 +86,7 @@ describe('User Model', () => {
     });
 
     it('The user model has a one-to-many association with the Articles Model as "articles"', () => {
-      expect(User.hasMany.calledWith(Articles)).to.equal(true);
+      expect(User.hasMany.calledWith(Article)).to.equal(true);
     });
 
     it('The user model has a one-to-many association with the Comment Model as "com"', () => {
@@ -102,7 +102,7 @@ describe('User Model', () => {
     });
 
     it('The user model has a one-to-many association with the Followers Model as "fol"', () => {
-      expect(User.hasMany.calledWith(Followers)).to.equal(true);
+      expect(User.hasMany.calledWith(Follower)).to.equal(true);
     });
 
     it('The user model has a one-to-many association with the Bookmark Model as "book"', () => {
@@ -110,11 +110,11 @@ describe('User Model', () => {
     });
 
     it('The user model has a one-to-many association with the ReportArticles Model as "report"', () => {
-      expect(User.hasMany.calledWith(ReportArticles)).to.equal(true);
+      expect(User.hasMany.calledWith(ReportArticle)).to.equal(true);
     });
 
     it('The user model has a one-to-many association with the Tags Model as "tags"', () => {
-      expect(User.hasMany.calledWith(Tags)).to.equal(true);
+      expect(User.hasMany.calledWith(Tag)).to.equal(true);
     });
   });
 });

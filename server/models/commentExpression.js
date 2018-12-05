@@ -5,7 +5,7 @@
  * @returns {object} - CommentExpression
  */
 
-const commentExpression = (sequelize, DataTypes) => {
+export default (sequelize, DataTypes) => {
   const CommentExpression = sequelize.define('CommentExpression', {
     emotion: {
       type: DataTypes.STRING,
@@ -29,5 +29,3 @@ const commentExpression = (sequelize, DataTypes) => {
   };
   return CommentExpression;
 };
-
-export default commentExpression;

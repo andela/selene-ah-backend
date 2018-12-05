@@ -1,8 +1,8 @@
 import sequelizeTestHelper from 'sequelize-test-helpers';
 import { expect } from 'chai';
-import articleTag from '../../server/models/articletag';
-import article from '../../server/models/articles';
-import tags from '../../server/models/tags';
+import articleTag from '../../server/models/articleTag';
+import article from '../../server/models/article';
+import tags from '../../server/models/tag';
 
 const {
   sequelize,

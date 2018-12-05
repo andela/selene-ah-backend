@@ -4,8 +4,8 @@
  * @returns {object} followers
  */
 
-const followers = (sequelize, DataTypes) => {
-  const Followers = sequelize.define('Followers', {
+export default (sequelize, DataTypes) => {
+  const Followers = sequelize.define('Follower', {
     followerId: DataTypes.UUID
   });
   Followers.associate = (models) => {
@@ -15,5 +15,3 @@ const followers = (sequelize, DataTypes) => {
   };
   return Followers;
 };
-
-export default followers;

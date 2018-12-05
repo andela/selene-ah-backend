@@ -10,7 +10,7 @@ export default {
       allowNull: false,
       type: Sequelize.INTEGER
     },
-    comment_history: {
+    commentHistory: {
       allowNull: false,
       type: Sequelize.STRING
     },

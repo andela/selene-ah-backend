@@ -1,5 +1,5 @@
-module.exports = (sequelize, DataTypes) => {
-  const ReportArticles = sequelize.define('ReportArticles', {
+export default (sequelize, DataTypes) => {
+  const ReportArticles = sequelize.define('ReportArticle', {
     report: {
       type: DataTypes.STRING,
       validate: {

@@ -1,6 +1,6 @@
 import { expect } from 'chai';
 import { sequelize, dataTypes, checkModelName } from 'sequelize-test-helpers';
-import ArticleModel from '../../server/models/articles';
+import ArticleModel from '../../server/models/article';
 import UserModel from '../../server/models/user';
 import CategoryModel from '../../server/models/category';
 
