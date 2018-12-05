@@ -21,7 +21,9 @@ describe('## Comment Expression model', () => {
       CommentExpressionModel.associate({ Comment });
     });
     it('should have a belongsTo relationship with comment model', () => {
-      expect(CommentExpressionModel.belongsTo.calledWith(Comment)).to.equal(true);
+      expect(
+        CommentExpressionModel.belongsTo.calledWith(Comment)
+      ).to.equal(true);
     });
   });
 

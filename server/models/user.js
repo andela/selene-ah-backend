@@ -63,7 +63,8 @@ export default (sequelize, DataTypes) => {
       validate: {
         isBoolean: {
           args: [true, false],
-          msg: 'Invalid value. The value for verified can only be "true" or "false"'
+          msg: `Invalid value. The value for verified 
+          can only be "true" or "false"`
         }
       }
     },
@@ -73,7 +74,8 @@ export default (sequelize, DataTypes) => {
       validate: {
         isBoolean: {
           args: [true, false],
-          msg: 'Invalid value. The value for blocked can only be "true" or "false"'
+          msg: `Invalid value. The value for blocked 
+          can only be "true" or "false"`
         }
       }
     },
@@ -86,7 +88,8 @@ export default (sequelize, DataTypes) => {
       validate: {
         isBoolean: {
           args: [true, false],
-          msg: 'Invalid value. The value for email notification can only be "true" or "false"'
+          msg: `Invalid value. The value for email notification
+            can only be "true" or "false"`
         }
       }
     }
@@ -96,44 +99,13 @@ export default (sequelize, DataTypes) => {
       foreignKey: 'userId',
       as: 'articles'
     });
-    User.hasMany(models.Comment, {
-      foreignKey: 'userId',
-      as: 'com'
-    });
-
     User.hasMany(models.Follower, {
       foreignKey: 'userId',
-      as: 'fol'
-    });
-    User.hasMany(models.Tag, {
-      foreignKey: 'userId',
-      as: 'tags'
-    });
-    User.hasMany(models.ArticleExpression, {
-      foreignKey: 'userId',
-      as: 'artex'
-    });
-    User.hasMany(models.CommentExpression, {
-      foreignKey: 'userId',
-      as: 'comex'
-    });
-    User.hasOne(models.LoginMethod, {
-      foreignKey: 'userId',
-      as: 'login'
+      as: 'followers'
     });
     User.hasOne(models.Profile, {
       foreignKey: 'userId',
       as: 'profile'
-    });
-
-    User.hasMany(models.Bookmark, {
-      foreignKey: 'userId',
-      as: 'book'
-    });
-
-    User.hasMany(models.ReportArticle, {
-      foreignKey: 'userId',
-      as: 'report'
     });
   };
 

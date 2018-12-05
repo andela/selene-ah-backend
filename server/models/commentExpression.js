@@ -12,7 +12,8 @@ export default (sequelize, DataTypes) => {
       validate: {
         isIn: {
           args: [['sad', 'excited', 'like', 'dislike', 'indifferent']],
-          msg: 'must be one of these (sad, excited, like, dislike, indifferent)',
+          msg: `must be one of these (sad, excited, 
+            like, dislike, indifferent)`,
         }
       }
     }

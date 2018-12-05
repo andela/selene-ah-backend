@@ -10,7 +10,9 @@ describe('Model for Profile', () => {
   const profile = new Profile();
   checkModelName(Profile)('Profile');
   context('properties', () => {
-    ['gender', 'twitterUrl', 'role', 'imageUrl', 'facebookUrl', 'bio', 'dateOfBirth'].forEach(checkPropertyExists(profile));
+    ['gender', 'twitterUrl', 'role', 'imageUrl',
+      'facebookUrl', 'bio', 'dateOfBirth'
+    ].forEach(checkPropertyExists(profile));
   });
   context('should check associations', () => {
     const User = UserModel(sequelize, dataTypes);

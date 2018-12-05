@@ -22,9 +22,10 @@ describe('CommentHistory Model', () => {
       expect(commentHistory).to.have.property('commentId');
     });
 
-    it('The CommentHistory model should have the property "comment_history"', () => {
-      expect(commentHistory).to.have.property('commentHistory');
-    });
+    it('The CommentHistory model should have the property "comment_history"',
+      () => {
+        expect(commentHistory).to.have.property('commentHistory');
+      });
   });
 
   context('Check the CommentHistory Model associations', () => {
@@ -34,8 +35,9 @@ describe('CommentHistory Model', () => {
       });
     });
 
-    it('The CommentHistory model has a many-to-one association with the Comment Model as "comhis"', () => {
-      expect(CommentHistory.belongsTo.calledWith(Comment)).to.equal(true);
-    });
+    it('should have a many-to-one association with the Comment',
+      () => {
+        expect(CommentHistory.belongsTo.calledWith(Comment)).to.equal(true);
+      });
   });
 });

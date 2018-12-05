@@ -37,6 +37,8 @@
         "ClassDeclaration": true
       }
     }],
-    "semi":"warn"
+    "semi":"warn",
+    "max-len": [2, 80, 2],
+    "arrow-body-style": 0
   }
 }

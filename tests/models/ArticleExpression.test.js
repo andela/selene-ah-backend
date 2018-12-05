@@ -14,7 +14,6 @@ describe('ArticleExpression', () => {
       expect(instance).to.have.property('emotion');
     });
   });
-
   context('assocations', () => {
     before(() => {
       ArticleExpression.associate({ Article, User });
