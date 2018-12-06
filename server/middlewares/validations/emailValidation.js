@@ -12,14 +12,14 @@ class EmailValidations {
    * @param {object} next - callback function
    * @returns {object} A response object from server
    */
-  static isEmailCheck(req, res, next) {
+  static isEmailValid(req, res, next) {
     if (!req.body.email || req.body.email.trim().length === '') {
       return res.status(400).json({
         success: false,
         msg: 'Email field cannot be empty'
       });
     }
-    if (!helpers.isEmail(req.body.email.trim())) {
+    if (!helpers.isEmailValid(req.body.email.trim())) {
       return res.status(400).json({
         success: false,
         msg: 'Invalid Email: supply a valid email'
@@ -33,7 +33,7 @@ class EmailValidations {
    * @param {object} next - callback function
    * @returns {object} A response object from server
    */
-  static isEmailExist(req, res, next) {
+  static doesEmailExist(req, res, next) {
     User.findOne({
       where: {
         email: req.body.email.toLowerCase().trim()
@@ -55,7 +55,7 @@ class EmailValidations {
    * @param {object} next - callback function
    * @returns {object} A response object from server
    */
-  static loginEmailExist(req, res, next) {
+  static doesLoginEmailExist(req, res, next) {
     User.findOne({
       where: {
         email: req.body.email.trim()

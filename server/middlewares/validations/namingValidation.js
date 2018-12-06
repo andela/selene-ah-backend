@@ -15,13 +15,13 @@ class NamingValidations {
    */
   static isNameValid(req, res, next) {
     const body = req.body;
-    if (body.firstname.trim() && !helpers.isName(body.firstname.trim())) {
+    if (body.firstname.trim() && !helpers.isNameValid(body.firstname.trim())) {
       return res.status(400).json({
         success: false,
         msg: 'Invalid Firstname: Supply a valid firstname'
       });
     }
-    if (body.lastname.trim() && !helpers.isName(body.lastname.trim())) {
+    if (body.lastname.trim() && !helpers.isNameValid(body.lastname.trim())) {
       return res.status(400).json({
         success: false,
         msg: 'Invalid Lastname: Supply a valid lastname'
@@ -60,7 +60,7 @@ class NamingValidations {
    * @param {object} next
    * @returns {object} - A response object
    */
-  static isUsernameCheck(req, res, next) {
+  static isUsernameValid(req, res, next) {
     if (!req.body.username || req.body.username.trim().length < 1) {
       return res.status(400).json({
         success: false,
@@ -73,7 +73,7 @@ class NamingValidations {
         msg: 'Invalid Username: Username length must not be less than 3'
       });
     }
-    if (!helpers.isUsername(req.body.username.trim())) {
+    if (!helpers.isUsernameValid(req.body.username.trim())) {
       return res.status(400).json({
         success: false,
         msg: 'Invalid Username: supply a valid username'
@@ -88,7 +88,7 @@ class NamingValidations {
    * @param {object} next - callback function
    * @returns {object} A response object from server
    */
-  static isUsernameExist(req, res, next) {
+  static doesUsernameExist(req, res, next) {
     User.findOne({
       where: {
         userName: req.body.username.trim().toLowerCase()

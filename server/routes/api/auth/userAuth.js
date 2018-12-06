@@ -1,21 +1,21 @@
 import { Router } from 'express';
 import authController from '../../../controllers/auth/userAuth';
 import
-  emailValid from '../../../middlewares/signupValidations/emailValidation';
+  email from '../../../middlewares/validations/emailValidation';
 import
-  pwdValid from '../../../middlewares/signupValidations/passwordValidation';
+  password from '../../../middlewares/validations/passwordValidation';
 import
-  nameValid from '../../../middlewares/signupValidations/namingValidation';
+  name from '../../../middlewares/validations/namingValidation';
 
 const router = Router();
 
 router.post('/auth/signup',
-  [emailValid.isEmailCheck, emailValid.isEmailExist, pwdValid.isPasswordCheck,
-    nameValid.isNameSupplied, nameValid.isNameValid, nameValid.isUsernameCheck,
-    nameValid.isUsernameExist], authController.signupUser);
+  [email.isEmailValid, email.doesEmailExist, password.isPasswordValid,
+    name.isNameSupplied, name.isNameValid, name.isUsernameValid,
+    name.doesUsernameExist], authController.signupUser);
 
 router.post('/auth/signin',
-  [emailValid.isEmailCheck, emailValid.loginEmailExist,
-    pwdValid.isPasswordCheck], authController.loginUser);
+  [email.isEmailValid, email.doesLoginEmailExist,
+    password.isPasswordValid], authController.loginUser);
 
 export default router;

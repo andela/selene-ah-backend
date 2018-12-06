@@ -1,16 +1,16 @@
 import helpers from './validationHelper';
 /**
- * @description This class is for validating email and password fields
+ * @description This class is for validating password fields
  */
 class PasswordValidation {
   /**
-   * @description A middleware for validating email
+   * @description A middleware for validating passwords
    * @param {object} req - get response from body
    * @param {object} res - response to be sent
    * @param {object} next - callback function
    * @returns {object} A response object
    */
-  static isPasswordCheck(req, res, next) {
+  static isPasswordValid(req, res, next) {
     if (!req.body.password || req.body.password.trim().length < 1) {
       return res.status(400).json({
         success: false,
@@ -23,7 +23,7 @@ class PasswordValidation {
         msg: 'Password must not be less than 8 characters'
       });
     }
-    if (!helpers.isPassword(req.body.password.trim())) {
+    if (!helpers.isPasswordValid(req.body.password.trim())) {
       return res.status(400).json({
         success: false,
         msg: 'Invalid Password: Password must contains a number and a symbol'

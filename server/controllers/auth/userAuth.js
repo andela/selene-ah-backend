@@ -1,5 +1,5 @@
 import models from '../../models';
-import password from '../../middlewares/signupValidations/validationHelper';
+import password from '../../middlewares/helperFunctions/passwordHash';
 
 const { User } = models;
 /**
