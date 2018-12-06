@@ -8,7 +8,7 @@ import hashPassword from '../../../helpers/paswordHash';
 config();
 
 const { FACEBOOK_APP_ID, FACEBOOK_APP_SECRET } = process.env;
-const { User } = db;
+const { User, Profile } = db;
 
 /**
  *
@@ -60,6 +60,9 @@ class Facebook {
       userDetails.isANewUser = created;
       userDetails.token = accessToken;
       done(null, userDetails);
+      Profile.create({
+        userId: user[0].dataValues.id
+      });
     });
   }
 
