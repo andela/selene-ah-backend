@@ -32,10 +32,10 @@ class NamingValidations {
 
   /**
    * @description - check if firstname and lastname is supplied
-   * @param {object} req - request to server
-   * @param {object} res - response from server
-   * @param {object} next - call a middleware when done
-   * @returns {object} - A response object
+  * @param {object} req - request to be sent to server
+   * @param {object} res - responses gotton from server
+   * @param {object} next - callback function
+   * @returns {object} A response object from server
    */
   static isNameSupplied(req, res, next) {
     if (!req.body.firstname || !req.body.firstname.trim()) {
@@ -55,10 +55,10 @@ class NamingValidations {
 
   /**
    * @description - check if firstname and lastname is supplied
-   * @param {object} req
-   * @param {object} res
-   * @param {object} next
-   * @returns {object} - A response object
+  * @param {object} req - request to be sent to server
+   * @param {object} res - responses gotton from server
+   * @param {object} next - callback function
+   * @returns {object} A response object from server
    */
   static isUsernameValid(req, res, next) {
     if (!req.body.username || req.body.username.trim().length < 1) {
