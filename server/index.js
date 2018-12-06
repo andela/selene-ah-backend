@@ -1,5 +1,4 @@
 import express from 'express';
-import bodyParser from 'body-parser';
 import session from 'express-session';
 import cors from 'cors';
 import errorhandler from 'errorhandler';
@@ -16,8 +15,8 @@ app.use(cors());
 // Normal express config defaults
 app.use(morgan('dev'));
 
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(bodyParser.json());
+app.use(express.urlencoded({ extended: false }));
+app.use(express.json());
 
 app.use(methodOverride());
 
@@ -72,4 +71,4 @@ app.use((err, req, res, next) => {
 });
 // finally, let's start our server...
 /* eslint-disable-next-line */
-app.listen(port, () => console.log(`App Listening on port ${port}`));
+app.listen(port, () => console.log(`App is starting on port ${port}`));
