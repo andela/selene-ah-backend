@@ -4,7 +4,7 @@ import cors from 'cors';
 import morgan from 'morgan';
 import methodOverride from 'method-override';
 import routes from './routes';
-import passportFacebookStrategy from './controller/auth/passport';
+import passportFacebookStrategy from './controllers/auth/passport';
 
 // const isProduction = process.env.NODE_ENV === 'production';
 const port = process.env.PORT || 3000;

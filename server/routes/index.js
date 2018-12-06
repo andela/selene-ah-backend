@@ -14,8 +14,8 @@ router.get('/api/v1/facebook',
       });
 });
 
-router.get('/api/v1/auth/facebook/callback', 
-  passport.authenticate('facebook', 
+router.get('/api/v1/auth/facebook/callback',
+  passport.authenticate('facebook',
   { session: false }), (req, res) => {
     res.json({
       msg: 'Working'
