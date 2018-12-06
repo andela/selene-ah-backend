@@ -25,7 +25,7 @@ describe('API endpoint for POST auth/signup - Name Validations', () => {
       expect(res.body.msg).to.be.equals('User created successfully');
     }));
 
-  it('Invalid route should give 404', () => chai.request(url)
+  it('should return a 404 status for invalid routes', () => chai.request(url)
     .get('/api/v1/au')
     .then((res) => {
       expect(res).to.have.status(404);
@@ -33,7 +33,7 @@ describe('API endpoint for POST auth/signup - Name Validations', () => {
       expect(res.body.errors.message).to.be.equals('Not Found');
     }));
 
-  it('should gives an error if firstname field is null', () => chai.request(url)
+  it('should return an error if the firstname is null', () => chai.request(url)
     .post('/api/v1/auth/signup')
     .send(userObject.users2)
     .then((res) => {
@@ -42,7 +42,7 @@ describe('API endpoint for POST auth/signup - Name Validations', () => {
       expect(res.body.msg).to.be.equals('Firstname must be supplied');
     }));
 
-  it('should gives an error if firstname is a number', () => chai.request(url)
+  it('should return an error if firstname is a number', () => chai.request(url)
     .post('/api/v1/auth/signup')
     .send(userObject.users2_5)
     .then((res) => {
@@ -71,7 +71,7 @@ describe('API endpoint for POST auth/signup - Lastname Validations', () => {
       expect(res.body.msg).to.be.equals('User created successfully');
     }));
 
-  it('should gives an error if lastname field is null', () => chai.request(url)
+  it('should return an error if lastname field is null', () => chai.request(url)
     .post('/api/v1/auth/signup')
     .send(userObject.users4)
     .then((res) => {
@@ -80,7 +80,7 @@ describe('API endpoint for POST auth/signup - Lastname Validations', () => {
       expect(res.body.msg).to.be.equals('Lastname must be supplied');
     }));
 
-  it('should gives an error if lastname is a number', () => chai.request(url)
+  it('should return an error if lastname is a number', () => chai.request(url)
     .post('/api/v1/auth/signup')
     .send(userObject.users5)
     .then((res) => {
@@ -109,7 +109,7 @@ describe('API endpoint for POST auth/signup - UserName Validations', () => {
       expect(res.body.msg).to.be.equals('User created successfully');
     }));
 
-  it('should gives an error if username field is null', () => chai.request(url)
+  it('should return an error if username field is null', () => chai.request(url)
     .post('/api/v1/auth/signup')
     .send(userObject.users7)
     .then((res) => {
@@ -118,7 +118,7 @@ describe('API endpoint for POST auth/signup - UserName Validations', () => {
       expect(res.body.msg).to.be.equals('Username must be supplied');
     }));
 
-  it('should gives error if username is invalid', () => chai.request(url)
+  it('should return an error if username is invalid', () => chai.request(url)
     .post('/api/v1/auth/signup')
     .send(userObject.users8)
     .then((res) => {
@@ -128,7 +128,7 @@ describe('API endpoint for POST auth/signup - UserName Validations', () => {
         'Invalid Username: supply a valid username');
     }));
 
-  it('should gives error if username is less than 3', () => chai.request(url)
+  it('should fail if username length is less than 3', () => chai.request(url)
     .post('/api/v1/auth/signup')
     .send(userObject.users9)
     .then((res) => {
@@ -138,7 +138,7 @@ describe('API endpoint for POST auth/signup - UserName Validations', () => {
         'Invalid Username: Username length must not be less than 3');
     }));
 
-  it('should give error if username already exists', () => chai.request(url)
+  it('should fail if username already exists', () => chai.request(url)
     .post('/api/v1/auth/signup')
     .send(userObject.users10)
     .then((res) => {

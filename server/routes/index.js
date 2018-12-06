@@ -1,8 +1,7 @@
+import { Router } from 'express';
 import userAuth from './api/auth/userAuth';
 
-const router = require('express').Router();
-
-router.use('/api', require('./api'));
+const router = Router();
 
 router.use('/api/v1', userAuth);
 

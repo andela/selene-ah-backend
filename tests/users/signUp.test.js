@@ -25,7 +25,7 @@ describe('API endpoint for POST auth/signup - Email Validations', () => {
       expect(res.body.msg).to.be.equals('User created successfully');
     }));
 
-  it('should gives error if email field is empty', () => chai.request(url)
+  it('should fail if email field is empty', () => chai.request(url)
     .post('/api/v1/auth/signup')
     .send(userObject.users2)
     .then((res) => {
@@ -34,7 +34,7 @@ describe('API endpoint for POST auth/signup - Email Validations', () => {
       expect(res.body.msg).to.be.equals('Email field cannot be empty');
     }));
 
-  it('should gives error if user supply invalid email', () => chai.request(url)
+  it('should fail if user supply invalid email', () => chai.request(url)
     .post('/api/v1/auth/signup')
     .send(userObject.users3)
     .then((res) => {
@@ -43,7 +43,7 @@ describe('API endpoint for POST auth/signup - Email Validations', () => {
       expect(res.body.msg).to.be.equals('Invalid Email: supply a valid email');
     }));
 
-  it('should give error if a duplicate email is found', () => chai.request(url)
+  it('should fail if a duplicate email is found', () => chai.request(url)
     .post('/api/v1/auth/signup')
     .send(userObject.users1)
     .then((res) => {

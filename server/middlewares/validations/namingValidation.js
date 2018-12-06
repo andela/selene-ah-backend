@@ -60,7 +60,7 @@ class NamingValidations {
    * @param {object} next
    * @returns {object} - A response object
    */
-  static isUsernameCheck(req, res, next) {
+  static isUsernameValid(req, res, next) {
     if (!req.body.username || req.body.username.trim().length < 1) {
       return res.status(400).json({
         success: false,
