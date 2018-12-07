@@ -1,5 +1,5 @@
 import models from '../../models';
-import password from '../../middlewares/helpers/passwordHash';
+import password from '../../helpers/passwordHash';
 
 const { User, Profile } = models;
 /**
@@ -17,9 +17,9 @@ class AuthController {
       const user = await User.create({
         email: req.body.email.trim().toLowerCase(),
         password: password.hashPassword(req.body.password.trim()),
-        firstName: req.body.firstname.trim().toLowerCase(),
-        lastName: req.body.lastname.trim().toLowerCase(),
-        userName: req.body.username.trim().toLowerCase()
+        firstName: req.body.firstname.trim(),
+        lastName: req.body.lastname.trim(),
+        userName: req.body.username.trim()
       });
       await Profile.create({
         userId: user.id,
@@ -34,6 +34,7 @@ class AuthController {
       return next(err);
     }
   }
+
   /**
    * @description - This function login a user
    * @param {object} req - req to be sent
@@ -48,8 +49,8 @@ class AuthController {
           email: req.body.email.toLowerCase().trim()
         }
       });
-      if (user) {
-        if (password.comparePassword(req.body.password.trim(), user.password)) {
+      if (user &&
+        password.comparePassword(req.body.password.trim(), user.password)) {
           return res.status(200).json({
             success: true,
             msg: 'Login successful'
@@ -60,11 +61,9 @@ class AuthController {
             msg: 'Invalid email or password'
           });
         }
-      }
     } catch(err) {
       return next(err);
     }
-    return false;
   }
 }
 

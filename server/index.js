@@ -44,8 +44,7 @@ app.use((req, res, next) => {
 
 /* eslint-disable-next-line */
 app.use((err, req, res, next) => {
-  res.status(err.status || 500);
-  res.json({
+  res.status(err.status || 500).json({
     errors: {
       message: err.message,
       error: err

@@ -3,7 +3,7 @@ import { Strategy as FacebookStrategy } from 'passport-facebook';
 import { config } from 'dotenv';
 
 import db from '../../../models';
-import pwd from '../../../middlewares/helpers/passwordHash';
+import passwordHash from '../../../helpers/passwordHash';
 
 config();
 
@@ -36,13 +36,13 @@ class Facebook {
    */
   static facebookCallback(accessToken, refreshToken, profile, done) {
     const names = profile.displayName.split(' ');
-    const password = pwd.hashPassword(profile.id);
+    const hashedPassword = passwordHash.hashPassword(profile.id);
     const userDetails = {
       firstName: names[0].trim(),
       lastName: names[1].trim(),
       userName: names[1].trim(),
       email: `${profile.id}@facebook.com`,
-      password,
+      password: hashedPassword,
     };
 
     User

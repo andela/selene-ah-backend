@@ -2,11 +2,11 @@ import chaiHttp from 'chai-http';
 import chai, { expect } from 'chai';
 import url from '../../server/index';
 import truncate from '../truncate';
-import testFile from '../../server/seeders/user';
+import userSeeds from '../../server/seeders/user';
 
 chai.use(chaiHttp);
 
-const userObject = testFile.signUpTest;
+const userObject = userSeeds.signUpTest;
 describe('API endpoint for POST auth/signup - Email Validations', () => {
   before(async () => {
     await truncate();
