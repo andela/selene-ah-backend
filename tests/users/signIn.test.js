@@ -4,7 +4,7 @@ import url from '../../server/index';
 import truncate from '../truncate';
 import models from '../../server/models';
 import valid
-  from '../../server/middlewares/helperFunctions/passwordHash';
+  from '../../server/middlewares/helpers/passwordHash';
 import testFile from '../../server/seeders/user';
 
 chai.use(chaiHttp);

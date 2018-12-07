@@ -3,13 +3,12 @@ import { Strategy as FacebookStrategy } from 'passport-facebook';
 import { config } from 'dotenv';
 
 import db from '../../../models';
-import hashPassword from '../../../helpers/paswordHash';
+import pwd from '../../../middlewares/helpers/passwordHash';
 
 config();
 
 const { FACEBOOK_APP_ID, FACEBOOK_APP_SECRET } = process.env;
 const { User, Profile } = db;
-
 /**
  *
  *
@@ -37,7 +36,7 @@ class Facebook {
    */
   static facebookCallback(accessToken, refreshToken, profile, done) {
     const names = profile.displayName.split(' ');
-    const password = hashPassword(profile.id);
+    const password = pwd.hashPassword(profile.id);
     const userDetails = {
       firstName: names[0].trim(),
       lastName: names[1].trim(),

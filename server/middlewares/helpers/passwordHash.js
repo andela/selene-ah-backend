@@ -1,4 +1,4 @@
-import bcrypt from 'bcrypt';
+import bcrypt from 'bcryptjs';
 /**
  * @description - This function hashes password
  * @param {password} password to be hashed

@@ -26,7 +26,7 @@ const isPasswordValid = (password) => {
  * @return {Boolean} returns true or false
  */
 const isNameValid = (name) => {
-  const nameRegex = /^([a-z]){3,20}$/;
+  const nameRegex = /^([a-zA-Z]){3,20}$/;
   return nameRegex.test(name);
 };
 
@@ -37,7 +37,7 @@ const isNameValid = (name) => {
  */
 
 const isUsernameValid = (name) => {
-  const usernameRegex = /^([a-z0-9!@#$%^&*]){3,20}$/;
+  const usernameRegex = /^([a-zA-Z0-9!@#$%^&*]){3,20}$/;
   return usernameRegex.test(name);
 };
 

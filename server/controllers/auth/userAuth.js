@@ -1,7 +1,7 @@
 import models from '../../models';
-import password from '../../middlewares/helperFunctions/passwordHash';
+import password from '../../middlewares/helpers/passwordHash';
 
-const { User } = models;
+const { User, Profile } = models;
 /**
  * @description - Performs all auth function
  */
@@ -15,11 +15,15 @@ class AuthController {
   static async signupUser(req, res, next) {
     try {
       const user = await User.create({
-        email: req.body.email.trim(),
+        email: req.body.email.trim().toLowerCase(),
         password: password.hashPassword(req.body.password.trim()),
         firstName: req.body.firstname.trim().toLowerCase(),
         lastName: req.body.lastname.trim().toLowerCase(),
         userName: req.body.username.trim().toLowerCase()
+      });
+      await Profile.create({
+        userId: user.id,
+        role: 'user'
       });
       return res.status(200).send({
         success: true,
