@@ -8,7 +8,7 @@ import fakeRequest from '../../../server/seeders/auth/fakeRequest';
 import fakeResponse from '../../../server/seeders/auth/fakeResponse';
 import models from '../../../server/models';
 
-const {User} = models;
+const {User, Profile} = models;
 
 should();
 chai.use(sinonChai);
@@ -57,13 +57,13 @@ describe('Facebook OAuth Strategy', () => {
     it('should have msg object that says Login Successful', () => {
       const user = Facebook
             .facebookControllerCallback(fakeRequest.fakeRequest1, fakeResponse);
-      expect(user.msg).to.equal('Login Successful');
+      expect(user.msg).to.equal('Registration Successful');
     });
 
     it('should have msg object that says Registration Successful', () => {
       const user = Facebook
             .facebookControllerCallback(fakeRequest.fakeRequest2, fakeResponse);
-      expect(user.msg).to.equal('Registration Successful');
+      expect(user.msg).to.equal('Login Successful');
     });
 
     it('should have a profile object', () => {
@@ -90,12 +90,36 @@ describe('Facebook OAuth Strategy', () => {
 
     const done = sinon.stub();
 
-    const myStub = sinon.stub(User, 'findOrCreate').resolves({});
+    const userStub = sinon.spy(User, 'findOrCreate');
     await Facebook.facebookCallback(accessToken, refreshToken, profile, done);
-    myStub.should.have.been.called;
+    userStub.should.have.been.called;
 
     const passportStub = sinon.stub(passport, 'use').returns({});
     Facebook.facebookStrategy();
     passportStub.should.have.been.called;
+  });
+
+  context('createUserProfile Test', () => {
+    const fakeData1 = {
+      user: {
+        dataValues: {
+          id: '3af12f69-610b-4cea-9636-97e81ade0d9b'
+        }
+      },
+      userDetails: {},
+      created: false,
+      accessToken: {}
+    };
+
+    it('should call Profile create when created is true', () => {
+      const profileSpy = sinon.spy(Profile, 'create');
+      Facebook.createUserProfile(
+        fakeData1.user,
+        fakeData1.created,
+        fakeData1.userDetails,
+        fakeData1.accessToken
+      );
+      profileSpy.should.have.been.called;
+    });
   });
 });
