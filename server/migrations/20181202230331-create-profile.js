@@ -2,38 +2,37 @@ export default {
   up: (queryInterface, Sequelize) => {
     return queryInterface.createTable('Profiles', {
       id: {
-        allowNull: false,
         primaryKey: true,
         type: Sequelize.UUID,
         defaultValue: Sequelize.UUIDV4,
       },
       role: {
         type: Sequelize.STRING,
-        allowNull: false,
+        allowNull: true,
       },
       imageUrl: {
         type: Sequelize.TEXT,
-        allowNull: false,
+        allowNull: true,
       },
       bio: {
         type: Sequelize.TEXT,
-        allowNull: false,
+        allowNull: true,
       },
       gender: {
         type: Sequelize.STRING,
-        allowNull: false,
+        allowNull: true,
       },
       twitterUrl: {
         type: Sequelize.STRING,
-        allowNull: false,
+        allowNull: true,
       },
       facebookUrl: {
         type: Sequelize.STRING,
-        allowNull: false,
+        allowNull: true,
       },
       dateOfBirth: {
         type: Sequelize.DATE,
-        allowNull: false,
+        allowNull: true,
       },
       userId: {
         type: Sequelize.UUID,

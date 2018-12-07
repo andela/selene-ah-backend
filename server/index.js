@@ -3,12 +3,14 @@ import session from 'express-session';
 import cors from 'cors';
 import morgan from 'morgan';
 import methodOverride from 'method-override';
-import routes from './routes/index';
+import routes from './routes';
+import passportFacebookStrategy from './controllers/auth/passport';
 
 // const isProduction = process.env.NODE_ENV === 'production';
 const port = process.env.PORT || 3000;
 // Create global app object
 const app = express();
+
 
 app.use(cors());
 // Normal express config defaults
@@ -18,6 +20,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 
 app.use(methodOverride());
+passportFacebookStrategy(app);
 
 app.use(express.static('public'));
 
@@ -49,6 +52,8 @@ app.use((err, req, res, next) => {
     }
   });
 });
+
+
 // finally, let's start our server...
 /* eslint-disable-next-line */
 app.listen(port, () => console.log(`App Listening on port ${port}`));

@@ -30,6 +30,7 @@
     "babel-preset-env": "^1.7.0",
     "babel-register": "^6.26.0",
     "bcrypt": "^3.0.2",
+    "bcryptjs": "^2.4.3",
     "cors": "^2.8.4",
     "dotenv": "^6.0.0",
     "errorhandler": "^1.5.0",
@@ -41,6 +42,7 @@
     "methods": "^1.1.2",
     "morgan": "^1.9.1",
     "passport": "^0.4.0",
+    "passport-facebook": "^2.1.1",
     "passport-local": "^1.0.0",
     "pg": "^7.6.1",
     "pg-hstore": "^2.3.2",
@@ -66,10 +68,12 @@
     "eslint-plugin-import": "^2.14.0",
     "eslint-plugin-jsx-a11y": "^6.1.2",
     "eslint-plugin-react": "^7.11.1",
+    "faker": "^4.1.0",
     "husky": "^1.2.0",
     "mocha": "^5.2.0",
     "nyc": "^13.1.0",
     "sequelize-test-helpers": "^1.0.6",
-    "sinon": "^7.1.1"
+    "sinon": "^7.1.1",
+    "sinon-chai": "^3.3.0"
   }
 }
