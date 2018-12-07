@@ -8,7 +8,6 @@ export default (sequelize, DataTypes) => {
     },
     role: {
       type: DataTypes.STRING,
-      allowNull: false,
     },
     imageUrl: {
       type: DataTypes.TEXT,
@@ -37,7 +36,7 @@ export default (sequelize, DataTypes) => {
   Profile.associate = (models) => {
     Profile.belongsTo(models.User, {
       foreignKey: 'userId',
-      onDelete: 'CASCADE'
+      onDelete: 'CASCADE',
     });
   };
   return Profile;

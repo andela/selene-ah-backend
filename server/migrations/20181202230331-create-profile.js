@@ -15,22 +15,26 @@ export default {
       },
       bio: {
         type: Sequelize.TEXT,
+
       },
       gender: {
         type: Sequelize.STRING,
+
       },
       twitterUrl: {
         type: Sequelize.STRING,
+
       },
       facebookUrl: {
         type: Sequelize.STRING,
+
       },
       dateOfBirth: {
         type: Sequelize.DATE,
       },
       userId: {
         type: Sequelize.UUID,
-        unique:true,
+        unique: true,
         references: {
           model: 'Users',
           key: 'id',
