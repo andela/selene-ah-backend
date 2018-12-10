@@ -55,13 +55,9 @@ class Facebook {
         password: userDetails.password,
         verified: true
        }
-    }).then((user, created) => {
-      userDetails.isANewUser = created;
-      userDetails.token = accessToken;
+    }).spread((user, created) => {
+      Facebook.createUserProfile(user, created, userDetails, accessToken);
       done(null, userDetails);
-      Profile.create({
-        userId: user[0].dataValues.id
-      });
     });
   }
 
@@ -72,7 +68,7 @@ class Facebook {
    */
   static facebookControllerCallback(req, res) {
     const { token, isANewUser } = req.user;
-    if(isANewUser) {
+    if(!isANewUser) {
       return res.json({
         msg: 'Registration Successful',
         token,
@@ -84,6 +80,25 @@ class Facebook {
       token,
       profile: req.user
     });
+  }
+
+  /**
+   *
+   * @param {*} user
+   * @param {*} created
+   * @param {*} userDetails
+   * @param {*} accessToken
+   * @returns {bool} boolean
+   */
+  static createUserProfile(user, created, userDetails, accessToken) {
+    userDetails.isANewUser = created;
+    userDetails.token = accessToken;
+    if(!created) {
+      Profile.create({
+        role: 'user',
+        userId: user.dataValues.id
+      });
+    }
   }
 }
 
