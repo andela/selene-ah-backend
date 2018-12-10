@@ -22,5 +22,8 @@ module.exports = {
   },
   production: {
     use_env_variable: 'DATABASE_URL'
+  },
+  staging: {
+    use_env_variable: 'DATABASE_URL'
   }
 };
