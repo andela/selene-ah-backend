@@ -9,7 +9,7 @@
     "start": "npm run build && npm run serve",
     "serve": "node ./dist/index.js",
     "postinstall": "npm run db:migrate",
-    "test": "nyc --reporter=text --reporter=lcov mocha ./tests --require babel-polyfill --require babel-register --exit --recursive",
+    "test": "export NODE_ENV=test && npm run db:reset && npm run db:migrate && nyc --reporter=text --reporter=lcov mocha ./tests --require babel-polyfill --require babel-register --exit --recursive",
     "build": "rm -rf dist/ && babel ./server --out-dir dist/ --ignore ./node_modules",
     "start:dev": "node_modules/nodemon/bin/nodemon.js --exec babel-node server/index.js",
     "db:migrate": "node_modules/.bin/sequelize db:migrate",
