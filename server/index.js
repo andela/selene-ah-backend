@@ -5,6 +5,7 @@ import morgan from 'morgan';
 import methodOverride from 'method-override';
 import routes from './routes';
 import passportFacebookStrategy from './controllers/auth/passport';
+import passport from './helpers/auth/passport';
 
 // const isProduction = process.env.NODE_ENV === 'production';
 const port = process.env.PORT || 3000;
@@ -33,6 +34,8 @@ app.use(
   })
 );
 
+
+passport(app);
 app.use(routes);
 
 // / catch 404 and forward to error handler
