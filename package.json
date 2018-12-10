@@ -11,7 +11,7 @@
     "postinstall": "npm run db:migrate",
     "test": "nyc --reporter=text --reporter=lcov mocha ./tests --require babel-polyfill --require babel-register --exit --recursive",
     "build": "rm -rf dist/ && babel ./server --out-dir dist/ --ignore ./node_modules",
-    "start:dev": "babel-watch server/index.js",
+    "start:dev": "node_modules/nodemon/bin/nodemon.js --exec babel-node server/index.js",
     "db:migrate": "node_modules/.bin/sequelize db:migrate",
     "db:reset": "node_modules/.bin/sequelize db:migrate:undo:all"
   },
@@ -70,6 +70,7 @@
     "faker": "^4.1.0",
     "husky": "^1.2.0",
     "mocha": "^5.2.0",
+    "nodemon": "^1.18.7",
     "nyc": "^13.1.0",
     "sequelize-test-helpers": "^1.0.6",
     "sinon": "^7.1.1",
