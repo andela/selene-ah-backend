@@ -8,31 +8,25 @@ export default (sequelize, DataTypes) => {
     },
     role: {
       type: DataTypes.STRING,
-      allowNull: true,
+      allowNull: false,
     },
     imageUrl: {
       type: DataTypes.TEXT,
-      allowNull: true,
     },
     bio: {
       type: DataTypes.TEXT,
-      allowNull: true,
     },
     gender: {
       type: DataTypes.STRING,
-      allowNull: true,
     },
     twitterUrl: {
       type: DataTypes.STRING,
-      allowNull: true,
     },
     facebookUrl: {
       type: DataTypes.STRING,
-      allowNull: true,
     },
     dateOfBirth: {
       type: DataTypes.DATE,
-      allowNull: true,
       validate: {
         isDate: {
           msg: 'Error: must be a valid date type',
@@ -43,6 +37,7 @@ export default (sequelize, DataTypes) => {
   Profile.associate = (models) => {
     Profile.belongsTo(models.User, {
       foreignKey: 'userId',
+      onDelete: 'CASCADE'
     });
   };
   return Profile;

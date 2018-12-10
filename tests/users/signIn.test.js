@@ -4,13 +4,13 @@ import url from '../../server/index';
 import truncate from '../truncate';
 import models from '../../server/models';
 import valid
-  from '../../server/middlewares/helperFunctions/passwordHash';
-import testFile from '../../server/seeders/user';
+  from '../../server/helpers/passwordHash';
+import userSeeds from '../../server/seeders/user';
 
 chai.use(chaiHttp);
 
 const { User } = models;
-const userObject = testFile.signinTest;
+const userObject = userSeeds.signinTest;
 describe('API endpoint for POST auth/signin - Email Validations', () => {
   before(async () => {
     await truncate();

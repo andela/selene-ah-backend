@@ -8,34 +8,29 @@ export default {
       },
       role: {
         type: Sequelize.STRING,
-        allowNull: true,
+        allowNull: false,
       },
       imageUrl: {
         type: Sequelize.TEXT,
-        allowNull: true,
       },
       bio: {
         type: Sequelize.TEXT,
-        allowNull: true,
       },
       gender: {
         type: Sequelize.STRING,
-        allowNull: true,
       },
       twitterUrl: {
         type: Sequelize.STRING,
-        allowNull: true,
       },
       facebookUrl: {
         type: Sequelize.STRING,
-        allowNull: true,
       },
       dateOfBirth: {
         type: Sequelize.DATE,
-        allowNull: true,
       },
       userId: {
         type: Sequelize.UUID,
+        unique:true,
         references: {
           model: 'Users',
           key: 'id',

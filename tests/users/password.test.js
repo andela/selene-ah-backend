@@ -2,9 +2,9 @@ import chaiHttp from 'chai-http';
 import chai, { expect } from 'chai';
 import url from '../../server/index';
 import truncate from '../truncate';
-import testFile from '../../server/seeders/user';
+import userSeeds from '../../server/seeders/user';
 
-const userObject = testFile.passwordTest;
+const userObject = userSeeds.passwordTest;
 chai.use(chaiHttp);
 describe('API endpoint for POST auth/signup - Password Validations', () => {
   before(async () => {
