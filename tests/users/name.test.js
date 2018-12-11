@@ -1,29 +1,23 @@
 import chaiHttp from 'chai-http';
 import chai, { expect } from 'chai';
 import url from '../../server/index';
-import truncate from '../truncate';
-import userSeeds from '../../server/seeders/user';
-
-const userObject = userSeeds.testName;
+import signupFactory from '../mocks/factories/userFactory';
 
 chai.use(chaiHttp);
 describe('API endpoint for POST auth/signup - Name Validations', () => {
-  before(async () => {
-    await truncate();
-  });
-
-  after(async () => {
-    await truncate();
-  });
-
-  it('should register a user with a correct firstname', () => chai.request(url)
+  it('should register a user with a valid firstName', () => {
+    const user = signupFactory.build({
+      password: 'opeyemi2018*'
+    });
+    chai.request(url)
     .post('/api/v1/auth/signup')
-    .send(userObject.users1)
+    .send(user)
     .then((res) => {
       expect(res).to.have.status(200);
       expect(res.body).to.be.an('Object');
       expect(res.body.msg).to.be.equals('User created successfully');
-    }));
+    });
+  });
 
   it('should return a 404 status for invalid routes', () => chai.request(url)
     .get('/api/v1/au')
@@ -33,117 +27,161 @@ describe('API endpoint for POST auth/signup - Name Validations', () => {
       expect(res.body.errors.message).to.be.equals('Not Found');
     }));
 
-  it('should return an error if the firstname is null', () => chai.request(url)
+  it('should return an error if the firstName is null', () => {
+    const user = signupFactory.build({
+      password: 'opeyemi20*',
+      firstName: null
+    });
+    chai.request(url)
     .post('/api/v1/auth/signup')
-    .send(userObject.users2)
+    .send(user)
     .then((res) => {
       expect(res).to.have.status(400);
       expect(res.body).to.be.an('Object');
       expect(res.body.msg).to.be.equals('Firstname must be supplied');
-    }));
+    });
+  });
 
-  it('should return an error if firstname is a number', () => chai.request(url)
+  it('should return an error if firstName is a number', () => {
+    const user = signupFactory.build({
+      password: 'opeyemi20*',
+      firstName: '56789'
+    });
+    chai.request(url)
     .post('/api/v1/auth/signup')
-    .send(userObject.users2_5)
+    .send(user)
     .then((res) => {
       expect(res).to.have.status(400);
       expect(res.body).to.be.an('Object');
       expect(res.body.msg).to.be.equals(
-        'Invalid Firstname: Supply a valid firstname');
-    }));
+        'Invalid Firstname: Supply a valid firstName');
+    });
+  });
 });
 
 describe('API endpoint for POST auth/signup - Lastname Validations', () => {
-  before(async () => {
-    await truncate();
-  });
-
-  after(async () => {
-    await truncate();
-  });
-
-  it('should register a user with a valid lastname', () => chai.request(url)
+  it('should return an error if lastName field is null', () => {
+    const user = signupFactory.build({
+      password: 'opeyemi20*',
+      lastName: null
+    });
+    chai.request(url)
     .post('/api/v1/auth/signup')
-    .send(userObject.users3)
-    .then((res) => {
-      expect(res).to.have.status(200);
-      expect(res.body).to.be.an('Object');
-      expect(res.body.msg).to.be.equals('User created successfully');
-    }));
-
-  it('should return an error if lastname field is null', () => chai.request(url)
-    .post('/api/v1/auth/signup')
-    .send(userObject.users4)
+    .send(user)
     .then((res) => {
       expect(res).to.have.status(400);
       expect(res.body).to.be.an('Object');
       expect(res.body.msg).to.be.equals('Lastname must be supplied');
-    }));
-
-  it('should return an error if lastname is a number', () => chai.request(url)
-    .post('/api/v1/auth/signup')
-    .send(userObject.users5)
-    .then((res) => {
-      expect(res).to.have.status(400);
-      expect(res.body).to.be.an('Object');
-      expect(res.body.msg).to.be.equals(
-        'Invalid Lastname: Supply a valid lastname');
-    }));
-});
-
-describe('API endpoint for POST auth/signup - UserName Validations', () => {
-  before(async () => {
-    await truncate();
+    });
   });
 
-  after(async () => {
-    await truncate();
-  });
-
-  it('should register a user with a valid username', () => chai.request(url)
+  it('should register a user with a valid lastName', () => {
+    const user = signupFactory.build({
+      password: 'opeyemi20*',
+    });
+    chai.request(url)
     .post('/api/v1/auth/signup')
-    .send(userObject.users6)
+    .send(user)
     .then((res) => {
       expect(res).to.have.status(200);
       expect(res.body).to.be.an('Object');
       expect(res.body.msg).to.be.equals('User created successfully');
-    }));
+    });
+  });
 
-  it('should return an error if username field is null', () => chai.request(url)
+  it('should return an error if lastName is a number', () => {
+    const user = signupFactory.build({
+      password: 'opeyemi20*',
+      lastName: '5678987654'
+    });
+    chai.request(url)
     .post('/api/v1/auth/signup')
-    .send(userObject.users7)
-    .then((res) => {
-      expect(res).to.have.status(400);
-      expect(res.body).to.be.an('Object');
-      expect(res.body.msg).to.be.equals('Username must be supplied');
-    }));
-
-  it('should return an error if username is invalid', () => chai.request(url)
-    .post('/api/v1/auth/signup')
-    .send(userObject.users8)
+    .send(user)
     .then((res) => {
       expect(res).to.have.status(400);
       expect(res.body).to.be.an('Object');
       expect(res.body.msg).to.be.equals(
-        'Invalid Username: supply a valid username');
-    }));
+        'Invalid Lastname: Supply a valid lastName');
+    });
+  });
+});
 
-  it('should fail if username length is less than 3', () => chai.request(url)
+describe('API endpoint for POST auth/signup - UserName Validations', () => {
+  it('should register a user with a valid userName', () => {
+    const user = signupFactory.build({
+      email: 'danielopeyemi2018@gmail.com',
+      userName: 'danielshow',
+      password: 'opeyemi20q8*'
+    });
+    chai.request(url)
     .post('/api/v1/auth/signup')
-    .send(userObject.users9)
+    .send(user)
+    .then((res) => {
+      expect(res).to.have.status(200);
+      expect(res.body).to.be.an('Object');
+      expect(res.body.msg).to.be.equals('User created successfully');
+    });
+  });
+
+  it('should return an error if userName field is null', () => {
+    const user = signupFactory.build({
+      password: 'opeyemi20*',
+      userName: null
+    });
+    chai.request(url)
+    .post('/api/v1/auth/signup')
+    .send(user)
+    .then((res) => {
+      expect(res).to.have.status(400);
+      expect(res.body).to.be.an('Object');
+      expect(res.body.msg).to.be.equals('Username must be supplied');
+    });
+  });
+
+  it('should return an error if userName is invalid', () => {
+    const user = signupFactory.build({
+      password: 'opeyemi20*',
+      userName: 'gddggd dgtdg'
+    });
+    chai.request(url)
+    .post('/api/v1/auth/signup')
+    .send(user)
+    .then((res) => {
+      expect(res).to.have.status(400);
+      expect(res.body).to.be.an('Object');
+      expect(res.body.msg).to.be.equals(
+        'Invalid Username: supply a valid userName');
+    });
+  });
+
+  it('should fail if userName length is less than 3', () => {
+    const user = signupFactory.build({
+      password: 'opeyemi20*',
+      userName: 'gd'
+    });
+    chai.request(url)
+    .post('/api/v1/auth/signup')
+    .send(user)
     .then((res) => {
       expect(res).to.have.status(400);
       expect(res.body).to.be.an('Object');
       expect(res.body.msg).to.be.equals(
         'Invalid Username: Username length must not be less than 3');
-    }));
+    });
+  });
 
-  it('should fail if username already exists', () => chai.request(url)
+  it('should fail if userName already exists', () => {
+    const user = signupFactory.build({
+      userName: 'danielshow',
+      password: 'opeyebheh223#'
+    });
+    chai.request(url)
     .post('/api/v1/auth/signup')
-    .send(userObject.users10)
+    .send(user)
     .then((res) => {
       expect(res).to.have.status(400);
       expect(res.body).to.be.an('Object');
       expect(res.body.msg).to.be.equals('Username already exist, Try another');
-    }));
+    });
+  });
 });

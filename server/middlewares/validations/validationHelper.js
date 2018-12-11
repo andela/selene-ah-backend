@@ -16,7 +16,7 @@ const isEmailValid = (email) => {
  */
 const isPasswordValid = (password) => {
   // eslint-disable-next-line
-  const passwordRegex = /^(?=.*[0-9])(?=.*[!@#$%^&*])([a-zA-Z0-9!@#$%^&*]{8,20})$/;
+  const passwordRegex = /^(?=.*[0-9])(?=.*[!@#$%^.&_*])([a-zA-Z0-9!@#$.%^&*]{8,20})$/;
   return passwordRegex.test(password);
 };
 
@@ -37,7 +37,7 @@ const isNameValid = (name) => {
  */
 
 const isUsernameValid = (name) => {
-  const usernameRegex = /^([a-zA-Z0-9!@#$%^&*]){3,20}$/;
+  const usernameRegex = /^([a-zA-Z0-9!@#$%^_&.*]){3,20}$/;
   return usernameRegex.test(name);
 };
 
