@@ -1,4 +1,3 @@
-/*
 import chai, { expect, should } from 'chai';
 import sinon from 'sinon';
 import passport from 'passport';
@@ -8,6 +7,7 @@ from '../../../server/controllers/auth/strategies/facebookStrategy';
 import fakeRequest from '../../../server/seeders/auth/fakeRequest';
 import fakeResponse from '../../../server/seeders/auth/fakeResponse';
 import models from '../../../server/models';
+import UserFactory from '../../mocks/factories/userFactory';
 
 const {User, Profile} = models;
 
@@ -94,6 +94,7 @@ describe('Facebook OAuth Strategy', () => {
     const userStub = sinon.spy(User, 'findOrCreate');
     await Facebook.facebookCallback(accessToken, refreshToken, profile, done);
     userStub.should.have.been.called;
+    userStub.restore();
 
     const passportStub = sinon.stub(passport, 'use').returns({});
     Facebook.facebookStrategy();
@@ -101,10 +102,18 @@ describe('Facebook OAuth Strategy', () => {
   });
 
   context('createUserProfile Test', () => {
+    let id;
+    before(async () => {
+      const user = UserFactory.build();
+      const [dbUser] = await User
+            .findOrCreate({ where: { email: user.email }, defaults: user });
+      id = dbUser.get('id');
+    });
+
     const fakeData1 = {
       user: {
         dataValues: {
-          id: '3af12f69-610b-4cea-9636-97e81ade0d9b'
+          id
         }
       },
       userDetails: {},
@@ -121,7 +130,7 @@ describe('Facebook OAuth Strategy', () => {
         fakeData1.accessToken
       );
       profileSpy.should.have.been.called;
+      profileSpy.restore();
     });
   });
 });
-*/
