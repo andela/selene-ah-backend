@@ -1,7 +1,7 @@
 import chaiHttp from 'chai-http';
 import chai, { expect } from 'chai';
 import JWTHelper from '../../server/helpers/JWTHelper';
-import UserFactory from '../mock/userFactory';
+import UserFactory from '../mocks/factories/userFactory';
 import removeDateStampAndPassword from
 '../../server/helpers/removeDateStampAndPassword';
 

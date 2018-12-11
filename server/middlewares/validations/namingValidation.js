@@ -15,36 +15,36 @@ class NamingValidations {
    */
   static isNameValid(req, res, next) {
     const body = req.body;
-    if (body.firstname.trim() && !helpers.isNameValid(body.firstname.trim())) {
+    if (body.firstName.trim() && !helpers.isNameValid(body.firstName.trim())) {
       return res.status(400).json({
         success: false,
-        msg: 'Invalid Firstname: Supply a valid firstname'
+        msg: 'Invalid Firstname: Supply a valid firstName'
       });
     }
-    if (body.lastname.trim() && !helpers.isNameValid(body.lastname.trim())) {
+    if (body.lastName.trim() && !helpers.isNameValid(body.lastName.trim())) {
       return res.status(400).json({
         success: false,
-        msg: 'Invalid Lastname: Supply a valid lastname'
+        msg: 'Invalid Lastname: Supply a valid lastName'
       });
     }
     return next();
   }
 
   /**
-   * @description - check if firstname and lastname is supplied
+   * @description - check if firstName and lastName is supplied
   * @param {object} req - request to be sent to server
    * @param {object} res - responses gotton from server
    * @param {object} next - callback function
    * @returns {object} A response object from server
    */
   static isNameSupplied(req, res, next) {
-    if (!req.body.firstname || !req.body.firstname.trim()) {
+    if (!req.body.firstName || !req.body.firstName.trim()) {
       return res.status(400).json({
         success: false,
         msg: 'Firstname must be supplied'
       });
     }
-    if (!req.body.lastname || !req.body.lastname.trim()) {
+    if (!req.body.lastName || !req.body.lastName.trim()) {
       return res.status(400).json({
         success: false,
         msg: 'Lastname must be supplied'
@@ -54,29 +54,29 @@ class NamingValidations {
   }
 
   /**
-   * @description - check if firstname and lastname is supplied
+   * @description - check if firstName and lastName is supplied
   * @param {object} req - request to be sent to server
    * @param {object} res - responses gotton from server
    * @param {object} next - callback function
    * @returns {object} A response object from server
    */
   static isUsernameValid(req, res, next) {
-    if (!req.body.username || req.body.username.trim().length < 1) {
+    if (!req.body.userName || req.body.userName.trim().length < 1) {
       return res.status(400).json({
         success: false,
         msg: 'Username must be supplied'
       });
     }
-    if (req.body.username.trim().length < 3) {
+    if (req.body.userName.trim().length < 3) {
       return res.status(400).json({
         success: false,
         msg: 'Invalid Username: Username length must not be less than 3'
       });
     }
-    if (!helpers.isUsernameValid(req.body.username.trim())) {
+    if (!helpers.isUsernameValid(req.body.userName.trim())) {
       return res.status(400).json({
         success: false,
-        msg: 'Invalid Username: supply a valid username'
+        msg: 'Invalid Username: supply a valid userName'
       });
     }
     return next();
@@ -91,7 +91,7 @@ class NamingValidations {
   static doesUsernameExist(req, res, next) {
     User.findOne({
       where: {
-        userName: req.body.username.trim().toLowerCase()
+        userName: req.body.userName.trim().toLowerCase()
         }
       }).then(data => {
         if (!data || data === null) {

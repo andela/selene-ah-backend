@@ -20,9 +20,9 @@ class AuthController {
       const user = await User.create({
         email: req.body.email.trim().toLowerCase(),
         password: password.hashPassword(req.body.password.trim()),
-        firstName: req.body.firstname.trim(),
-        lastName: req.body.lastname.trim(),
-        userName: req.body.username.trim()
+        firstName: req.body.firstName.trim(),
+        lastName: req.body.lastName.trim(),
+        userName: req.body.userName.trim()
       });
       await Profile.create({
         userId: user.id,
