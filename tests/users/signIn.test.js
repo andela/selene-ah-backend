@@ -21,12 +21,12 @@ describe('API endpoint for POST auth/signin - Email Validations', () => {
     });
   });
 
-  it('should fail if password is incorrect', () => {
+  it('should fail if password is incorrect', async () => {
     const user = loginFactory.build({
       email: 'opeyemi@yahoo.com',
       password: 'daniel#2jjfj'
     });
-    chai.request(url)
+    await chai.request(url)
     .post('/api/v1/auth/signin')
     .send(user)
     .then((res) => {
@@ -96,12 +96,12 @@ describe('API endpoint for POST auth/signin - Email Validations', () => {
     });
   });
 
-  it('should fail if a email is not in the database', () => {
+  it('should fail if a email is not in the database', async () => {
     const user = loginFactory.build({
       password: 'fdghjku',
       email: 'opeyemi@yahhhhoo.com',
     });
-    chai.request(url)
+    await chai.request(url)
     .post('/api/v1/auth/signin')
     .send(user)
     .then((res) => {
@@ -112,12 +112,12 @@ describe('API endpoint for POST auth/signin - Email Validations', () => {
     });
   });
 
-  it('should login with valid email and password', () => {
+  it('should login with valid email and password', async () => {
     const user ={
       email: 'opeyemi@yahoo.com',
       password: 'danielshow2#'
     };
-    chai.request(url)
+    await chai.request(url)
     .post('/api/v1/auth/signin')
     .send(user)
     .then((res) => {
