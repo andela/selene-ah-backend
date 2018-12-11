@@ -17,7 +17,7 @@ class JWTHelper {
    */
   static generateToken(userObject){
     if(!userObject || !userObject.firstName) {
-      return 'Please supply a valid user object.';
+      throw new Error('Please supply a valid user object.');
     }
     const token = jsonWebToken.sign({ user: userObject }, secretKey,
       {
@@ -34,7 +34,7 @@ class JWTHelper {
    */
   static verifyToken(userToken){
     if(!userToken || typeof userToken !=='string'){
-      return 'Please enter a valid token.';
+      throw new Error('Please enter a valid token.');
     }
     const decodedToken = jsonWebToken.verify(userToken, secretKey);
     return decodedToken;

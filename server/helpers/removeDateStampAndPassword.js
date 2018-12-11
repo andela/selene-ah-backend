@@ -7,7 +7,7 @@
 
  const removeDateStampsAndPassword = (user) => {
    if(!user.firstName){
-     return 'Please enter a valid user object';
+     throw new Error('Please enter a valid user object');
    }
    const {createdAt, updatedAt, password, ...userObject } = user;
    return userObject;

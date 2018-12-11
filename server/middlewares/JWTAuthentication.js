@@ -2,7 +2,7 @@ import JWTHelper from '../helpers/JWTHelper';
 /**
  * @description this class handles user authentication
  */
-class Authentication{
+class JWTAuthentication{
 
   /**
    * @param {object} req
@@ -17,9 +17,14 @@ class Authentication{
       req.token = verifiedToken;
       return next();
     } catch (err) {
-      return next(err);
+      return res.status(401).json({
+        success: false,
+        msg: 'Authentication failed: Please supply a valid token.'
+      });
     }
   }
+
+
 }
 
-export default Authentication;
+export default JWTAuthentication;

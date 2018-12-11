@@ -17,8 +17,9 @@ describe('Token generation and verification', () => {
     });
 
     it('should fail if input is parameter is not a valid user object',()=>{
-      const invalidToken = JWTHelper.generateToken(8);
-      expect(invalidToken).to.equal('Please supply a valid user object.');
+      expect(() => {
+        JWTHelper.generateToken(8);
+      }).to.throw('Please supply a valid user object.');
     });
   });
 
@@ -30,8 +31,9 @@ describe('Token generation and verification', () => {
     });
 
     it('should fail if input is parameter is not a valid token string',()=>{
-      const invalidToken = JWTHelper.verifyToken(8);
-      expect(invalidToken).to.eql('Please enter a valid token.');
+      expect(() => {
+        JWTHelper.verifyToken(8);
+      }).to.throw('Please enter a valid token.');
     });
   });
 });

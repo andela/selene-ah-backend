@@ -6,7 +6,6 @@ import removeDateStampAndPassword from
 
 const userObject = UserFactory.build();
 const strippedUser = removeDateStampAndPassword(userObject);
-const invalidUserObject = removeDateStampAndPassword(5);
 
 chai.use(chaiHttp);
 
@@ -16,7 +15,9 @@ describe('Function to strip user object of password and timestamps', () => {
   });
 
   it('should not accept not accept invalid data', () => {
-    expect(invalidUserObject).to.equal('Please enter a valid user object');
+    expect(() => {
+      removeDateStampAndPassword(5);
+    }).to.throw('Please enter a valid user object');
   });
 
   it('should not contain the password property', () => {
