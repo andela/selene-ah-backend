@@ -1,30 +1,18 @@
 import passport from 'passport';
 import googleStrategyOauth2 from 'passport-google-oauth';
 import models from '../../../models';
-import passwordHash from '../../passwordHash';
-import JWTHelper from '../../JWTHelper';
-import removeDateStampAndPassword from '../../removeDateStampAndPassword';
+import JWTHelper from '../../../helpers/JWTHelper';
+import removeDateStampAndPassword from
+'../../../helpers/removeDateStampAndPassword';
+import generateRandomPassword from
+'../../../helpers/generatePassword';
+import createNewSocialMediaUser from
+'../../../helpers/createNewSocialMediaUser';
 
 /**
  * @description A class that implements google strategy for passport
  */
 export default class GoogleLogin{
-
-  /**
-   * @description Generate a random password for every user authenticated
-   * @returns {function} hashPassword
-   */
-  static generatePassword() {
-    const alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
-    const numbersSpecialChars = '0123456789*&^%$##@!';
-    const random = alphabet + numbersSpecialChars;
-    let password = '';
-    for (let i = 0; i < 8; i++) {
-      password += random.charAt(Math.floor(Math.random() * random.length));
-    }
-    return passwordHash.hashPassword(password);
-  }
-
   /**
   * @description Setup google strategy for passport
   * @returns {object} passport
@@ -35,34 +23,11 @@ export default class GoogleLogin{
       new GoogleStrategy({
           clientID: process.env.GOOGLE_CLIENT_ID,
           clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-          callbackURL: 'http://localhost:3000/auth/google/callback'
+          callbackURL: process.env.GOOGLE_CALLBACK_URL
         }, GoogleLogin.googleStrategyCallback )
     );
   }
 
-/**
- * @description creates a new user
- * @param {object} user
- * @param {boolean} created
- * @param {object} userData
- * @returns {object} true
- */
-static createNewSocialMediaUser(user, created, userData) {
-  const {
-    Profile,
-  } = models;
-  userData.isNewUser = created;
-  if (created) {
-    Profile.create({
-        userId: user.id,
-        role: 'user'
-      })
-      .then(id => {
-        return id;
-      });
-  }
-  return true;
-}
   /**
   * @description callback for google strategy
   * @param {string} accessToken
@@ -92,13 +57,13 @@ static createNewSocialMediaUser(user, created, userData) {
         verified: true,
         blocked: false,
         emailNotification: true,
-        password: GoogleLogin.generatePassword()
+        password: generateRandomPassword()
       }}).spread((user, created) => {
         const token = JWTHelper.generateToken(
           removeDateStampAndPassword(user.dataValues)
           );
         userData.token = token;
-        GoogleLogin.createNewSocialMediaUser(user,created,userData);
+        createNewSocialMediaUser(user,created,userData);
         done(null, userData);
       })
       .catch((err) => {

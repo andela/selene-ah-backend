@@ -1,7 +1,9 @@
 import { Router } from 'express';
 import passport from 'passport';
-import Facebook
-from '../../../../controllers/auth/strategies/facebookStrategy';
+
+import socialMediaControllerCallback from
+'../../../../controllers/auth/socialMediaControllerCallback';
+
 
 const router = Router();
 
@@ -11,6 +13,6 @@ router.get('/auth/facebook',
 router.get('/auth/facebook/callback',
   passport.authenticate('facebook',
   { session: false }),
-  Facebook.facebookControllerCallback );
+  (req, res) => socialMediaControllerCallback(req, res));
 
 export default router;

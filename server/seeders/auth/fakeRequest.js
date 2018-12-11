@@ -5,7 +5,7 @@ const fakeRequest1 = {
     displayName: faker.name.findName(),
     id: faker.random.number({ min: 0, max: 30 }),
     token: faker.random.number({ min: 0, max: 30 }),
-    isANewUser: false
+    isNewUser: false
   }
 };
 
@@ -14,7 +14,7 @@ const fakeRequest2 = {
     displayName: faker.name,
     id: faker.random.number({ min: 0, max: 30 }),
     token: faker.random.number({ min: 0, max: 30 }),
-    isANewUser: true
+    isNewUser: true
   }
 };
 

@@ -3,14 +3,12 @@ import { Router } from 'express';
 import userAuth from './api/auth/userAuth';
 import fbAuth from './api/auth/strategy/fbAuth';
 import googleAuth from './api/auth/strategy/googleAuth';
-import googleCallback from './api/auth/strategy/googleCallback';
+import twitterAuth from './api/auth/strategy/twitterAuth';
 
 const router = Router();
 router.use('/api/v1', userAuth);
 router.use('/api/v1', fbAuth);
+router.use('/api/v1',twitterAuth);
 router.use('/api/v1', googleAuth);
-router.use('/auth/google/', googleCallback);
-
-
 
 export default router;

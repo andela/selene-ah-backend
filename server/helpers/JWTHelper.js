@@ -1,6 +1,6 @@
 import jsonWebToken from 'jsonwebtoken';
 import { config } from 'dotenv';
-import { secretKey } from '../config/config';
+import { SECRETKEY } from '../config/config';
 
 config();
 
@@ -19,7 +19,7 @@ class JWTHelper {
     if(!userObject || !userObject.firstName) {
       throw new Error('Please supply a valid user object.');
     }
-    const token = jsonWebToken.sign({ user: userObject }, secretKey,
+    const token = jsonWebToken.sign({ user: userObject }, SECRETKEY,
       {
         expiresIn: expirationTime,
       });
@@ -36,7 +36,7 @@ class JWTHelper {
     if(!userToken || typeof userToken !=='string'){
       throw new Error('Please enter a valid token.');
     }
-    const decodedToken = jsonWebToken.verify(userToken, secretKey);
+    const decodedToken = jsonWebToken.verify(userToken, SECRETKEY);
     return decodedToken;
   }
 }
