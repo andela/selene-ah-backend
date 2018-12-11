@@ -123,13 +123,19 @@ describe('Google passport authentication',() => {
   });
 
   context('Save a new user authenticated by Google', async () => {
+    before(() => {
+      sinon.spy(User, 'findOrCreate');
+    });
+
+    after(() => {
+      User.findOrCreate.restore();
+    });
+
     const done = sinon.stub();
-    const spy = sinon.spy(User, 'findOrCreate');
     const {profile} = authMock();
     const {accessToken, refreshToken} = authMock().tokens;
     await GoogleStrategy
     .googleStrategyCallback(accessToken, refreshToken, profile, done);
-    spy.called;
-    spy.restore();
+    User.findOrCreate.called;
   });
 });
