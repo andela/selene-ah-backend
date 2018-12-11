@@ -1,9 +1,12 @@
 import passport from 'passport';
 import { Strategy as FacebookStrategy } from 'passport-facebook';
 import { config } from 'dotenv';
+import JWTHelper from '../../../helpers/JWTHelper';
 
 import db from '../../../models';
 import passwordHash from '../../../helpers/passwordHash';
+import removeDateStampAndPassword from
+'../../../helpers/removeDateStampAndPassword';
 
 config();
 
@@ -56,7 +59,7 @@ class Facebook {
         verified: true
        }
     }).spread((user, created) => {
-      Facebook.createUserProfile(user, created, userDetails, accessToken);
+      Facebook.createUserProfile(user, created, userDetails);
       done(null, userDetails);
     });
   }
@@ -90,9 +93,12 @@ class Facebook {
    * @param {*} accessToken
    * @returns {bool} boolean
    */
-  static createUserProfile(user, created, userDetails, accessToken) {
+  static createUserProfile(user, created, userDetails) {
+    const token = JWTHelper.generateToken(
+      removeDateStampAndPassword(user.dataValues)
+      );
     userDetails.isANewUser = created;
-    userDetails.token = accessToken;
+    userDetails.token = token;
     if(!created) {
       Profile.create({
         role: 'user',

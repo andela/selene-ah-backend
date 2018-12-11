@@ -2,6 +2,8 @@ import passport from 'passport';
 import googleStrategyOauth2 from 'passport-google-oauth';
 import models from '../../../models';
 import passwordHash from '../../passwordHash';
+import JWTHelper from '../../JWTHelper';
+import removeDateStampAndPassword from '../../removeDateStampAndPassword';
 
 /**
  * @description A class that implements google strategy for passport
@@ -92,6 +94,10 @@ static createNewSocialMediaUser(user, created, userData) {
         emailNotification: true,
         password: GoogleLogin.generatePassword()
       }}).spread((user, created) => {
+        const token = JWTHelper.generateToken(
+          removeDateStampAndPassword(user.dataValues)
+          );
+        userData.token = token;
         GoogleLogin.createNewSocialMediaUser(user,created,userData);
         done(null, userData);
       })
