@@ -68,7 +68,7 @@ class Facebook {
        }
     }).spread((user, created) => {
       const token = JWTHelper.generateToken(
-        removeDateStampAndPassword(user.dataValues)
+        removeDateStampAndPassword(user.dataValues), '1d'
         );
       userDetails.token = token;
       createNewSocialMediaUser(user, created, userDetails);

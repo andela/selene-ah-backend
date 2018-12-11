@@ -11,10 +11,16 @@ class JWTAuthentication{
    * @returns {function} next
    */
   static authenticateUser(req, res, next) {
+    if (!req.headers.authorization) {
+      return res.status(401).json({
+        success: false,
+        msg: 'Authentication failed: Please supply a valid token.'
+      });
+    }
     try {
       const userToken = req.headers.authorization.split(' ')[1];
       const verifiedToken = JWTHelper.verifyToken(userToken);
-      req.token = verifiedToken;
+      req.user = verifiedToken.user;
       return next();
     } catch (err) {
       return res.status(401).json({

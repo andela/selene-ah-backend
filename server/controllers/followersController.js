@@ -15,7 +15,7 @@ class FollowerController {
   static async followAuthor(req, res, next) {
     try {
       const { followerId } = req.body;
-      const userId = req.token.user.id;
+      const userId = req.user.id;
       const follow = await Follower.create({
         userId,
         followerId
@@ -40,7 +40,7 @@ class FollowerController {
   static async unfollowUser(req, res, next) {
     try {
       const { id } = req.params;
-      const userId = req.token.user.id;
+      const userId = req.user.id;
       await Follower.destroy({
         where: {userId: userId,
         followerId: id}
@@ -115,7 +115,7 @@ class FollowerController {
    * @returns {object} - Response to be sent
    */
   static getAllFollowers(req, res, next) {
-    const userId = req.token.user.id;
+    const userId = req.user.id;
     return FollowerController.getFollowers(req, res, next, userId);
   }
 
@@ -128,7 +128,7 @@ class FollowerController {
    * @returns {object} - Response to be sent
    */
   static async getAllFollowees(req, res, next) {
-    const id = req.token.user.id;
+    const id = req.user.id;
     return FollowerController.getFollowees(req, res, next, id);
   }
 

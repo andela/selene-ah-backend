@@ -9,6 +9,8 @@ import generateRandomPassword from
 import createNewSocialMediaUser from
 '../../../helpers/createNewSocialMediaUser';
 
+
+const duration = '1d';
 /**
  * @description A class that implements google strategy for passport
  */
@@ -45,9 +47,7 @@ export default class GoogleLogin{
       token: accessToken,
       profile,
     };
-    const {
-      User,
-    } = models;
+    const { User } = models;
     User.findOrCreate({where: {email: userData.email},
       defaults: {
         email: userData.email,
@@ -60,7 +60,7 @@ export default class GoogleLogin{
         password: generateRandomPassword()
       }}).spread((user, created) => {
         const token = JWTHelper.generateToken(
-          removeDateStampAndPassword(user.dataValues)
+          removeDateStampAndPassword(user.dataValues), duration
           );
         userData.token = token;
         createNewSocialMediaUser(user,created,userData);

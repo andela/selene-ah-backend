@@ -1,4 +1,4 @@
-import checkUUID from './validationHelper';
+import checkUUID from '../../helpers/validationHelper';
 /**
  * @description this class handles user UUID validation
  */

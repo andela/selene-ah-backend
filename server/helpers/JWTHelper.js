@@ -4,8 +4,6 @@ import { SECRETKEY } from '../config/config';
 
 config();
 
-const expirationTime = 86400;
-
 /**
  * @description This class is for JWT token generation and verification
  */
@@ -13,15 +11,16 @@ class JWTHelper {
   /**
    * @description This function generates JWT tokens
    * @param {object} userObject
+   * @param {string} duration time that a token has before becoming invalid
    * @returns {string} token
    */
-  static generateToken(userObject){
-    if(!userObject || !userObject.firstName) {
+  static generateToken(userObject,duration){
+    if(!userObject || !userObject.userName) {
       throw new Error('Please supply a valid user object.');
     }
     const token = jsonWebToken.sign({ user: userObject }, SECRETKEY,
       {
-        expiresIn: expirationTime,
+        expiresIn: duration,
       });
 
       return token;
@@ -36,8 +35,13 @@ class JWTHelper {
     if(!userToken || typeof userToken !=='string'){
       throw new Error('Please enter a valid token.');
     }
-    const decodedToken = jsonWebToken.verify(userToken, SECRETKEY);
-    return decodedToken;
+    try{
+      const decodedToken = jsonWebToken.verify(userToken, SECRETKEY);
+      return decodedToken;
+    }
+    catch(err) {
+      return err;
+    }
   }
 }
 

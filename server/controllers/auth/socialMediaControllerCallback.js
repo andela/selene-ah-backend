@@ -1,3 +1,10 @@
+import sendEmail from '../../helpers/sendEmail';
+import template from '../../helpers/emailTemplate';
+import helpers from '../../helpers/validationHelper';
+
+const { isSocialMediaEmail } = helpers;
+
+const { welcome } = template;
 /**
    * @description Google social login callback
    * @param {object} req
@@ -5,10 +12,10 @@
    * @returns {function} Anonymous
    */
    const socialMediaControllerCallback = (req, res) => {
-    const {
-      token,
-      isNewUser
-    } = req.user;
+     const {user , user: {token}, user : {isNewUser} } = req;
+     if ( !(isSocialMediaEmail(user.email)) ) {
+       sendEmail(user.email,'', req.headers.host, welcome);
+      }
     if (isNewUser) {
       return res.status(201).json({
         message: 'Registration Successfull',
