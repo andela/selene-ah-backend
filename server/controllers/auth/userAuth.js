@@ -1,5 +1,8 @@
 import models from '../../models';
 import password from '../../helpers/passwordHash';
+import JWTHelper from '../../helpers/JWTHelper';
+import removeDateStampAndPassword from
+'../../helpers/removeDateStampAndPassword';
 
 const { User, Profile } = models;
 /**
@@ -25,10 +28,14 @@ class AuthController {
         userId: user.id,
         role: 'user'
       });
+      const token = JWTHelper.generateToken(
+        removeDateStampAndPassword(user.dataValues)
+        );
       return res.status(200).send({
         success: true,
         msg: 'User created successfully',
-        user
+        user,
+        token
       });
     } catch(err) {
       return next(err);
@@ -51,9 +58,14 @@ class AuthController {
       });
       if (user &&
         password.comparePassword(req.body.password.trim(), user.password)) {
+          const token = JWTHelper.generateToken(
+            removeDateStampAndPassword(user.dataValues)
+            );
+
           return res.status(200).json({
             success: true,
-            msg: 'Login successful'
+            msg: 'Login successful',
+            token
           });
         } else{
           return res.status(400).json({

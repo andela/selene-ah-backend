@@ -1,9 +1,12 @@
 import passport from 'passport';
 import { Strategy as FacebookStrategy } from 'passport-facebook';
 import { config } from 'dotenv';
+import JWTHelper from '../../../helpers/JWTHelper';
 
 import db from '../../../models';
 import passwordHash from '../../../helpers/passwordHash';
+import removeDateStampAndPassword from
+'../../../helpers/removeDateStampAndPassword';
 
 config();
 
@@ -28,11 +31,11 @@ class Facebook {
 
   /**
    * @description Our facebookStrategy Callback function
-   * @param {*} accessToken
-   * @param {*} refreshToken
-   * @param {*} profile
-   * @param {*} done
-   * @returns {*} Done function
+   * @param {string} accessToken
+   * @param {string} refreshToken
+   * @param {object} profile
+   * @param {fn} done
+   * @returns {function} Done
    */
   static facebookCallback(accessToken, refreshToken, profile, done) {
     const names = profile.displayName.split(' ');
@@ -56,15 +59,19 @@ class Facebook {
         verified: true
        }
     }).spread((user, created) => {
-      Facebook.createUserProfile(user, created, userDetails, accessToken);
+      const token = JWTHelper.generateToken(
+        removeDateStampAndPassword(user.dataValues)
+        );
+      userDetails.token = token;
+      Facebook.createUserProfile(user, created, userDetails);
       done(null, userDetails);
     });
   }
 
   /**
-   * @param {*} req
-   * @param {*} res
-   * @returns {res} response
+   * @param {object} req
+   * @param {object} res
+   * @returns {object} response
    */
   static facebookControllerCallback(req, res) {
     const { token, isANewUser } = req.user;
@@ -84,15 +91,13 @@ class Facebook {
 
   /**
    *
-   * @param {*} user
-   * @param {*} created
-   * @param {*} userDetails
-   * @param {*} accessToken
-   * @returns {bool} boolean
+   * @param {object} user
+   * @param {boolean} created
+   * @param {object} userDetails
+   * @returns {boolean} boolean
    */
-  static createUserProfile(user, created, userDetails, accessToken) {
+  static createUserProfile(user, created, userDetails) {
     userDetails.isANewUser = created;
-    userDetails.token = accessToken;
     if(!created) {
       Profile.create({
         role: 'user',
