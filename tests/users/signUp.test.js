@@ -1,10 +1,14 @@
 import chaiHttp from 'chai-http';
+import sinon from 'sinon';
 import chai, { expect } from 'chai';
 import url from '../../server/index';
 import signupFactory from '../mocks/factories/userFactory';
+import models from '../../server/models';
+import userController from '../../server/controllers/auth/userAuth';
+
 
 chai.use(chaiHttp);
-
+const { User } = models;
 
 describe('API endpoint for POST auth/signup - Email Validations', () => {
   it('should register a user with a correct email', async () => {
@@ -77,5 +81,19 @@ describe('API endpoint for POST auth/signup - Email Validations', () => {
       expect(res.body).to.be.an('Object');
       expect(res.body.msg).to.be.equals('Email already exist, Login');
     });
+  });
+
+  it('fake test: should throw 500 error ', async () => {
+    const user = signupFactory.build();
+    const req= {
+      body: user
+    };
+
+    const res = {};
+    const next = sinon.stub();
+
+    sinon.stub(User, 'create').throws();
+    await userController.signupUser(req, res, next);
+    expect(next.called).to.be.true;
   });
 });

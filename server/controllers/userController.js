@@ -8,7 +8,7 @@ class UserController {
   /**
    * @param {object} req - req sent to server
    * @param {object} res - response gotten from server
-   * @param {fn} next - csllback function
+   * @param {fn} next - callback function
    * @returns {obj} - response object
    */
   static async getAllUsers(req, res, next) {

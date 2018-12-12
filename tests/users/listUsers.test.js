@@ -1,7 +1,10 @@
 import chaiHttp from 'chai-http';
 import chai, { expect } from 'chai';
+import sinon from 'sinon';
 import url from '../../server/index';
 import userFactory from '../mocks/factories/userFactory';
+import models from '../../server/models';
+import UserController from '../../server/controllers/userController';
 
 const user = userFactory.build({
   password: 'daniel.shotonwa12'
@@ -9,6 +12,7 @@ const user = userFactory.build({
 
 chai.use(chaiHttp);
 
+const { User } = models;
 let token;
 describe('######### List Users', () => {
   before( async ()=>{
@@ -53,5 +57,16 @@ describe('######### List Users', () => {
         expect(res.body.msg).to.be
           .equals('Authentication failed: Please supply a valid token.');
       });
+  });
+
+  it('fake test: should return 500 error', async () => {
+    const req= {};
+    const res = {};
+    const next = sinon.stub();
+
+    sinon.stub(User, 'findAll').throws();
+    await UserController.getAllUsers(req, res, next);
+    expect(next.called).to.be.true;
+    sinon.restore();
   });
 });

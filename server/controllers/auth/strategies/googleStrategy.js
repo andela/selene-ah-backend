@@ -67,7 +67,7 @@ export default class GoogleLogin{
         done(null, userData);
       })
       .catch((err) => {
-       throw err;
+        throw err;
       });
   }
 }

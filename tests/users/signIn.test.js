@@ -1,5 +1,7 @@
 import chaiHttp from 'chai-http';
 import chai, { expect } from 'chai';
+import sinon from 'sinon';
+import userController from '../../server/controllers/auth/userAuth';
 import url from '../../server/index';
 import models from '../../server/models';
 import valid
@@ -125,5 +127,23 @@ describe('API endpoint for POST auth/signin - Email Validations', () => {
       expect(res.body).to.be.an('Object');
       expect(res.body.msg).to.be.equals('Login successful');
     });
+  });
+
+  it('fake test: should return 500 error', async () => {
+    const user = {
+      email: 'opeyemi@yahoo.com',
+      password: 'danielshow2#'
+    };
+    const req={
+      body: user
+    };
+
+    const res = {};
+
+    const next = sinon.stub();
+    sinon.stub(User, 'findOne').throws();
+    await userController.loginUser(req, res, next);
+    expect(next.called).to.be.true;
+    sinon.restore();
   });
 });
