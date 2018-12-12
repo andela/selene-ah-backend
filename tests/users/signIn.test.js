@@ -1,5 +1,7 @@
 import chaiHttp from 'chai-http';
 import chai, { expect } from 'chai';
+import sinon from 'sinon';
+import userController from '../../server/controllers/auth/userAuth';
 import url from '../../server/index';
 import models from '../../server/models';
 import valid
@@ -21,12 +23,12 @@ describe('API endpoint for POST auth/signin - Email Validations', () => {
     });
   });
 
-  it('should fail if password is incorrect', () => {
+  it('should fail if password is incorrect', async () => {
     const user = loginFactory.build({
       email: 'opeyemi@yahoo.com',
       password: 'daniel#2jjfj'
     });
-    chai.request(url)
+    await chai.request(url)
     .post('/api/v1/auth/signin')
     .send(user)
     .then((res) => {
@@ -96,12 +98,12 @@ describe('API endpoint for POST auth/signin - Email Validations', () => {
     });
   });
 
-  it('should fail if a email is not in the database', () => {
+  it('should fail if a email is not in the database', async () => {
     const user = loginFactory.build({
       password: 'fdghjku',
       email: 'opeyemi@yahhhhoo.com',
     });
-    chai.request(url)
+    await chai.request(url)
     .post('/api/v1/auth/signin')
     .send(user)
     .then((res) => {
@@ -112,12 +114,12 @@ describe('API endpoint for POST auth/signin - Email Validations', () => {
     });
   });
 
-  it('should login with valid email and password', () => {
+  it('should login with valid email and password', async () => {
     const user ={
       email: 'opeyemi@yahoo.com',
       password: 'danielshow2#'
     };
-    chai.request(url)
+    await chai.request(url)
     .post('/api/v1/auth/signin')
     .send(user)
     .then((res) => {
@@ -125,5 +127,23 @@ describe('API endpoint for POST auth/signin - Email Validations', () => {
       expect(res.body).to.be.an('Object');
       expect(res.body.msg).to.be.equals('Login successful');
     });
+  });
+
+  it('fake test: should return 500 error', async () => {
+    const user = {
+      email: 'opeyemi@yahoo.com',
+      password: 'danielshow2#'
+    };
+    const req={
+      body: user
+    };
+
+    const res = {};
+
+    const next = sinon.stub();
+    sinon.stub(User, 'findOne').throws();
+    await userController.loginUser(req, res, next);
+    expect(next.called).to.be.true;
+    sinon.restore();
   });
 });

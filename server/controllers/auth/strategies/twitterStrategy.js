@@ -64,7 +64,7 @@ export default class TwitterLogin{
         done(null, userData);
       })
       .catch((err) => {
-       throw err;
+        throw err;
       });
   }
 }
