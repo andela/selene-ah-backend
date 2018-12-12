@@ -12,6 +12,15 @@ export default () => {
       value: `f${faker.name.firstName()}@gmail.com`
     }],
   };
+  const twitterProfile = {
+    _json: {
+        firstname: ' ',
+        lastname: ' ',
+        screen_name: faker.name.lastName(),
+        id: '4b2a8e1d-7e9f-406a-b22a-950a101d7675',
+        email: `f${faker.name.firstName()}@gmail.com`
+    }
+  };
   const user = {
     isNewUser: true,
     token: faker.random.number({
@@ -56,5 +65,6 @@ export default () => {
     loginMessage,
     signupMessage,
     oldUser,
+    twitterProfile,
   };
 };

@@ -4,8 +4,7 @@ import cors from 'cors';
 import morgan from 'morgan';
 import methodOverride from 'method-override';
 import routes from './routes';
-import passportFacebookStrategy from './controllers/auth/passport';
-import passport from './helpers/auth/passport';
+import passport from './controllers/auth/passport';
 
 // const isProduction = process.env.NODE_ENV === 'production';
 const port = process.env.PORT || 3000;
@@ -21,7 +20,6 @@ app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 
 app.use(methodOverride());
-passportFacebookStrategy(app);
 
 app.use(express.static('public'));
 

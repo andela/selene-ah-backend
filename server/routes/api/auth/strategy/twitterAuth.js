@@ -6,17 +6,14 @@ import passport from 'passport';
 import socialMediaControllerCallback from
 '../../../../controllers/auth/socialMediaControllerCallback';
 
-
 const router = Router();
 
-router.get('/auth/google', passport.authenticate('google', {
-  scope: ['profile', 'email']
-}));
+router.get('/auth/twitter',  passport.authenticate('twitter'));
 router.get(
-  '/auth/google/callback',
-  passport.authenticate('google', {
+  '/auth/twitter/callback',
+  passport.authenticate('twitter', {
     failureRedirect: '/',
     session: false
-  }), (req, res) => socialMediaControllerCallback (req, res));
+  }), (req, res) => socialMediaControllerCallback(req, res));
 
 export default router;

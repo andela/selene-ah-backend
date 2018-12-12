@@ -3,13 +3,14 @@ import sinon from 'sinon';
 import passport from 'passport';
 import sinonChai from 'sinon-chai';
 import Facebook
-from '../../../server/controllers/auth/strategies/facebookStrategy';
-import fakeRequest from '../../../server/seeders/auth/fakeRequest';
-import fakeResponse from '../../../server/seeders/auth/fakeResponse';
-import models from '../../../server/models';
-import UserFactory from '../../mocks/factories/userFactory';
+from '../../server/controllers/auth/strategies/facebookStrategy';
+import fakeRequest from '../../server/seeders/auth/fakeRequest';
+import fakeResponse from '../../server/seeders/auth/fakeResponse';
+import models from '../../server/models';
 
-const {User, Profile} = models;
+const {
+  User
+} = models;
 
 should();
 chai.use(sinonChai);
@@ -52,31 +53,25 @@ describe('Facebook OAuth Strategy', () => {
     it('should return a msg obj', () => {
       const user = Facebook
             .facebookControllerCallback(fakeRequest.fakeRequest1, fakeResponse);
-      expect(user).to.be.an('object').that.has.property('msg');
+      expect(user).to.be.an('object').that.has.property('message');
     });
 
     it('should have msg object that says Login Successful', () => {
       const user = Facebook
             .facebookControllerCallback(fakeRequest.fakeRequest1, fakeResponse);
-      expect(user.msg).to.equal('Registration Successful');
+      expect(user.message).to.equal('Login Successful');
     });
 
     it('should have msg object that says Registration Successful', () => {
       const user = Facebook
             .facebookControllerCallback(fakeRequest.fakeRequest2, fakeResponse);
-      expect(user.msg).to.equal('Login Successful');
+      expect(user.message).to.equal('Registration Successful');
     });
 
     it('should have a profile object', () => {
       const user = Facebook
             .facebookControllerCallback(fakeRequest.fakeRequest2, fakeResponse);
-      expect(user.profile).to.exist;
-    });
-
-    it('should have a isANewUser field', () => {
-      const user = Facebook
-            .facebookControllerCallback(fakeRequest.fakeRequest2, fakeResponse);
-      expect(user.profile.isANewUser).to.exist;
+      expect(user).to.exist;
     });
 
   });
@@ -99,38 +94,5 @@ describe('Facebook OAuth Strategy', () => {
     const passportStub = sinon.stub(passport, 'use').returns({});
     Facebook.facebookStrategy();
     passportStub.should.have.been.called;
-  });
-
-  context('createUserProfile Test', () => {
-    let id;
-    before(async () => {
-      const user = UserFactory.build();
-      const [dbUser] = await User
-            .findOrCreate({ where: { email: user.email }, defaults: user });
-      id = dbUser.get('id');
-    });
-
-    const fakeData1 = {
-      user: {
-        dataValues: {
-          id
-        }
-      },
-      userDetails: {},
-      created: false,
-      accessToken: {}
-    };
-
-    it('should call Profile create when created is true', () => {
-      const profileSpy = sinon.spy(Profile, 'create');
-      Facebook.createUserProfile(
-        fakeData1.user,
-        fakeData1.created,
-        fakeData1.userDetails,
-        fakeData1.accessToken
-      );
-      profileSpy.should.have.been.called;
-      profileSpy.restore();
-    });
   });
 });
