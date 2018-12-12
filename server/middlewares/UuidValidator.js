@@ -1,14 +1,8 @@
 import checkUUID from './validations/validationHelper';
-
-
-
-
-
 /**
  * @description this class handles user authentication
  */
 class UuidValidator {
-
   /**
    * @param {object} req
    * @param {object} res
@@ -26,8 +20,6 @@ class UuidValidator {
     }
     return next();
   }
-
-
 }
 
 export default UuidValidator;

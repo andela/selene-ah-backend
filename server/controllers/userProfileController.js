@@ -1,15 +1,12 @@
 import db from '../models';
 
 const { Profile } = db;
-
-
 /**
 * @description class will implement users profile functionality
 *
 * @class userProfileController
 */
 class UserProfileController {
-
   /**
    * @param {object} req - Request sent to the router
    * @param {object} res - Response sent from the controller
@@ -18,9 +15,6 @@ class UserProfileController {
    * @param {object} next - Error handler
    */
   static async getUserProfile(req, res, userId, next) {
-
-
-
     try {
       const getUser = await Profile.findOne({
         where: { userId }
@@ -52,7 +46,6 @@ class UserProfileController {
       return next(error);
     }
   }
-
   /**
    * @description - Method to get login user profile
    *
@@ -64,9 +57,7 @@ class UserProfileController {
   static async getLoginUser(req, res, next) {
     const { userId } = req.body;
     return UserProfileController.getUserProfile(req, res, userId, next);
-
   }
-
   /**
    * @description - Method to get any user profile
    * @returns {object} - returns an object
@@ -78,8 +69,6 @@ class UserProfileController {
     const { id } = req.params;
     return UserProfileController.getUserProfile(req, res, id, next);
   }
-
-
   /**
    * @description - method for updating user's profile
    * @returns {object} - object representing response message
@@ -100,7 +89,6 @@ class UserProfileController {
           message: 'User not found',
         });
       }
-
       await Profile.update(
         {
           gender: req.body.gender || getUser.gender,
@@ -119,15 +107,10 @@ class UserProfileController {
         success: 'true',
         message: 'Updated profile successfully',
       });
-
     } catch (error) {
       return next(error);
     }
   }
-
 }
-
-
-
 
 export default UserProfileController;

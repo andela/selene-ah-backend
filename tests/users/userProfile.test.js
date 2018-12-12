@@ -8,7 +8,6 @@ import userProfileFactory from '../mocks/factories/userProfileFactory';
 import userProfile from '../../server/controllers/userProfileController';
 import models from '../../server/models';
 
-
 chai.should();
 chai.use(chaiHttp);
 chai.use(sinonChai);
@@ -39,7 +38,6 @@ describe('API endpoint for user pofile', () => {
   it('should update a user profile', async () => {
     const userData = userProfileFactory.build({
       userId: userId,
-      bio: 'lorem ipsum'
     });
     await chai.request(url)
       .put('/api/v1/user/profile/')
