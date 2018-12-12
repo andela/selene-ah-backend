@@ -1,20 +1,28 @@
 import chaiHttp from 'chai-http';
 import chai, { expect } from 'chai';
+import sinon from 'sinon';
+import sinonChai from 'sinon-chai';
 import url from '../../server/index';
 import signupFactory from '../mocks/factories/userFactory';
 import userProfileFactory from '../mocks/factories/userProfileFactory';
+import userProfile from '../../server/controllers/userProfileController';
+import models from '../../server/models';
 
+
+chai.should();
 chai.use(chaiHttp);
+chai.use(sinonChai);
+
+const { Profile } = models;
 
 let userId;
 const fakeId = '14dd13b2-981c-490d-879c-71edaf5d674d';
-const wrongUUID = '14dd13b2-981c-490d-879c-71edaf5d674doiii';
 let token;
 
 
 describe('API endpoint for user pofile', () => {
   const user = signupFactory.build({
-    email: 'mike@gmail.com',
+    email: 'mikolo@gmail.com',
     password: 'password123*'
   });
 
@@ -29,14 +37,14 @@ describe('API endpoint for user pofile', () => {
   });
 
   it('should update a user profile', async () => {
-    const userProfile = userProfileFactory.build({
-      id: userId,
+    const userData = userProfileFactory.build({
+      userId: userId,
       bio: 'lorem ipsum'
     });
     await chai.request(url)
       .put('/api/v1/user/profile/')
       .set('Authorization', `Bearer ${token}`)
-      .send(userProfile)
+      .send(userData)
       .then((res) => {
         expect(res).to.have.status(200);
         expect(res.body).to.be.an('Object');
@@ -44,29 +52,15 @@ describe('API endpoint for user pofile', () => {
       });
   });
 
-  it('should return a 500 error', async () => {
-    const userProfile = userProfileFactory.build({
-      id: wrongUUID,
-    });
-    await chai.request(url)
-      .put('/api/v1/user/profile/')
-      .set('Authorization', `Bearer ${token}`)
-      .send(userProfile)
-      .then((res) => {
-        expect(res).to.have.status(500);
-      });
-  });
-
-
   it('should return user not found', async () => {
-    const userProfile = userProfileFactory.build({
-      id: fakeId,
+    const userData = userProfileFactory.build({
+      userId: fakeId,
       bio: 'lorem ipsum'
     });
     await chai.request(url)
       .put('/api/v1/user/profile/')
       .set('Authorization', `Bearer ${token}`)
-      .send(userProfile)
+      .send(userData)
       .then((res) => {
         expect(res).to.have.status(404);
         expect(res.body.message).to.be.equals('User not found');
@@ -74,13 +68,13 @@ describe('API endpoint for user pofile', () => {
   });
 
   it('should get a login user profile', async () => {
-    const userProfile = userProfileFactory.build({
+    const userData = userProfileFactory.build({
       userId: userId,
     });
     await chai.request(url)
       .get('/api/v1/user/profile/')
       .set('Authorization', `Bearer ${token}`)
-      .send(userProfile)
+      .send(userData)
       .then((res) => {
         expect(res).to.have.status(200);
         expect(res.body).to.be.an('Object');
@@ -89,31 +83,19 @@ describe('API endpoint for user pofile', () => {
   });
 
   it('should return login user not found', async () => {
-    const userProfile = userProfileFactory.build({
+    const userData = userProfileFactory.build({
       userId: fakeId,
     });
     await chai.request(url)
       .get('/api/v1/user/profile/')
       .set('Authorization', `Bearer ${token}`)
-      .send(userProfile)
+      .send(userData)
       .then((res) => {
         expect(res).to.have.status(404);
         expect(res.body.message).to.be.equals('User not found');
       });
   });
 
-  it('should return a 500 error (login user)', async () => {
-    const userProfile = userProfileFactory.build({
-      userId: wrongUUID,
-    });
-    await chai.request(url)
-      .get('/api/v1/user/profile/')
-      .set('Authorization', `Bearer ${token}`)
-      .send(userProfile)
-      .then((res) => {
-        expect(res).to.have.status(500);
-      });
-  });
 
   it('should get any user profile', async () => {
     await chai.request(url)
@@ -140,13 +122,41 @@ describe('API endpoint for user pofile', () => {
       });
   });
 
-  it('should update a 500 erro', async () => {
-    await chai.request(url)
-      .get(`/api/v1/user/profile/${wrongUUID}`)
-      .set('Authorization', `Bearer ${token}`)
-      .send()
-      .then((res) => {
-        expect(res).to.have.status(500);
-      });
+
+  it('should fake error', async () => {
+    const req = {
+      body: {
+        id: 1
+      }
+    };
+
+    const res = {};
+    const next = sinon.stub();
+
+    sinon.stub(Profile, 'findOne').throws();
+
+    await userProfile.updateUserProfile(req, res, next);
+
+    expect(next.calledOnce).to.be.true;
+    sinon.restore();
   });
+
+  it('should fake error', async () => {
+    const req = {
+      body: {
+        id: 1
+      }
+    };
+
+    const res = {};
+    const next = sinon.stub();
+
+    sinon.stub(Profile, 'findOne').throws();
+
+    await userProfile.getLoginUser(req, res, next);
+
+    expect(next.calledOnce).to.be.true;
+    sinon.restore();
+  });
+
 });

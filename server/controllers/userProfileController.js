@@ -1,22 +1,25 @@
 import db from '../models';
 
 const { Profile } = db;
+
+
 /**
 * @description class will implement users profile functionality
 *
 * @class userProfileController
 */
-class userProfileController {
+class UserProfileController {
+
   /**
-   * @description - Method to get login user profile
-   *
-   * @param {object} req - Request object
-   * @param {object} res - Response object
+   * @param {object} req - Request sent to the router
+   * @param {object} res - Response sent from the controller
+   * @param {object} userId
    * @returns {object} - object representing response message
-   * @param {object} next - Return error
+   * @param {object} next - Error handler
    */
-  static async getLoginUser(req, res, next) {
-    const { userId } = req.body;
+  static async getUserProfile(req, res, userId, next) {
+
+
 
     try {
       const getUser = await Profile.findOne({
@@ -25,7 +28,7 @@ class userProfileController {
 
       if (!getUser) {
         return res.status(404).json({
-          status: 'Fail',
+          success: 'false',
           message: 'User not found',
         });
       }
@@ -40,15 +43,28 @@ class userProfileController {
       };
 
       return res.status(200).json({
-        status: 'Success',
+        success: 'true',
         message: 'Retrieved profile successfully',
         userProfile
       });
 
-
     } catch (error) {
       return next(error);
     }
+  }
+
+  /**
+   * @description - Method to get login user profile
+   *
+   * @param {object} req - Request object
+   * @param {object} res - Response object
+   * @returns {object} - object representing response message
+   * @param {object} next - Return error
+   */
+  static async getLoginUser(req, res, next) {
+    const { userId } = req.body;
+    return UserProfileController.getUserProfile(req, res, userId, next);
+
   }
 
   /**
@@ -60,38 +76,7 @@ class userProfileController {
    */
   static async getAnyUserProfile(req, res, next) {
     const { id } = req.params;
-    try {
-      const getUser = await Profile.findOne({
-        where: { userId: id }
-      });
-
-      if (!getUser) {
-        return res.status(404).json({
-          status: 'Fail',
-          message: 'User not found',
-        });
-      }
-
-      const userProfile = {
-        bio: getUser.bio,
-        twiiter: getUser.twitterUrl,
-        facebook: getUser.facebookUrl,
-        role: getUser.role,
-        image: getUser.imageUrl,
-        gender: getUser.gender,
-      };
-
-
-      return res.status(200).json({
-        status: 'Success',
-        message: 'Retrieved profile successfully',
-        userProfile
-      });
-
-
-    } catch (error) {
-      return next(error);
-    }
+    return UserProfileController.getUserProfile(req, res, id, next);
   }
 
 
@@ -103,15 +88,15 @@ class userProfileController {
    * @param {object} next - Error handler
    */
   static async updateUserProfile(req, res, next) {
-    const { id } = req.body;
+    const { userId } = req.body;
     try {
       const getUser = await Profile.findOne({
-        where: { userId: id }
+        where: { userId }
       });
 
       if (!getUser) {
         return res.status(404).json({
-          status: 'Fail',
+          success: 'false',
           message: 'User not found',
         });
       }
@@ -131,7 +116,7 @@ class userProfileController {
       );
 
       return res.status(200).json({
-        status: 'Success',
+        success: 'true',
         message: 'Updated profile successfully',
       });
 
@@ -142,4 +127,7 @@ class userProfileController {
 
 }
 
-export default userProfileController;
+
+
+
+export default UserProfileController;
