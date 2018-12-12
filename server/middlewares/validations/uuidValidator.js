@@ -10,7 +10,7 @@ class UuidValidator {
    * @returns {function} next
    */
   static validateUUID(req, res, next) {
-    const userUUID = req.params.id || req.body.userId;
+    const userUUID = req.params.id || req.body.userId || req.body.followerId;
     const isValidateUUID = checkUUID.isUUIDValid(userUUID);
     if (!isValidateUUID) {
       return res.status(400).json({
