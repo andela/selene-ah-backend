@@ -17,13 +17,13 @@ describe('API endpoint for POST auth/signup - Email Validations', () => {
       password: 'password123*'
     });
     await chai.request(url)
-    .post('/api/v1/auth/signup')
-    .send(user)
-    .then((res) => {
-      expect(res).to.have.status(200);
-      expect(res.body).to.be.an('Object');
-      expect(res.body.msg).to.be.equals('User created successfully');
-    });
+      .post('/api/v1/auth/signup')
+      .send(user)
+      .then((res) => {
+        expect(res).to.have.status(200);
+        expect(res.body).to.be.an('Object');
+        expect(res.body.msg).to.be.equals('User created successfully');
+      });
   });
 
   it('should fail if email exist in the database', async () => {
@@ -32,13 +32,13 @@ describe('API endpoint for POST auth/signup - Email Validations', () => {
       password: 'password123*'
     });
     await chai.request(url)
-    .post('/api/v1/auth/signup')
-    .send(user)
-    .then((res) => {
-      expect(res).to.have.status(400);
-      expect(res.body).to.be.an('Object');
-      expect(res.body.msg).to.be.equals('Email already exist, Login');
-    });
+      .post('/api/v1/auth/signup')
+      .send(user)
+      .then((res) => {
+        expect(res).to.have.status(400);
+        expect(res.body).to.be.an('Object');
+        expect(res.body.msg).to.be.equals('Email already exist, Login');
+      });
   });
 
   it('should fail if email field is empty', () => {
@@ -46,13 +46,13 @@ describe('API endpoint for POST auth/signup - Email Validations', () => {
       email: null
     });
     chai.request(url)
-    .post('/api/v1/auth/signup')
-    .send(user)
-    .then((res) => {
-      expect(res).to.have.status(400);
-      expect(res.body).to.be.an('Object');
-      expect(res.body.msg).to.be.equals('Email field cannot be empty');
-    });
+      .post('/api/v1/auth/signup')
+      .send(user)
+      .then((res) => {
+        expect(res).to.have.status(400);
+        expect(res.body).to.be.an('Object');
+        expect(res.body.msg).to.be.equals('Email field cannot be empty');
+      });
   });
 
   it('should fail if user supply invalid email', () => {
@@ -60,13 +60,14 @@ describe('API endpoint for POST auth/signup - Email Validations', () => {
       email: 'danieiopeyey@djjdd'
     });
     chai.request(url)
-    .post('/api/v1/auth/signup')
-    .send(user)
-    .then((res) => {
-      expect(res).to.have.status(400);
-      expect(res.body).to.be.an('Object');
-      expect(res.body.msg).to.be.equals('Invalid Email: supply a valid email');
-    });
+      .post('/api/v1/auth/signup')
+      .send(user)
+      .then((res) => {
+        expect(res).to.have.status(400);
+        expect(res.body).to.be.an('Object');
+        expect(res.body.msg).to.be
+          .equals('Invalid Email: supply a valid email');
+      });
   });
 
   it('should fail if a duplicate email is found', () => {
@@ -74,18 +75,18 @@ describe('API endpoint for POST auth/signup - Email Validations', () => {
       email: 'opeyemidaniel@gmail.com'
     });
     chai.request(url)
-    .post('/api/v1/auth/signup')
-    .send(user)
-    .then((res) => {
-      expect(res).to.have.status(400);
-      expect(res.body).to.be.an('Object');
-      expect(res.body.msg).to.be.equals('Email already exist, Login');
-    });
+      .post('/api/v1/auth/signup')
+      .send(user)
+      .then((res) => {
+        expect(res).to.have.status(400);
+        expect(res.body).to.be.an('Object');
+        expect(res.body.msg).to.be.equals('Email already exist, Login');
+      });
   });
 
   it('fake test: should throw 500 error ', async () => {
     const user = signupFactory.build();
-    const req= {
+    const req = {
       body: user
     };
 
@@ -95,5 +96,6 @@ describe('API endpoint for POST auth/signup - Email Validations', () => {
     sinon.stub(User, 'create').throws();
     await userController.signupUser(req, res, next);
     expect(next.called).to.be.true;
+    sinon.restore();
   });
 });
