@@ -22,7 +22,7 @@ let token;
 describe('API endpoint for user pofile', () => {
   const user = signupFactory.build({
     email: 'mikolo@gmail.com',
-    password: 'password123*'
+    password: 'password123*',
   });
 
   before(async () => {

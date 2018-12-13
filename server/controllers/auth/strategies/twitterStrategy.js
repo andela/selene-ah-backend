@@ -38,7 +38,7 @@ export default class TwitterLogin{
   * @param {object} done
   * @returns {object} passport
   */
-  static twitterStrategyCallback (token, tokenSecret, profile, done) {
+  static async twitterStrategyCallback (token, tokenSecret, profile, done) {
     /*eslint no-underscore-dangle: ["error", { "allow": ["_json"] }]*/
     const data = profile._json;
     const userData = {
@@ -58,6 +58,7 @@ export default class TwitterLogin{
         verified: true,
         blocked: false,
         emailNotification: true,
+        role: 'regular',
         password: generateRandomPassword()
       }}).spread((user, created) => {
         createNewSocialMediaUser(user,created,userData);

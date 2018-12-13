@@ -6,6 +6,7 @@ import googleAuth from './api/auth/strategy/googleAuth';
 import twitterAuth from './api/auth/strategy/twitterAuth';
 import userProfile from './api/userProfileRoute';
 import followers from './api/follow';
+import Authorize from './api/auth/authorize';
 
 const router = Router();
 router.use('/api/v1', userAuth);
@@ -15,6 +16,7 @@ router.use('/api/v1', fbAuth);
 router.use('/api/v1', twitterAuth);
 router.use('/api/v1', googleAuth);
 router.use('/api/v1', followers);
+router.use('/api/v1/role', Authorize);
 
 
 export default router;

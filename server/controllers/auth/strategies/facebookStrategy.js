@@ -40,7 +40,7 @@ class Facebook {
    * @param {fn} done
    * @returns {function} Done
    */
-  static facebookCallback(accessToken, refreshToken, profile, done) {
+  static async facebookCallback(accessToken, refreshToken, profile, done) {
     const names = profile.displayName.split(' ');
     const hashedPassword = passwordHash.hashPassword(profile.id);
     const userDetails = {
@@ -60,6 +60,7 @@ class Facebook {
         userName: userDetails.userName,
         email: userDetails.email,
         password: userDetails.password,
+        role: 'regular',
         verified: true
        }
     }).spread((user, created) => {

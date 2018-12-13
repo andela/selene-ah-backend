@@ -6,12 +6,13 @@ const UserFactory = new Factory()
   id: faker.random.uuid,
   email: faker.internet.email,
   password: faker.internet.password,
-  firstName: faker.name.firstName,
-  lastName: faker.name.firstName,
+  firstName: faker.name.lastName,
+  lastName: faker.name.lastName,
   userName: faker.internet.userName,
   verified: faker.random.boolean,
   blocked: faker.random.boolean,
   emailNotification: faker.random.boolean,
+  role: faker.name.title,
   createdAt: faker.date.recent,
   updatedAt: faker.date.recent
 });

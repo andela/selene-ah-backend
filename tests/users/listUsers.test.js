@@ -8,7 +8,8 @@ import UserController from '../../server/controllers/userController';
 
 
 const user = userFactory.build({
-  password: 'daniel.shotonwa12'
+  password: 'daniel.shotonwa12',
+  role: 'regular'
 });
 
 

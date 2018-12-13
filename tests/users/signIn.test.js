@@ -12,21 +12,23 @@ chai.use(chaiHttp);
 
 const { User } = models;
 
-describe('API endpoint for POST auth/signin - Email Validations', () => {
+describe('API endpoint for POST auth/signin - Email Validations', async () => {
   before(async () => {
     await User.create({
       email: 'opeyemi@yahoo.com',
       firstName: 'Danielshow',
       lastName: 'Opeyemi',
       userName: 'shotonwaa',
-      password: valid.hashPassword('danielshow2#')
+      password: valid.hashPassword('danielshow2#'),
+      role: 'regular'
     });
   });
 
   it('should fail if password is incorrect', async () => {
     const user = loginFactory.build({
       email: 'opeyemi@yahoo.com',
-      password: 'daniel#2jjfj'
+      password: 'daniel#2jjfj',
+      role: 'regular'
     });
     await chai.request(server)
     .post('/api/v1/auth/signin')
@@ -41,7 +43,8 @@ describe('API endpoint for POST auth/signin - Email Validations', () => {
   it('should fail if email field is empty', () => {
     const user = loginFactory.build({
       email: null,
-      password: 'daniel#2jjfj'
+      password: 'daniel#2jjfj',
+      role: 'regular'
     });
     chai.request(server)
     .post('/api/v1/auth/signin')
@@ -55,7 +58,8 @@ describe('API endpoint for POST auth/signin - Email Validations', () => {
 
   it('should fail if user supply invalid email', () => {
     const user = loginFactory.build({
-      email: 'daniel@yeheeheh'
+      email: 'daniel@yeheeheh',
+      role: 'regular'
     });
     chai.request(server)
     .post('/api/v1/auth/signin')
@@ -71,6 +75,7 @@ describe('API endpoint for POST auth/signin - Email Validations', () => {
     const user = loginFactory.build({
       password: '  ',
       email: 'opeyemi@yahoo.com',
+      role: 'regular'
     });
     chai.request(server)
     .post('/api/v1/auth/signin')
@@ -86,6 +91,7 @@ describe('API endpoint for POST auth/signin - Email Validations', () => {
     const user = loginFactory.build({
       password: 'gyhhjjkjj',
       email: 'opeyemi@yahoo.com',
+      role: 'regular'
     });
     chai.request(server)
     .post('/api/v1/auth/signin')
@@ -102,6 +108,7 @@ describe('API endpoint for POST auth/signin - Email Validations', () => {
     const user = loginFactory.build({
       password: 'fdghjku',
       email: 'opeyemi@yahhhhoo.com',
+      role: 'regular'
     });
     await chai.request(server)
     .post('/api/v1/auth/signin')
@@ -117,7 +124,8 @@ describe('API endpoint for POST auth/signin - Email Validations', () => {
   it('should login with valid email and password', async () => {
     const user ={
       email: 'opeyemi@yahoo.com',
-      password: 'danielshow2#'
+      password: 'danielshow2#',
+      role: 'regular'
     };
     await chai.request(server)
     .post('/api/v1/auth/signin')

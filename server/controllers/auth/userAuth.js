@@ -30,7 +30,8 @@ class AuthController {
         password: password.hashPassword(req.body.password.trim()),
         firstName: req.body.firstName.trim(),
         lastName: req.body.lastName.trim(),
-        userName: req.body.userName.trim()
+        userName: req.body.userName.trim(),
+        role: 'regular'
       });
       await Profile.create({
         userId: user.id,
@@ -71,7 +72,6 @@ class AuthController {
           const token = JWTHelper.generateToken(
             removeDateStampAndPassword(user.dataValues), duration
             );
-
           return res.status(200).json({
             success: true,
             msg: 'Login successful',

@@ -38,7 +38,9 @@ export default class GoogleLogin{
   * @param {object} done
   * @returns {object} passport
   */
-  static googleStrategyCallback (accessToken, refreshToken, profile, done) {
+  static async googleStrategyCallback (accessToken, refreshToken,
+                                       profile, done)
+  {
     const userData = {
       email: profile.emails[0].value,
       firstname: profile.name.givenName,
@@ -57,6 +59,7 @@ export default class GoogleLogin{
         verified: true,
         blocked: false,
         emailNotification: true,
+        role: 'regular',
         password: generateRandomPassword()
       }}).spread((user, created) => {
         const token = JWTHelper.generateToken(
