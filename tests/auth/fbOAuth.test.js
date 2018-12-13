@@ -4,8 +4,8 @@ import passport from 'passport';
 import sinonChai from 'sinon-chai';
 import Facebook
 from '../../server/controllers/auth/strategies/facebookStrategy';
-import fakeRequest from '../../server/seeders/auth/fakeRequest';
-import fakeResponse from '../../server/seeders/auth/fakeResponse';
+import fakeRequest from '../mocks/auth/fakeRequest';
+import fakeResponse from '../mocks/auth/fakeResponse';
 import models from '../../server/models';
 
 const {
