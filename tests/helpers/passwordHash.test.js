@@ -4,6 +4,7 @@ import bcrypt from 'bcryptjs';
 import passwordHash from '../../server/helpers/passwordHash';
 
 describe('#PasswordHash', () => {
+  afterEach(()=> sinon.restore());
   const hashPasswordSpy = sinon.spy(bcrypt, 'hashSync');
   const hashedPassword = passwordHash.hashPassword('opeyemi');
   context('#hashPassword', () => {
@@ -23,11 +24,13 @@ describe('#PasswordHash', () => {
   });
 
   context('#comparePassword', () => {
-    const comparePasswordSpy = sinon.spy(bcrypt, 'compareSync');
     it('Should return true if password is equal to hashed password', () => {
-      expect(passwordHash.comparePassword('opeyemi', hashedPassword))
+      const comparePasswordSpy = sinon.spy(bcrypt, 'compareSync');
+      const isPassword = passwordHash.comparePassword(
+        'opeyemi', hashedPassword);
+      expect(isPassword)
         .to.be.equal(true);
-      // expect(comparePasswordSpy.called).to.be.equal(true);
+      expect(comparePasswordSpy.called).to.be.equal(true);
     });
 
     it('should throw error if password is null or empty', () => {
@@ -38,9 +41,6 @@ describe('#PasswordHash', () => {
     it('should throw error if hashedPassword is null or empty', () => {
       expect(() => passwordHash.comparePassword('opeyemi', null))
         .to.throw('No password or hashedPassword defined');
-    });
-    after(() => {
-      comparePasswordSpy.restore();
     });
   });
 });

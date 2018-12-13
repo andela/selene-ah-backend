@@ -94,9 +94,9 @@ describe('GET /follow Route', () => {
     .send({followerId: invalidId})
     .set('Authorization', `Bearer ${token}`)
     .then((res) => {
-      expect(res).to.have.status(400);
+      expect(res).to.have.status(404);
       expect(res.body).to.be.an('object');
-      expect(res.body.message).to.be.equal('Bad Request: User does not exist');
+      expect(res.body.message).to.be.equal('User not found');
     });
   });
 
@@ -131,7 +131,7 @@ describe('GET /follow Route', () => {
     const next = sinon.stub();
     sinon.stub(User, 'findOne').throws();
 
-    await userAuthentication.doesUserExist(req, res, next);
+    await userAuthentication.checkIfUserExist(req, res, next);
     expect(next.called).to.be.true;
     sinon.restore();
   });
@@ -142,7 +142,7 @@ describe('GET /follow Route', () => {
     const next = sinon.stub();
     sinon.stub(User, 'findOne').throws();
 
-    await userAuthentication.isFollowingUser(req, res, next);
+    await userAuthentication.checkIfUserIsFollowed(req, res, next);
     expect(next.called).to.be.true;
     sinon.restore();
   });
@@ -199,9 +199,9 @@ describe('GET /unfollow/:id route', () => {
     .delete(`/api/v1/unfollow/${invalidId}`)
     .set('Authorization', `Bearer ${token}`)
     .then((res) => {
-      expect(res).to.have.status(400);
+      expect(res).to.have.status(404);
       expect(res.body).to.be.an('object');
-      expect(res.body.message).to.be.equal('Bad Request: User does not exist');
+      expect(res.body.message).to.be.equal('User not found');
     });
   });
 
@@ -216,13 +216,13 @@ describe('GET /unfollow/:id route', () => {
     });
   });
 
-  it('should fake isNotFollowingUser middleware', async () => {
+  it('should fake checkIfUserNotFollowed middleware', async () => {
     const req= {};
     const res = {};
     const next = sinon.stub();
     sinon.stub(User, 'findOne').throws();
 
-    await userAuthentication.isNotFollowingUser(req, res, next);
+    await userAuthentication.checkIfUserNotFollowed(req, res, next);
     expect(next.called).to.be.true;
     sinon.restore();
   });

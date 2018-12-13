@@ -55,7 +55,7 @@ class FollowerController {
   }
 
   /**
-   * @description - This function get user followers
+   * @description - This function get all user followers using the id supplied
    * @param {object} req - request to be sent
    * @param {object} res - response gotten from server
    * @param {object} next - callback function
@@ -82,7 +82,7 @@ class FollowerController {
   }
 
    /**
-   * @description - This function get user followees
+   * @description - This function get user followees using the id supplied
    * @param {object} req - request to be sent
    * @param {object} res - response gotten from server
    * @param {object} next - callback function
@@ -107,7 +107,8 @@ class FollowerController {
     }
   }
   /**
-   * @description - This function get user followers
+   * @description - This function get an authenticated user
+   * followers using the userId
    * @param {object} req - request to be sent
    * @param {object} res - response gotten from server
    * @param {object} next - callback function
@@ -119,7 +120,8 @@ class FollowerController {
   }
 
   /**
-   * @description - This function get those following a user
+   * @description - This function get an authenticated user
+   * followee using the userId
    * @param {object} req - request to be sent
    * @param {object} res - response gotten from server
    * @param {object} next - callback function
@@ -131,7 +133,7 @@ class FollowerController {
   }
 
    /**
-   * @description - This function get other user followees
+   * @description - This function get other user followees using the user's ID
    * @param {object} req - request to be sent
    * @param {object} res - response gotten from server
    * @param {object} next - callback function

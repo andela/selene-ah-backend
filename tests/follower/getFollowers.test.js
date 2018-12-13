@@ -18,7 +18,7 @@ const user2 = userFactory.build({
   password: 'opeyemi2318*'
 });
 
-describe('GET /follower Route', () => {
+describe('GET /followers Route', () => {
   before(async () => {
     await chai.request(server)
     .post('/api/v1/auth/signup')
@@ -63,7 +63,7 @@ describe('GET /follower Route', () => {
 
   it('should return all followed user', async () => {
     await chai.request(server)
-    .get('/api/v1/follower')
+    .get('/api/v1/followers')
     .set('Authorization', `Bearer ${token}`)
     .then((res) => {
       expect(res).to.have.status(200);
@@ -75,7 +75,7 @@ describe('GET /follower Route', () => {
 
   it('should give a descriptive message if follower is not found', async () => {
       await chai.request(server)
-      .get('/api/v1/follower')
+      .get('/api/v1/followers')
       .set('Authorization', `Bearer ${token2}`)
       .then((res) => {
         expect(res).to.have.status(200);
@@ -85,10 +85,10 @@ describe('GET /follower Route', () => {
   });
 });
 
-describe('GET /follower/:id', () => {
+describe('GET /followers/:id', () => {
   it('should give a descriptive message if follower is not found', async () => {
     await chai.request(server)
-    .get(`/api/v1/follower/${id2}`)
+    .get(`/api/v1/followers/${id2}`)
     .set('Authorization', `Bearer ${token}`)
     .then((res) => {
       expect(res).to.have.status(200);
@@ -99,7 +99,7 @@ describe('GET /follower/:id', () => {
 
   it('should return followers if a user is authenticated', async () => {
     await chai.request(server)
-    .get(`/api/v1/follower/${id1}`)
+    .get(`/api/v1/followers/${id1}`)
     .set('Authorization', `Bearer ${token}`)
     .then((res) => {
       expect(res).to.have.status(200);
@@ -111,7 +111,7 @@ describe('GET /follower/:id', () => {
 
   it('should give error if an invalid UUID is supplied', async () => {
     await chai.request(server)
-    .get('/api/v1/follower/dgdgdvd-1771')
+    .get('/api/v1/followers/dgdgdvd-1771')
     .set('Authorization', `Bearer ${token}`)
     .then((res) => {
       expect(res).to.have.status(400);
@@ -133,11 +133,11 @@ describe('GET /follower/:id', () => {
   });
 });
 
-describe('GET /followee Route', () => {
+describe('GET /followees Route', () => {
 
   it('should return all user followers', async () => {
     await chai.request(server)
-    .get('/api/v1/followee')
+    .get('/api/v1/followees')
     .set('Authorization', `Bearer ${token2}`)
     .then((res) => {
       expect(res).to.have.status(200);
@@ -148,7 +148,7 @@ describe('GET /followee Route', () => {
 
   it('should return no followers if user has none', async () => {
     await chai.request(server)
-    .get('/api/v1/followee')
+    .get('/api/v1/followees')
     .set('Authorization', `Bearer ${token}`)
     .then((res) => {
       expect(res).to.have.status(200);
@@ -170,10 +170,10 @@ describe('GET /followee Route', () => {
   });
 });
 
-describe('GET /followee/:id Route', () => {
+describe('GET /followees/:id Route', () => {
   it('should return another user followers', async () => {
     await chai.request(server)
-    .get(`/api/v1/followee/${id1}`)
+    .get(`/api/v1/followees/${id1}`)
     .set('Authorization', `Bearer ${token}`)
     .then((res) => {
       expect(res).to.have.status(200);

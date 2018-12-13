@@ -11,30 +11,31 @@ router.post('/follow',
     UserAuthentication.isFollowerIdSupplied,
     uuidValidator.validateUUID,
     UserAuthentication.isFollowingSelf,
-    UserAuthentication.doesUserExist,
-      UserAuthentication.isFollowingUser], followersController.followAuthor);
+    UserAuthentication.checkIfUserExist,
+      UserAuthentication.checkIfUserIsFollowed],
+        followersController.followAuthor);
 
 router.delete('/unfollow/:id',
   [JWTAuthentication.authenticateUser,
     uuidValidator.validateUUID,
-    UserAuthentication.doesUserExist,
-      UserAuthentication.isNotFollowingUser],
+    UserAuthentication.checkIfUserExist,
+      UserAuthentication.checkIfUserNotFollowed],
         followersController.unfollowUser);
 
-router.get('/follower',
+router.get('/followers',
   [JWTAuthentication.authenticateUser],
     followersController.getAllFollowers);
 
-router.get('/followee',
+router.get('/followees',
   [JWTAuthentication.authenticateUser],
     followersController.getAllFollowees);
 
-router.get('/follower/:id',
+router.get('/followers/:id',
   [JWTAuthentication.authenticateUser,
     uuidValidator.validateUUID],
     followersController.getUserFollowers);
 
-router.get('/followee/:id',
+router.get('/followees/:id',
   [JWTAuthentication.authenticateUser,
     uuidValidator.validateUUID],
       followersController.getAnotherUserFollowees);

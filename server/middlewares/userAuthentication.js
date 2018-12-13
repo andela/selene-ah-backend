@@ -12,15 +12,17 @@ class UserAuthentication {
    * @param {object} next - call back function
    * @returns { object } -
    */
-  static async doesUserExist(req, res, next) {
+  static async checkIfUserExist(req, res, next) {
     try {
       const user = await User.findOne({
-        where: {id: req.body.followerId || req.params.id}
+        where: {
+          id: req.body.followerId || req.params.id
+        }
       });
       if (!user || user===null) {
-        return res.status(400).json({
+        return res.status(404).json({
           success: false,
-          message: 'Bad Request: User does not exist'
+          message: 'User not found'
         });
       }
       return next();
@@ -36,7 +38,7 @@ class UserAuthentication {
    * @param {object} next - call back function
    * @returns { object } -
    */
-  static async isFollowingUser(req, res, next) {
+  static async checkIfUserIsFollowed(req, res, next) {
     try {
       const follow = await Follower.findOne({
         where: {userId: req.token.user.id,
@@ -62,7 +64,7 @@ class UserAuthentication {
    * @param {object} next - call back function
    * @returns { object } -
    */
-  static async isNotFollowingUser(req, res, next) {
+  static async checkIfUserNotFollowed(req, res, next) {
     try {
       const follow = await Follower.findOne({
         where: {userId: req.token.user.id,
@@ -105,7 +107,7 @@ class UserAuthentication {
    * @param {object} next - call back function
    * @returns { object } -
    */
-  static async isFollowerIdSupplied(req, res, next) {
+  static isFollowerIdSupplied(req, res, next) {
     if (!req.body.followerId || req.body.followerId.trim().length < 1) {
       return res.status(400).json({
         sucess: false,
