@@ -35,11 +35,11 @@ describe('API endpoint for user pofile', () => {
       });
   });
 
-  it('should update a user profile', async () => {
+  it('should update a user profile',  (done) => {
     const userData = userProfileFactory.build({
       userId: userId,
     });
-    await chai.request(url)
+    chai.request(url)
       .put('/api/v1/user/profile/')
       .set('Authorization', `Bearer ${token}`)
       .send(userData)
@@ -47,29 +47,31 @@ describe('API endpoint for user pofile', () => {
         expect(res).to.have.status(200);
         expect(res.body).to.be.an('Object');
         expect(res.body.message).to.be.equals('Updated profile successfully');
+        done();
       });
   });
 
-  it('should return user not found', async () => {
+  it('should return user not found', (done) => {
     const userData = userProfileFactory.build({
       userId: fakeId,
       bio: 'lorem ipsum'
     });
-    await chai.request(url)
+    chai.request(url)
       .put('/api/v1/user/profile/')
       .set('Authorization', `Bearer ${token}`)
       .send(userData)
       .then((res) => {
         expect(res).to.have.status(404);
         expect(res.body.message).to.be.equals('User not found');
+        done();
       });
   });
 
-  it('should get a login user profile', async () => {
+  it('should get a login user profile', (done) => {
     const userData = userProfileFactory.build({
       userId: userId,
     });
-    await chai.request(url)
+      chai.request(url)
       .get('/api/v1/user/profile/')
       .set('Authorization', `Bearer ${token}`)
       .send(userData)
@@ -77,26 +79,28 @@ describe('API endpoint for user pofile', () => {
         expect(res).to.have.status(200);
         expect(res.body).to.be.an('Object');
         expect(res.body.message).to.be.equals('Retrieved profile successfully');
+        done();
       });
   });
 
-  it('should return login user not found', async () => {
+  it('should return login user not found', (done) => {
     const userData = userProfileFactory.build({
       userId: fakeId,
     });
-    await chai.request(url)
+    chai.request(url)
       .get('/api/v1/user/profile/')
       .set('Authorization', `Bearer ${token}`)
       .send(userData)
       .then((res) => {
         expect(res).to.have.status(404);
         expect(res.body.message).to.be.equals('User not found');
+        done();
       });
   });
 
 
-  it('should get any user profile', async () => {
-    await chai.request(url)
+  it('should get any user profile', (done) => {
+    chai.request(url)
       .get(`/api/v1/user/profile/${userId}`)
       .set('Authorization', `Bearer ${token}`)
       .send()
@@ -104,12 +108,13 @@ describe('API endpoint for user pofile', () => {
         expect(res).to.have.status(200);
         expect(res.body).to.be.an('Object');
         expect(res.body.message).to.be.equals('Retrieved profile successfully');
+        done();
       });
   });
 
 
-  it('should return user not found', async () => {
-    await chai.request(url)
+  it('should return user not found', (done) => {
+    chai.request(url)
       .get(`/api/v1/user/profile/${fakeId}`)
       .set('Authorization', `Bearer ${token}`)
       .send()
@@ -117,6 +122,7 @@ describe('API endpoint for user pofile', () => {
         expect(res).to.have.status(404);
         expect(res).to.have.status(404);
         expect(res.body.message).to.be.equals('User not found');
+        done();
       });
   });
 
