@@ -7,27 +7,11 @@ export default (sequelize, DataTypes) => {
     },
     firstName: {
       type: DataTypes.STRING,
-      allowNull: false,
-      validate: {
-        notEmpty: {
-          msg: 'Empty firstname. The firstname is required.'
-        },
-        isAlpha: {
-          msg: 'Invalid firstname. The firstname can only contain letters.'
-        },
-      }
+      allowNull: false
     },
     lastName: {
       type: DataTypes.STRING,
-      allowNull: false,
-      validate: {
-        isAlpha: {
-          msg: 'Invalid Lastname. The Lastname can only contain letters.'
-        },
-        notEmpty: {
-          msg: 'Empty lastname. The Lastname is required.'
-        }
-      }
+      allowNull: false
     },
     userName: {
       type: DataTypes.STRING,
