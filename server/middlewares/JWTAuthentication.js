@@ -20,6 +20,12 @@ class JWTAuthentication{
     try {
       const userToken = req.headers.authorization.split(' ')[1];
       const verifiedToken = JWTHelper.verifyToken(userToken);
+      if (verifiedToken.name === 'JsonWebTokenError'){
+        return res.status(401).json({
+          success: false,
+          msg: 'Authentication failed: Please supply a valid token.'
+        });
+      }
       req.user = verifiedToken.user;
       return next();
     } catch (err) {

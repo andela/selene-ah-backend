@@ -49,18 +49,18 @@ describe('######### List Users', () => {
       });
   });
 
-  // it('should give error if Token is Invalid',  (done)=> {
-  //   chai.request(url)
-  //     .get('/api/v1/users')
-  //     .set('Authorization', 'Bearer invalidTOKEN')
-  //     .then(res => {
-  //       expect(res).to.have.status();
-  //       expect(res.body).to.be.an('object');
-  //       expect(res.body.msg).to.be
-  //         .equals('Authentication failed: Please supply a valid token.');
-  //         done();
-  //     });
-  // });
+  it('should give error if Token is Invalid',  async ()=> {
+    await chai.request(url)
+      .get('/api/v1/users')
+      .set('Authorization', 'Bearer invalidTOKEN')
+      .then(res => {
+        expect(res).to.have.status(401);
+        expect(res.body).to.be.an('object');
+        expect(res.body.msg).to.be
+          .equals('Authentication failed: Please supply a valid token.');
+
+      });
+  });
 
   it('fake test: should return 500 error', async () => {
     const req= {};

@@ -11,14 +11,10 @@ import createNewSocialMediaUser from
 '../../../helpers/createNewSocialMediaUser';
 
 config();
-const {
-  FACEBOOK_APP_ID,
-  FACEBOOK_APP_SECRET,
-  FACEBOOK_CALLBACK_URL
-} = process.env;
-const {
-  User
-} = db;
+const { FACEBOOK_APP_ID, FACEBOOK_APP_SECRET,
+  FACEBOOK_CALLBACK_URL } = process.env;
+const { User } = db;
+const duration = '1d';
 /**
  *
  *
@@ -68,7 +64,7 @@ class Facebook {
        }
     }).spread((user, created) => {
       const token = JWTHelper.generateToken(
-        removeDateStampAndPassword(user.dataValues), '1d'
+        removeDateStampAndPassword(user.dataValues), duration
         );
       userDetails.token = token;
       createNewSocialMediaUser(user, created, userDetails);

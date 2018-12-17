@@ -40,10 +40,10 @@ describe('Users can login through /api/v1/auth/google', () => {
       .reply(200, authMock().profile);
     done();
   });
-  after((done) => {
-    models.User.destroy({ truncate: true });
-    done();
-  });
+  // after((done) => {
+  //   models.User.destroy({ truncate: true });
+  //   done();
+  // });
   it('should return 200 if user is successfully', (done) => {
     chai.request(app).get('/api/v1/auth/google')
       .end((err, res) => {

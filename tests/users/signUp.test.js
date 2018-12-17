@@ -53,7 +53,7 @@ describe('API endpoint for POST auth/signup - Email Validations', () => {
       });
   });
 
-  it('should fail if user supply invalid email', () => {
+  it('should fail if user supply invalid email', (done) => {
     const user = signupFactory.build({
       email: 'danieiopeyey@djjdd'
     });
@@ -65,6 +65,7 @@ describe('API endpoint for POST auth/signup - Email Validations', () => {
         expect(res.body).to.be.an('Object');
         expect(res.body.msg).to.be
           .equals('Invalid Email: supply a valid email');
+          done();
       });
   });
 
