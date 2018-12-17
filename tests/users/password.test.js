@@ -5,76 +5,67 @@ import signupFactory from '../mocks/factories/userFactory';
 
 chai.use(chaiHttp);
 describe('API endpoint for POST auth/signup - Password Validations', () => {
-  it('should register a user with a valid password', () => {
+  it('should register a user with a valid password', async () => {
     const user = signupFactory.build({
-      password: 'danielshow1#'
+      password: 'danielshow1#',
+      userName: 'opeyeyeemib456'
     });
-    chai.request(url)
+    const res = await chai.request(url)
     .post('/api/v1/auth/signup')
-    .send(user)
-    .then((res) => {
-      expect(res).to.have.status(200);
-      expect(res.body).to.be.an('Object');
-      expect(res.body.msg).to.be.equals('User created successfully');
-    });
+    .send(user);
+    expect(res).to.have.status(200);
+    expect(res.body).to.be.an('Object');
+    expect(res.body.msg).to.be.equals('User created successfully');
   });
 
-  it('should fail if password field is empty', () => {
+  it('should fail if password field is empty', async () => {
     const user = signupFactory.build({
       password: null
     });
-    chai.request(url)
+    const res = await chai.request(url)
     .post('/api/v1/auth/signup')
-    .send(user)
-    .then((res) => {
-      expect(res).to.have.status(400);
-      expect(res.body).to.be.an('Object');
-      expect(res.body.msg).to.be.equals('Password field cannot be empty');
-    });
+    .send(user);
+    expect(res).to.have.status(400);
+    expect(res.body).to.be.an('Object');
+    expect(res.body.msg).to.be.equals('Password field cannot be empty');
   });
 
-  it('should fail for invalid password', () => {
+  it('should fail for invalid password', async () => {
     const user = signupFactory.build({
       password: 'hfhfjfbhfhfjhfhkf'
     });
-    chai.request(url)
+    const res = await chai.request(url)
     .post('/api/v1/auth/signup')
-    .send(user)
-    .then((res) => {
-      expect(res).to.have.status(400);
-      expect(res.body).to.be.an('Object');
-      expect(res.body.msg).to.be.equals(
-        'Invalid Password: Password must contains a number and a symbol');
-    });
+    .send(user);
+    expect(res).to.have.status(400);
+    expect(res.body).to.be.an('Object');
+    expect(res.body.msg).to.be.equals(
+      'Invalid Password: Password must contains a number and a symbol');
   });
 
-  it('should fail for invalid password', () => {
+  it('should fail for invalid password', async () => {
     const user = signupFactory.build({
       password: 'hfhfjfbhf   hfjhfhkf'
     });
-    chai.request(url)
+    const res = await chai.request(url)
     .post('/api/v1/auth/signup')
-    .send(user)
-    .then((res) => {
-      expect(res).to.have.status(400);
-      expect(res.body).to.be.an('Object');
-      expect(res.body.msg).to.be.equals(
-        'Invalid Password: Password must contains a number and a symbol');
-    });
+    .send(user);
+    expect(res).to.have.status(400);
+    expect(res.body).to.be.an('Object');
+    expect(res.body.msg).to.be.equals(
+      'Invalid Password: Password must contains a number and a symbol');
   });
 
-  it('should fail if password length is less than 8', () => {
+  it('should fail if password length is less than 8', async () => {
     const user = signupFactory.build({
       password: 'hfhfjf'
     });
-    chai.request(url)
+    const res = await chai.request(url)
     .post('/api/v1/auth/signup')
-    .send(user)
-    .then((res) => {
-      expect(res).to.have.status(400);
-      expect(res.body).to.be.an('Object');
-      expect(res.body.msg).to.be.equals(
-        'Password must not be less than 8 characters');
-    });
+    .send(user);
+    expect(res).to.have.status(400);
+    expect(res.body).to.be.an('Object');
+    expect(res.body.msg).to.be.equals(
+      'Password must not be less than 8 characters');
   });
 });

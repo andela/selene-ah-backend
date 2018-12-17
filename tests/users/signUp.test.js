@@ -25,62 +25,54 @@ describe('API endpoint for POST auth/signup - Email Validations', () => {
   it('should register a user with a correct email', async () => {
     const user = signupFactory.build({
       email: 'opeyemidaniel@gmail.com',
-      password: 'password123*'
+      password: 'password123*',
+      userName: 'followers345'
     });
-    await chai.request(server)
+    const res = await chai.request(server)
       .post('/api/v1/auth/signup')
-      .send(user)
-      .then((res) => {
-        expect(res).to.have.status(200);
-        expect(res.body).to.be.an('Object');
-        expect(res.body.msg).to.be.equals('User created successfully');
-         userDetails = { ...res.body };
-         expiredToken = JWTHelper.generateToken(userDetails.user, '0.2s');
-      });
+      .send(user);
+      expect(res).to.have.status(200);
+      expect(res.body).to.be.an('Object');
+      expect(res.body.msg).to.be.equals('User created successfully');
+        userDetails = { ...res.body };
+        expiredToken = JWTHelper.generateToken(userDetails.user, '0.2s');
   });
 
   it('should fail if email field is empty', async () => {
     const user = signupFactory.build({
       email: null
     });
-    chai.request(server)
+    const res = await chai.request(server)
       .post('/api/v1/auth/signup')
-      .send(user)
-      .then((res) => {
-        expect(res).to.have.status(400);
-        expect(res.body).to.be.an('Object');
-        expect(res.body.msg).to.be.equals('Email field cannot be empty');
-      });
+      .send(user);
+    expect(res).to.have.status(400);
+    expect(res.body).to.be.an('Object');
+    expect(res.body.msg).to.be.equals('Email field cannot be empty');
   });
 
-  it('should fail if user supply invalid email', (done) => {
+  it('should fail if user supply invalid email', async () => {
     const user = signupFactory.build({
       email: 'danieiopeyey@djjdd'
     });
-    chai.request(server)
+    const res = await chai.request(server)
       .post('/api/v1/auth/signup')
-      .send(user)
-      .then((res) => {
-        expect(res).to.have.status(400);
-        expect(res.body).to.be.an('Object');
-        expect(res.body.msg).to.be
-          .equals('Invalid Email: supply a valid email');
-          done();
-      });
+      .send(user);
+    expect(res).to.have.status(400);
+    expect(res.body).to.be.an('Object');
+    expect(res.body.msg).to.be
+      .equals('Invalid Email: supply a valid email');
   });
 
-  it('should fail if a duplicate email is found', () => {
+  it('should fail if a duplicate email is found', async () => {
     const user = signupFactory.build({
       email: 'opeyemidaniel@gmail.com'
     });
-    chai.request(server)
+    const res = await chai.request(server)
       .post('/api/v1/auth/signup')
-      .send(user)
-      .then((res) => {
-        expect(res).to.have.status(400);
-        expect(res.body).to.be.an('Object');
-        expect(res.body.msg).to.be.equals('Email already exist, Login');
-      });
+      .send(user);
+    expect(res).to.have.status(400);
+    expect(res.body).to.be.an('Object');
+    expect(res.body.msg).to.be.equals('Email already exist, Login');
   });
 
   it('fake test: should throw 500 error ', async () => {
@@ -105,13 +97,11 @@ describe('Email Verification', () => {
 
   it('should verify the email address of a user', async () => {
     const { token, user: { email } } = userDetails;
-    await chai.request(server)
-    .get(`/api/v1/auth/verifyemail?token=${token}&email=${email}`)
-    .then(res => {
-      expect(res).to.have.status(200);
-      expect(res.body).to.be.an('Object');
-      expect(res.body.msg).to.be.equals('Email successfully confirmed');
-    });
+    const res = await chai.request(server)
+    .get(`/api/v1/auth/verifyemail?token=${token}&email=${email}`);
+    expect(res).to.have.status(200);
+    expect(res.body).to.be.an('Object');
+    expect(res.body.msg).to.be.equals('Email successfully confirmed');
   });
 
   context('###', (done) => {

@@ -30,19 +30,16 @@ const URL = '/api/v1/role/';
 describe('#Authorization Test', () => {
   afterEach(() => sinon.restore());
 
-  before((done) => {
+  before(async() => {
     const user = UserFactory.build({
       email: 'admin@admin.com',
       password: 'password123!'
     });
-    request(server)
+    const res = await request(server)
       .post(SIGNIN_URL)
-      .send(user)
-      .end((err, response) => {
-        const jwtToken = response.body.token;
-        token = jwtToken;
-        done();
-      });
+      .send(user);
+    const jwtToken = res.body.token;
+    token = jwtToken;
   });
 
   context('function test', () => {
@@ -80,15 +77,13 @@ describe('#Authorization Test', () => {
   });
 
   context('getAllRoles Tests', () => {
-    it('should get all the role', () => {
-      request(server)
+    it('should get all the role', async () => {
+      const res = await request(server)
         .get(URL)
-        .set('authorization', `Bearer ${token}`)
-        .end((err, response) => {
-          expect(200);
-          expect(response.body).to.be.an('object');
-          expect(response.body).to.have.property('data');
-        });
+        .set('authorization', `Bearer ${token}`);
+      expect(200);
+      expect(res.body).to.be.an('object');
+      expect(res.body).to.have.property('data');
     });
 
     it(`should return ${NOT_FOUND_MSG}
@@ -96,11 +91,11 @@ describe('#Authorization Test', () => {
 
       sinon.stub(Role, 'findAll').returns(false);
       const next = sinon.stub();
-      const response = await Authorization
+      const res = await Authorization
                           .getAllRoles(fakeRequest, fakeResponse, next);
-      expect(response).to.be.an('object');
-      expect(response.error).to.exist;
-      expect(response.error).to.equal(NOT_FOUND_MSG);
+      expect(res).to.be.an('object');
+      expect(res.error).to.exist;
+      expect(res.error).to.equal(NOT_FOUND_MSG);
     });
 
     it('should reach the catch block for undefined errors',async () => {
@@ -112,49 +107,43 @@ describe('#Authorization Test', () => {
   });
 
   context('postANewRole Test', () => {
-    it('should post a new role', () => {
+    it('should post a new role', async () => {
       const role = RoleFactory.build({
         type: 'admin'
       });
-      request(server)
+      const res = await request(server)
         .post(URL)
         .set('authorization', `Bearer ${token}`)
-        .send(role)
-        .end((err, response) => {
-          expect(response.body).to.be.an('object');
-          expect(response.body).to.have.property('message');
-          expect(response.body.message).to.equal(SUCCESSFULLY_CREATED_MSG);
-        });
+        .send(role);
+      expect(res.body).to.be.an('object');
+      expect(res.body).to.have.property('message');
+      expect(res.body.message).to.equal(SUCCESSFULLY_CREATED_MSG);
     });
 
-    it(`should return ${INVALID_STRING_MSG} when type is not valid`, () => {
+    it(`should give ${INVALID_STRING_MSG} when type is not valid`, async () => {
       const role = RoleFactory.build({
         type: 1283736
       });
-      request(server)
+      const res = await request(server)
       .post(URL)
       .set('authorization', `Bearer ${token}`)
-      .send(role)
-      .end((err, response) => {
-        expect(response.body).to.be.an('object');
-        expect(response.body).to.have.property('message');
-        expect(response.body.message).to.equal(INVALID_STRING_MSG);
-      });
+      .send(role);
+      expect(res.body).to.be.an('object');
+      expect(res.body).to.have.property('message');
+      expect(res.body.message).to.equal(INVALID_STRING_MSG);
     });
 
-    it(`should return ${ROLE_ALREADY_EXIST_MSG}`, () => {
+    it(`should return ${ROLE_ALREADY_EXIST_MSG}`, async () => {
       const role = RoleFactory.build({
         type: 'admin'
       });
-      request(server)
+      const res = await request(server)
         .post(URL)
         .set('authorization', `Bearer ${token}`)
-        .send(role)
-        .end((err, response) => {
-          expect(response.body).to.be.an('object');
-          expect(response.body).to.have.property('message');
-          expect(response.body.message).to.equal(ROLE_ALREADY_EXIST_MSG);
-        });
+        .send(role);
+      expect(res.body).to.be.an('object');
+      expect(res.body).to.have.property('message');
+      expect(res.body.message).to.equal(ROLE_ALREADY_EXIST_MSG);
     });
 
     it('should reach the catch block for undefined errors',async () => {
@@ -166,34 +155,30 @@ describe('#Authorization Test', () => {
   });
 
   context('deleteRole Test', () => {
-    it(`should return ${INVALID_STRING_MSG} when type is not valid`, () => {
+    it(`should give ${INVALID_STRING_MSG} when type is not valid`, async () => {
       const role = RoleFactory.build({
         type: 1283736
       });
-      request(server)
+      const res = await request(server)
       .delete(URL)
       .set('authorization', `Bearer ${token}`)
-      .send(role)
-      .end((err, response) => {
-        expect(response.body).to.be.an('object');
-        expect(response.body).to.have.property('message');
-        expect(response.body.message).to.equal(INVALID_STRING_MSG);
-      });
+      .send(role);
+    expect(res.body).to.be.an('object');
+    expect(res.body).to.have.property('message');
+    expect(res.body.message).to.equal(INVALID_STRING_MSG);
     });
 
-    it(`should return ${ROLE_ALREADY_EXIST_MSG}`, () => {
+    it(`should return ${ROLE_ALREADY_EXIST_MSG}`, async () => {
       const role = RoleFactory.build({
         type: 'admin'
       });
-      request(server)
+      const res = await request(server)
         .delete(URL)
         .set('authorization', `Bearer ${token}`)
-        .send(role)
-        .end((err, response) => {
-          expect(response.body).to.be.an('object');
-          expect(response.body).to.have.property('message');
-          expect(response.body.message).to.equal(SUCCESSFULLY_DELETED_MSG);
-        });
+        .send(role);
+      expect(res.body).to.be.an('object');
+      expect(res.body).to.have.property('message');
+      expect(res.body.message).to.equal(SUCCESSFULLY_DELETED_MSG);
     });
 
     it('should reach the catch block for undefined errors',async () => {

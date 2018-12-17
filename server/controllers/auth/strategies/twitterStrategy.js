@@ -6,6 +6,7 @@ import createNewSocialMediaUser from
 '../../../helpers/createNewSocialMediaUser';
 import generateRandomPassword from
 '../../../helpers/generatePassword';
+import { REGULAR } from '../../../helpers/constants';
 
 const {
   User,
@@ -58,7 +59,7 @@ export default class TwitterLogin{
         verified: true,
         blocked: false,
         emailNotification: true,
-        role: 'regular',
+        role: REGULAR,
         password: generateRandomPassword()
       }}).spread((user, created) => {
         createNewSocialMediaUser(user,created,userData);

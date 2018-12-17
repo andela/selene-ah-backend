@@ -4,6 +4,7 @@ import sinon from 'sinon';
 import sinonChai from 'sinon-chai';
 import RoleAuthorization
 from '../../server/middlewares/RoleAuthorization';
+import { REGULAR } from '../../server/helpers/constants';
 
 chai.use(chaiHttp);
 chai.use(sinonChai);
@@ -32,14 +33,14 @@ describe('#Role Middleware', () => {
 
   context('authorizeUser Test', () => {
     it('should return a function', () => {
-      const response = RoleAuthorization.authorizeUser('regular');
+      const response = RoleAuthorization.authorizeUser(REGULAR);
       expect(response).to.be.a('function');
     });
 
     it('should call isPermitted function when user role is passed', () => {
         const request = {
           user: {
-            role: 'regular'
+            role: REGULAR
           },
           headers: {
             token: 'null'
@@ -57,7 +58,7 @@ describe('#Role Middleware', () => {
         const next = sinon.stub();
         sinon.spy(RoleAuthorization, 'isPermitted');
 
-        const responseFn = RoleAuthorization.authorizeUser('regular');
+        const responseFn = RoleAuthorization.authorizeUser(REGULAR);
 
         responseFn(request, response, next);
 
@@ -67,7 +68,7 @@ describe('#Role Middleware', () => {
     it('should return next when user is authorised', () => {
       const request = {
         user: {
-          role: 'regular'
+          role: REGULAR
         },
         headers: {
           token: 'null'
@@ -84,7 +85,7 @@ describe('#Role Middleware', () => {
 
       const next = sinon.stub();
       sinon.stub(RoleAuthorization, 'isPermitted').returns(next);
-      const responseFn = RoleAuthorization.authorizeUser('regular');
+      const responseFn = RoleAuthorization.authorizeUser(REGULAR);
       responseFn(request, response, next);
       next.should.have.been.called;
     });
@@ -92,7 +93,7 @@ describe('#Role Middleware', () => {
 
   context('isPermitted Test', () => {
     it('should return true if user is authorized', () => {
-      const response = RoleAuthorization.isPermitted('regular', 'regular');
+      const response = RoleAuthorization.isPermitted(REGULAR, 'regular');
       expect(response).to.be.a('boolean');
       expect(response).to.equal(true);
     });

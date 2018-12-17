@@ -6,7 +6,7 @@ import {
   INVALID_STRING_MSG,
   ROLE_ALREADY_EXIST_MSG
 } from '../helpers/responseMessages';
-import validationHelper from '../middlewares/validations/validationHelper';
+import validationHelper from '../helpers/validationHelper';
 
 const { Role, User } = models;
 /**

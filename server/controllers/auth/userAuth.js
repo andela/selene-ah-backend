@@ -5,6 +5,7 @@ import removeDateStampAndPassword from
 '../../helpers/removeDateStampAndPassword';
 import sendEmail from '../../helpers/sendEmail';
 import emailTemplate from '../../helpers/emailTemplate';
+import { REGULAR } from '../../helpers/constants';
 
 const { User, Profile } = models;
 const {
@@ -31,7 +32,7 @@ class AuthController {
         firstName: req.body.firstName.trim(),
         lastName: req.body.lastName.trim(),
         userName: req.body.userName.trim(),
-        role: 'regular'
+        role: REGULAR
       });
       await Profile.create({
         userId: user.id,

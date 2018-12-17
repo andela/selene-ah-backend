@@ -7,12 +7,13 @@ import models from '../../server/models';
 import valid
   from '../../server/helpers/passwordHash';
 import loginFactory from '../mocks/factories/userFactory';
+import { REGULAR } from '../../server/helpers/constants';
 
 chai.use(chaiHttp);
 
 const { User } = models;
 
-describe('API endpoint for POST auth/signin - Email Validations', async () => {
+describe('API endpoint for POST auth/signin - Email Validations', () => {
   before(async () => {
     await User.create({
       email: 'opeyemi@yahoo.com',
@@ -20,7 +21,7 @@ describe('API endpoint for POST auth/signin - Email Validations', async () => {
       lastName: 'Opeyemi',
       userName: 'shotonwaa',
       password: valid.hashPassword('danielshow2#'),
-      role: 'regular'
+      role: REGULAR
     });
   });
 
@@ -28,113 +29,99 @@ describe('API endpoint for POST auth/signin - Email Validations', async () => {
     const user = loginFactory.build({
       email: 'opeyemi@yahoo.com',
       password: 'daniel#2jjfj',
-      role: 'regular'
+      role: REGULAR
     });
-    await chai.request(server)
+    const res = await chai.request(server)
     .post('/api/v1/auth/signin')
-    .send(user)
-    .then((res) => {
-      expect(res).to.have.status(400);
-      expect(res.body).to.be.an('Object');
-      expect(res.body.msg).to.be.equals('Invalid email or password');
-    });
+    .send(user);
+    expect(res).to.have.status(400);
+    expect(res.body).to.be.an('Object');
+    expect(res.body.msg).to.be.equals('Invalid email or password');
   });
 
-  it('should fail if email field is empty', () => {
+  it('should fail if email field is empty', async () => {
     const user = loginFactory.build({
       email: null,
       password: 'daniel#2jjfj',
-      role: 'regular'
+      role: REGULAR
     });
-    chai.request(server)
+    const res = await chai.request(server)
     .post('/api/v1/auth/signin')
-    .send(user)
-    .then((res) => {
-      expect(res).to.have.status(400);
-      expect(res.body).to.be.an('Object');
-      expect(res.body.msg).to.be.equals('Email field cannot be empty');
-    });
+    .send(user);
+    expect(res).to.have.status(400);
+    expect(res.body).to.be.an('Object');
+    expect(res.body.msg).to.be.equals('Email field cannot be empty');
   });
 
-  it('should fail if user supply invalid email', () => {
+  it('should fail if user supply invalid email', async () => {
     const user = loginFactory.build({
       email: 'daniel@yeheeheh',
-      role: 'regular'
+      role: REGULAR
     });
-    chai.request(server)
+    const res = await chai.request(server)
     .post('/api/v1/auth/signin')
-    .send(user)
-    .then((res) => {
-      expect(res).to.have.status(400);
-      expect(res.body).to.be.an('Object');
-      expect(res.body.msg).to.be.equals('Invalid Email: supply a valid email');
-    });
+    .send(user);
+    expect(res).to.have.status(400);
+    expect(res.body).to.be.an('Object');
+    expect(res.body.msg).to.be.equals('Invalid Email: supply a valid email');
   });
 
-  it('should fail if a password is not supplied', () => {
+  it('should fail if a password is not supplied', async () => {
     const user = loginFactory.build({
       password: '  ',
       email: 'opeyemi@yahoo.com',
-      role: 'regular'
+      role: REGULAR
     });
-    chai.request(server)
+    const res = await chai.request(server)
     .post('/api/v1/auth/signin')
-    .send(user)
-    .then((res) => {
-      expect(res).to.have.status(400);
-      expect(res.body).to.be.an('Object');
-      expect(res.body.msg).to.be.equals('Password field cannot be empty');
-    });
+    .send(user);
+    expect(res).to.have.status(400);
+    expect(res.body).to.be.an('Object');
+    expect(res.body.msg).to.be.equals('Password field cannot be empty');
   });
 
-  it('should fail if a password is not valid', () => {
+  it('should fail if a password is not valid', async () => {
     const user = loginFactory.build({
       password: 'gyhhjjkjj',
       email: 'opeyemi@yahoo.com',
-      role: 'regular'
+      role: REGULAR
     });
-    chai.request(server)
+    const res = await chai.request(server)
     .post('/api/v1/auth/signin')
-    .send(user)
-    .then((res) => {
-      expect(res).to.have.status(400);
-      expect(res.body).to.be.an('Object');
-      expect(res.body.msg).to.be.equals(
-        'Invalid Password: Password must contains a number and a symbol');
-    });
+    .send(user);
+    expect(res).to.have.status(400);
+    expect(res.body).to.be.an('Object');
+    expect(res.body.msg).to.be.equals(
+      'Invalid Password: Password must contains a number and a symbol');
   });
 
   it('should fail if a email is not in the database', async () => {
     const user = loginFactory.build({
       password: 'fdghjku',
       email: 'opeyemi@yahhhhoo.com',
-      role: 'regular'
+      role: REGULAR
     });
-    await chai.request(server)
+    const res = await chai.request(server)
     .post('/api/v1/auth/signin')
-    .send(user)
-    .then((res) => {
-      expect(res).to.have.status(400);
-      expect(res.body).to.be.an('Object');
-      expect(res.body.msg).to.be.equals(
-        'Invalid email or password');
-    });
+    .send(user);
+    expect(res).to.have.status(400);
+    expect(res.body).to.be.an('Object');
+    expect(res.body.msg).to.be.equals(
+      'Invalid email or password');
   });
 
   it('should login with valid email and password', async () => {
     const user ={
       email: 'opeyemi@yahoo.com',
       password: 'danielshow2#',
-      role: 'regular'
+      role: REGULAR
     };
-    await chai.request(server)
+    const res = await chai.request(server)
     .post('/api/v1/auth/signin')
-    .send(user)
-    .then((res) => {
-      expect(res).to.have.status(200);
-      expect(res.body).to.be.an('Object');
-      expect(res.body.msg).to.be.equals('Login successful');
-    });
+    .send(user);
+    expect(res).to.have.status(200);
+    expect(res.body).to.be.an('Object');
+    expect(res.body.msg).to.be.equals('Login successful');
   });
 
   it('fake test: should return 500 error', async () => {

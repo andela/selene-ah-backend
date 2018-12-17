@@ -9,6 +9,7 @@ import removeDateStampAndPassword from
 '../../../helpers/removeDateStampAndPassword';
 import createNewSocialMediaUser from
 '../../../helpers/createNewSocialMediaUser';
+import { REGULAR } from '../../../helpers/constants';
 
 config();
 const { FACEBOOK_APP_ID, FACEBOOK_APP_SECRET,
@@ -60,7 +61,7 @@ class Facebook {
         userName: userDetails.userName,
         email: userDetails.email,
         password: userDetails.password,
-        role: 'regular',
+        role: REGULAR,
         verified: true
        }
     }).spread((user, created) => {

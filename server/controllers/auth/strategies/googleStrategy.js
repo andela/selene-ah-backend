@@ -8,6 +8,7 @@ import generateRandomPassword from
 '../../../helpers/generatePassword';
 import createNewSocialMediaUser from
 '../../../helpers/createNewSocialMediaUser';
+import { REGULAR } from '../../../helpers/constants';
 
 
 const duration = '1d';
@@ -59,7 +60,7 @@ export default class GoogleLogin{
         verified: true,
         blocked: false,
         emailNotification: true,
-        role: 'regular',
+        role: REGULAR,
         password: generateRandomPassword()
       }}).spread((user, created) => {
         const token = JWTHelper.generateToken(
