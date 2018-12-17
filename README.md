@@ -377,16 +377,24 @@ Authentication optional, returns multiple comments
 
 Authentication required
 
-### Favorite Article
+### Like Article
 
-`POST /api/articles/:slug/favorite`
+`GET /api/votes/:artilceId/like`
 
 Authentication required, returns the Article
 No additional parameters required
 
-### Unfavorite Article
+### Dislike Article
 
-`DELETE /api/articles/:slug/favorite`
+`GET /api/votes/:articleId/dislike`
+
+Authentication required, returns the Article
+
+No additional parameters required
+
+### Unlike Article
+
+`GET /api/votes/:articleId/unlike`
 
 Authentication required, returns the Article
 
