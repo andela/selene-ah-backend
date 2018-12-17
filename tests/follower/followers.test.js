@@ -63,7 +63,7 @@ describe('GET /follow Route', () => {
   });
 
 
-  it('should return error is followerId is not supplied or null', async () => {
+  it('should return error if followerId is not supplied or null', async () => {
     await chai.request(server)
     .post('/api/v1/follow')
     .send({followerId: null})

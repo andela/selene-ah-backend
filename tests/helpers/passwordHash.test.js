@@ -26,11 +26,11 @@ describe('#PasswordHash', () => {
   context('#comparePassword', () => {
     it('Should return true if password is equal to hashed password', () => {
       const comparePasswordSpy = sinon.spy(bcrypt, 'compareSync');
-      const isPassword = passwordHash.comparePassword(
-        'opeyemi', hashedPassword);
-      expect(isPassword)
+      const hashed = passwordHash.comparePassword('opeyemi', hashedPassword);
+      expect(hashed)
         .to.be.equal(true);
       expect(comparePasswordSpy.called).to.be.equal(true);
+      comparePasswordSpy.restore();
     });
 
     it('should throw error if password is null or empty', () => {

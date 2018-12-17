@@ -18,4 +18,6 @@ router.post('/auth/signin',
   [email.isEmailValid, email.doesLoginEmailExist,
     password.isPasswordValid], authController.loginUser);
 
+router.get('/auth/verifyemail', authController.verifyEmail);
+
 export default router;

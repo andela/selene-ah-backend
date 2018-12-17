@@ -41,9 +41,10 @@ class UserAuthentication {
   static async checkIfUserIsFollowed(req, res, next) {
     try {
       const follow = await Follower.findOne({
-        where: {userId: req.token.user.id,
+        where: {userId: req.user.id,
         followerId: req.body.followerId}
       });
+
 
       if (!follow || follow === null) {
         return next();
@@ -67,7 +68,7 @@ class UserAuthentication {
   static async checkIfUserNotFollowed(req, res, next) {
     try {
       const follow = await Follower.findOne({
-        where: {userId: req.token.user.id,
+        where: {userId: req.user.id,
         followerId: req.body.followerId || req.params.id}
       });
 
@@ -91,7 +92,7 @@ class UserAuthentication {
    * @returns { object } -
    */
   static isFollowingSelf(req, res, next) {
-    if (req.token.user.id === req.body.followerId) {
+    if (req.user.id === req.body.followerId) {
       return res.status(400).json({
         success: false,
         message: 'You can\'t follow yourself'

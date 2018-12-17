@@ -2,7 +2,7 @@ import chaiHttp from 'chai-http';
 import chai, { expect } from 'chai';
 import sinon from 'sinon';
 import userController from '../../server/controllers/auth/userAuth';
-import url from '../../server/index';
+import server from '../../server/index';
 import models from '../../server/models';
 import valid
   from '../../server/helpers/passwordHash';
@@ -28,7 +28,7 @@ describe('API endpoint for POST auth/signin - Email Validations', () => {
       email: 'opeyemi@yahoo.com',
       password: 'daniel#2jjfj'
     });
-    await chai.request(url)
+    await chai.request(server)
     .post('/api/v1/auth/signin')
     .send(user)
     .then((res) => {
@@ -43,7 +43,7 @@ describe('API endpoint for POST auth/signin - Email Validations', () => {
       email: null,
       password: 'daniel#2jjfj'
     });
-    chai.request(url)
+    chai.request(server)
     .post('/api/v1/auth/signin')
     .send(user)
     .then((res) => {
@@ -57,7 +57,7 @@ describe('API endpoint for POST auth/signin - Email Validations', () => {
     const user = loginFactory.build({
       email: 'daniel@yeheeheh'
     });
-    chai.request(url)
+    chai.request(server)
     .post('/api/v1/auth/signin')
     .send(user)
     .then((res) => {
@@ -72,7 +72,7 @@ describe('API endpoint for POST auth/signin - Email Validations', () => {
       password: '  ',
       email: 'opeyemi@yahoo.com',
     });
-    chai.request(url)
+    chai.request(server)
     .post('/api/v1/auth/signin')
     .send(user)
     .then((res) => {
@@ -87,7 +87,7 @@ describe('API endpoint for POST auth/signin - Email Validations', () => {
       password: 'gyhhjjkjj',
       email: 'opeyemi@yahoo.com',
     });
-    chai.request(url)
+    chai.request(server)
     .post('/api/v1/auth/signin')
     .send(user)
     .then((res) => {
@@ -103,7 +103,7 @@ describe('API endpoint for POST auth/signin - Email Validations', () => {
       password: 'fdghjku',
       email: 'opeyemi@yahhhhoo.com',
     });
-    await chai.request(url)
+    await chai.request(server)
     .post('/api/v1/auth/signin')
     .send(user)
     .then((res) => {
@@ -119,7 +119,7 @@ describe('API endpoint for POST auth/signin - Email Validations', () => {
       email: 'opeyemi@yahoo.com',
       password: 'danielshow2#'
     };
-    await chai.request(url)
+    await chai.request(server)
     .post('/api/v1/auth/signin')
     .send(user)
     .then((res) => {

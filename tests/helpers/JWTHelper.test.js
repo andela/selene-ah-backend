@@ -6,8 +6,14 @@ import removeDateStampAndPassword from
 '../../server/helpers/removeDateStampAndPassword';
 
 const userObject = UserFactory.build();
-const token = JWTHelper.generateToken(removeDateStampAndPassword(userObject));
+const token = JWTHelper.generateToken(
+  removeDateStampAndPassword(userObject), '1d'
+  );
 const decodedToken = JSON.stringify(JWTHelper.verifyToken(token).user);
+const expiredToken = JWTHelper.generateToken(
+  removeDateStampAndPassword(userObject), '0.1s'
+  );
+const invalidDecodedToken = JWTHelper.verifyToken(expiredToken);
 
 chai.use(chaiHttp);
 describe('Token generation and verification', () => {
@@ -34,6 +40,10 @@ describe('Token generation and verification', () => {
       expect(() => {
         JWTHelper.verifyToken(8);
       }).to.throw('Please enter a valid token.');
+    });
+
+    it('should return an error for expired tokens', () => {
+      expect(invalidDecodedToken.message).to.equal('jwt expired');
     });
   });
 });

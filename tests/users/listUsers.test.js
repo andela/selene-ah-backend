@@ -6,9 +6,11 @@ import userFactory from '../mocks/factories/userFactory';
 import models from '../../server/models';
 import UserController from '../../server/controllers/userController';
 
+
 const user = userFactory.build({
   password: 'daniel.shotonwa12'
 });
+
 
 chai.use(chaiHttp);
 
@@ -47,8 +49,8 @@ describe('######### List Users', () => {
       });
   });
 
-  it('should give error if Token is Invalid', ()=> {
-    chai.request(url)
+  it('should give error if Token is Invalid',  async ()=> {
+    await chai.request(url)
       .get('/api/v1/users')
       .set('Authorization', 'Bearer invalidTOKEN')
       .then(res => {
@@ -56,6 +58,7 @@ describe('######### List Users', () => {
         expect(res.body).to.be.an('object');
         expect(res.body.msg).to.be
           .equals('Authentication failed: Please supply a valid token.');
+
       });
   });
 

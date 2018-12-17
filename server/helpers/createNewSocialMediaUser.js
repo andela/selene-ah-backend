@@ -8,10 +8,9 @@ import models from '../models';
  * @returns {object} true
  */
 const createNewSocialMediaUser = (user, created, userData) => {
-  const {
-    Profile,
-  } = models;
+  const { Profile } = models;
   userData.isNewUser = created;
+
   if (created) {
     Profile.create({
       userId: user.id,

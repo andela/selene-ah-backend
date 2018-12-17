@@ -23,6 +23,7 @@ export default () => {
   };
   const user = {
     isNewUser: true,
+    email: faker.internet.email(),
     token: faker.random.number({
       min: 0,
       max: 40
@@ -31,6 +32,7 @@ export default () => {
   };
   const oldUser = {
     isNewUser: false,
+    email: faker.internet.email(),
     token: faker.random.number({
       min: 0,
       max: 40

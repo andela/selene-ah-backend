@@ -1,4 +1,4 @@
-import helpers from './validationHelper';
+import helpers from '../../helpers/validationHelper';
 /**
  * @description This class is for validating password fields
  */

@@ -11,7 +11,6 @@ import models from '../../server/models';
 import app from '../../server/index';
 import authMock from '../mocks/authMock';
 import generatePassword from '../../server/helpers/generatePassword';
-// import GoogleAuth from '../../server/helpers/auth/googleAuthenticate';
 import GoogleStrategy
 from '../../server/controllers/auth/strategies/googleStrategy';
 import socialMediaControllerCallback from
@@ -41,6 +40,10 @@ describe('Users can login through /api/v1/auth/google', () => {
       .reply(200, authMock().profile);
     done();
   });
+  // after((done) => {
+  //   models.User.destroy({ truncate: true });
+  //   done();
+  // });
   it('should return 200 if user is successfully', (done) => {
     chai.request(app).get('/api/v1/auth/google')
       .end((err, res) => {
@@ -78,6 +81,9 @@ describe('Google passport authentication',() => {
     const {user} = authMock();
     const req = {
       user,
+      headers:{
+        host: 'localhost:3000'
+      }
     };
     const res = {
       status() {
@@ -95,6 +101,9 @@ describe('Google passport authentication',() => {
     const {oldUser} = authMock();
     const req = {
       user: oldUser,
+      headers:{
+        host: 'localhost:3000'
+      }
     };
     const res = {
       status() {

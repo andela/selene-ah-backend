@@ -1,4 +1,4 @@
-import helpers from './validationHelper';
+import helpers from '../../helpers/validationHelper';
 import models from '../../models';
 
 const { User } = models;

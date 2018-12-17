@@ -43,8 +43,12 @@ const isUsernameValid = (name) => {
 
 const isUUIDValid = (uuid) => {
   // eslint-disable-next-line
-  const uuidRegex = /^[A-F\d]{8}-[A-F\d]{4}-4[A-F\d]{3}-[89AB][A-F\d]{3}-[A-F\d]{12}$/i; // UUID Regex credit to @jakewtaylor 
+  const uuidRegex = /^[A-F\d]{8}-[A-F\d]{4}-4[A-F\d]{3}-[89AB][A-F\d]{3}-[A-F\d]{12}$/i; // UUID Regex credit to @jakewtaylor
   return uuidRegex.test(uuid);
+};
+
+const  isSocialMediaEmail = (email) => {
+  return email.includes('@facebook.com') || email.includes('@twitter.com');
 };
 
 export default {
@@ -52,5 +56,6 @@ export default {
   isUsernameValid,
   isNameValid,
   isPasswordValid,
-  isUUIDValid
+  isUUIDValid,
+  isSocialMediaEmail
 };
