@@ -31,6 +31,24 @@ class PasswordValidation {
     }
     return next();
   }
+
+  /**
+   * @description A middleware that checks if password = confirmPassword
+   * @param {object} req - Express request object sent to the server
+   * @param {object} res - Express response object gotten from the middleware
+   * @param {object} next - Express next middleware function
+   * @returns {res} - Returns the response object
+   */
+  static confirmPassword(req, res, next){
+    const { password, confirmPassword } = req.body;
+    if(password !== confirmPassword){
+      return res.status(400).json({
+        success: false,
+        message: 'Password and confirm password must be the same'
+      });
+    }
+    return next();
+  }
 }
 
 export default PasswordValidation;

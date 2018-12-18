@@ -20,4 +20,28 @@ router.post('/auth/signin',
 
 router.get('/auth/verifyemail', authController.verifyEmail);
 
+router.get('/auth/verifyemail', authController.verifyEmail);
+
+/**
+ * @description sends link for user to update password
+ * @param {string}
+ * @param {function}
+ */
+router.post('/auth/resetpassword',
+[email.isEmailValid,
+  email.doesLoginEmailExist,
+  authController.sendResetPasswordEmail
+]);
+
+/**
+ * @description Updates the user password
+ * @param {string}
+ * @param {function}
+ */
+router.post('/auth/updatepassword',
+[password.isPasswordValid,
+  password.confirmPassword,
+  authController.updateUserPassword
+]);
+
 export default router;

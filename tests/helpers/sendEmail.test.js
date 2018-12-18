@@ -10,8 +10,7 @@ describe('Sends an email', () => {
         text: faker.lorem.text(),
     };
     it('should send an email to a valid address', async () => {
-        const res = await sendEmail(faker.internet.email(),
-        faker.lorem.sentence(),faker.internet.url(), template);
+        const res = await sendEmail(faker.internet.email(), template);
         expect(res).to.be.an('array');
         });
 });
