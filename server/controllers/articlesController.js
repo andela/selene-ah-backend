@@ -1,5 +1,6 @@
 import db from '../models';
 import generateUniqueSlug from '../helpers/generateUniqueSlug';
+import RatingController from './ratingController';
 
 const { Article, Category, User } = db;
 /**
@@ -66,7 +67,6 @@ class ArticlesController {
           model: User,
           as: 'author',
           attributes: ['userName', 'imageUrl', 'bio', 'dateOfBirth']
-
         }],
       });
 
@@ -76,6 +76,10 @@ class ArticlesController {
           message: 'Article not found',
         });
       }
+      const averageRating = RatingController.getAverageArticleRating(
+        article.id
+      );
+      article.averageRating = averageRating;
       return res.status(200).json({
         success: 'true',
         message: 'Retrieved article successfully',
@@ -101,7 +105,6 @@ class ArticlesController {
             model: User,
             as: 'author',
             attributes: ['userName', 'imageUrl', 'bio', 'dateOfBirth']
-
           }],
         });
 
@@ -140,7 +143,6 @@ class ArticlesController {
             model: User,
             as: 'author',
             attributes: ['userName', 'imageUrl', 'bio', 'dateOfBirth']
-
           }],
         });
 

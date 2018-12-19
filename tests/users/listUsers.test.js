@@ -42,7 +42,7 @@ describe('GET List Users', () => {
       .get('/api/v1/users');
       expect(res).to.have.status(401);
       expect(res.body).to.be.an('object');
-      expect(res.body.msg).to.be
+      expect(res.body.message).to.be
         .equals('Authentication failed: Please supply a valid token.');
   });
 
@@ -52,7 +52,7 @@ describe('GET List Users', () => {
       .set('Authorization', 'Bearer invalidTOKEN');
     expect(res).to.have.status(401);
     expect(res.body).to.be.an('object');
-    expect(res.body.msg).to.be
+    expect(res.body.message).to.be
       .equals('Authentication failed: Please supply a valid token.');
   });
 

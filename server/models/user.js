@@ -45,7 +45,7 @@ export default (sequelize, DataTypes) => {
       validate: {
         isBoolean: {
           args: [true, false],
-          msg: `Invalid value. The value for verified 
+          msg: `Invalid value. The value for verified
           can only be "true" or "false"`
         }
       }
@@ -56,7 +56,7 @@ export default (sequelize, DataTypes) => {
       validate: {
         isBoolean: {
           args: [true, false],
-          msg: `Invalid value. The value for blocked 
+          msg: `Invalid value. The value for blocked
           can only be "true" or "false"`
         }
       }
@@ -103,6 +103,10 @@ export default (sequelize, DataTypes) => {
     User.hasMany(models.Article, {
       foreignKey: 'userId',
       as: 'articles'
+    });
+    User.hasMany(models.Rating, {
+      foreignKey: 'userId',
+      as: 'userRating'
     });
     User.hasMany(models.Follower, {
       foreignKey: 'userId',

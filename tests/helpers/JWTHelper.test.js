@@ -1,5 +1,4 @@
-import chaiHttp from 'chai-http';
-import chai, { expect } from 'chai';
+import { expect } from 'chai';
 import JWTHelper from '../../server/helpers/JWTHelper';
 import UserFactory from '../mocks/factories/userFactory';
 import removeDateStampAndPassword from
@@ -16,7 +15,6 @@ const expiredToken = JWTHelper.generateToken(
   );
 const invalidDecodedToken = JWTHelper.verifyToken(expiredToken);
 
-chai.use(chaiHttp);
 describe('Token generation and verification', () => {
   describe('Test for token generation', () => {
     it('should generate a valid token', ()=>{
