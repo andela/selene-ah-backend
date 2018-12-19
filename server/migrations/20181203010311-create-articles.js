@@ -11,6 +11,10 @@ export default {
         type: Sequelize.STRING,
         allowNull: false
       },
+      readTime: {
+        type: Sequelize.INTEGER,
+        allowNull: false
+      },
       slug: {
         type: Sequelize.STRING,
         allowNull: false

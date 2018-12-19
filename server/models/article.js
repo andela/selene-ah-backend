@@ -31,6 +31,7 @@
     },
     slug: DataTypes.TEXT,
     published: DataTypes.BOOLEAN,
+    readTime: DataTypes.INTEGER,
   });
   Article.associate = (models) => {
     Article.belongsTo(models.User, {
