@@ -8,9 +8,7 @@ import createNewSocialMediaUser from
 const {Profile} = model;
 
 describe('New SocialMedia User Profile', () => {
-  after(() => {
-    Profile.create.restore();
-  });
+  afterEach(() => sinon.restore());
   it('should create a new profile', async () => {
     const user = {};
     const created = false;

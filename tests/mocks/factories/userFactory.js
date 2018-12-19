@@ -12,6 +12,7 @@ const UserFactory = new Factory()
   verified: faker.random.boolean,
   blocked: faker.random.boolean,
   emailNotification: faker.random.boolean,
+  role: faker.name.title,
   createdAt: faker.date.recent,
   updatedAt: faker.date.recent
 });

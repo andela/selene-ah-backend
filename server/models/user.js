@@ -7,9 +7,11 @@ export default (sequelize, DataTypes) => {
     },
     firstName: {
       type: DataTypes.STRING,
+      allowNull: false
     },
     lastName: {
       type: DataTypes.STRING,
+      allowNull: false
     },
     userName: {
       type: DataTypes.STRING,
@@ -45,10 +47,14 @@ export default (sequelize, DataTypes) => {
       validate: {
         isBoolean: {
           args: [true, false],
-          msg: `Invalid value. The value for verified 
+          msg: `Invalid value. The value for verified
           can only be "true" or "false"`
         }
       }
+    },
+    role: {
+      type: DataTypes.STRING,
+      allowNull: false,
     },
     blocked: {
       type: DataTypes.BOOLEAN,
@@ -56,7 +62,7 @@ export default (sequelize, DataTypes) => {
       validate: {
         isBoolean: {
           args: [true, false],
-          msg: `Invalid value. The value for blocked 
+          msg: `Invalid value. The value for blocked
           can only be "true" or "false"`
         }
       }

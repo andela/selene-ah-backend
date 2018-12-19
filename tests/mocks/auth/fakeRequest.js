@@ -6,6 +6,12 @@ const fakeRequest1 = {
     id: faker.random.number({ min: 0, max: 30 }),
     token: faker.random.number({ min: 0, max: 30 }),
     isNewUser: false
+  },
+  params: {
+    id: 9272
+  },
+  body: {
+    role: 'admin'
   }
 };
 

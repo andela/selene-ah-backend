@@ -22,32 +22,29 @@ let token;
 describe('API endpoint for user pofile', () => {
   const user = signupFactory.build({
     email: 'mikolo@gmail.com',
-    password: 'password123*'
+    password: 'password123*',
+    userName: 'opppeyemi2018'
   });
 
   before(async () => {
-    await chai.request(url)
+    const res = await chai.request(url)
       .post('/api/v1/auth/signup')
-      .send(user)
-      .then(res => {
-        token = res.body.token;
-        userId = res.body.user.id;
-      });
+      .send(user);
+    token = res.body.token;
+    userId = res.body.user.id;
   });
 
-  it('should update a user profile', async () => {
+  it('should update a user profile',  async () => {
     const userData = userProfileFactory.build({
       userId: userId,
     });
-    await chai.request(url)
+    const res = await chai.request(url)
       .put('/api/v1/user/profile/')
       .set('Authorization', `Bearer ${token}`)
-      .send(userData)
-      .then((res) => {
-        expect(res).to.have.status(200);
-        expect(res.body).to.be.an('Object');
-        expect(res.body.message).to.be.equals('Updated profile successfully');
-      });
+      .send(userData);
+    expect(res).to.have.status(200);
+    expect(res.body).to.be.an('Object');
+    expect(res.body.message).to.be.equals('Updated profile successfully');
   });
 
   it('should return user not found', async () => {
@@ -55,69 +52,57 @@ describe('API endpoint for user pofile', () => {
       userId: fakeId,
       bio: 'lorem ipsum'
     });
-    await chai.request(url)
+    const res = await chai.request(url)
       .put('/api/v1/user/profile/')
       .set('Authorization', `Bearer ${token}`)
-      .send(userData)
-      .then((res) => {
-        expect(res).to.have.status(404);
-        expect(res.body.message).to.be.equals('User not found');
-      });
+      .send(userData);
+    expect(res).to.have.status(404);
+    expect(res.body.message).to.be.equals('User not found');
   });
 
   it('should get a login user profile', async () => {
     const userData = userProfileFactory.build({
       userId: userId,
     });
-    await chai.request(url)
+    const res = await chai.request(url)
       .get('/api/v1/user/profile/')
       .set('Authorization', `Bearer ${token}`)
-      .send(userData)
-      .then((res) => {
-        expect(res).to.have.status(200);
-        expect(res.body).to.be.an('Object');
-        expect(res.body.message).to.be.equals('Retrieved profile successfully');
-      });
+      .send(userData);
+    expect(res).to.have.status(200);
+    expect(res.body).to.be.an('Object');
+    expect(res.body.message).to.be.equals('Retrieved profile successfully');
   });
 
   it('should return login user not found', async () => {
     const userData = userProfileFactory.build({
       userId: fakeId,
     });
-    await chai.request(url)
+    const res = await chai.request(url)
       .get('/api/v1/user/profile/')
       .set('Authorization', `Bearer ${token}`)
-      .send(userData)
-      .then((res) => {
-        expect(res).to.have.status(404);
-        expect(res.body.message).to.be.equals('User not found');
-      });
+      .send(userData);
+    expect(res).to.have.status(404);
+    expect(res.body.message).to.be.equals('User not found');
   });
 
 
   it('should get any user profile', async () => {
-    await chai.request(url)
+    const res = await chai.request(url)
       .get(`/api/v1/user/profile/${userId}`)
-      .set('Authorization', `Bearer ${token}`)
-      .send()
-      .then((res) => {
-        expect(res).to.have.status(200);
-        expect(res.body).to.be.an('Object');
-        expect(res.body.message).to.be.equals('Retrieved profile successfully');
-      });
+      .set('Authorization', `Bearer ${token}`);
+    expect(res).to.have.status(200);
+    expect(res.body).to.be.an('Object');
+    expect(res.body.message).to.be.equals('Retrieved profile successfully');
   });
 
 
   it('should return user not found', async () => {
-    await chai.request(url)
+    const res = await chai.request(url)
       .get(`/api/v1/user/profile/${fakeId}`)
-      .set('Authorization', `Bearer ${token}`)
-      .send()
-      .then((res) => {
-        expect(res).to.have.status(404);
-        expect(res).to.have.status(404);
-        expect(res.body.message).to.be.equals('User not found');
-      });
+      .set('Authorization', `Bearer ${token}`);
+    expect(res).to.have.status(404);
+    expect(res).to.have.status(404);
+    expect(res.body.message).to.be.equals('User not found');
   });
 
 

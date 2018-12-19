@@ -6,6 +6,7 @@ import createNewSocialMediaUser from
 '../../../helpers/createNewSocialMediaUser';
 import generateRandomPassword from
 '../../../helpers/generatePassword';
+import { REGULAR } from '../../../helpers/constants';
 
 const {
   User,
@@ -38,7 +39,7 @@ export default class TwitterLogin{
   * @param {object} done
   * @returns {object} passport
   */
-  static twitterStrategyCallback (token, tokenSecret, profile, done) {
+  static async twitterStrategyCallback (token, tokenSecret, profile, done) {
     /*eslint no-underscore-dangle: ["error", { "allow": ["_json"] }]*/
     const data = profile._json;
     const userData = {
@@ -58,6 +59,7 @@ export default class TwitterLogin{
         verified: true,
         blocked: false,
         emailNotification: true,
+        role: REGULAR,
         password: generateRandomPassword()
       }}).spread((user, created) => {
         createNewSocialMediaUser(user,created,userData);

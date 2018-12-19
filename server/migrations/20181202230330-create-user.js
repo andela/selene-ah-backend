@@ -29,6 +29,10 @@ export default {
         type: Sequelize.STRING,
         allowNull: false
       },
+      role: {
+        type: Sequelize.STRING,
+        allowNull: false
+      },
       verified: {
         type: Sequelize.BOOLEAN,
         defaultValue: false,

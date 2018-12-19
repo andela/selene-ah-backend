@@ -12,8 +12,9 @@
     "test": "export NODE_ENV=test && npm run db:reset && npm run db:migrate && nyc --reporter=text --reporter=lcov mocha ./tests --require babel-polyfill --require babel-register --exit --recursive",
     "build": "rm -rf dist/ && babel ./server --out-dir dist/ --ignore ./node_modules",
     "start:dev": "node_modules/nodemon/bin/nodemon.js --exec babel-node server/index.js",
-    "db:migrate": "node_modules/.bin/sequelize db:migrate",
-    "db:reset": "node_modules/.bin/sequelize db:migrate:undo:all"
+    "db:migrate": "node_modules/.bin/sequelize db:migrate && npm run db:seed:all",
+    "db:reset": "node_modules/.bin/sequelize db:migrate:undo:all",
+    "db:seed:all": "sequelize db:seed:all"
   },
   "engines": {
     "node": "10.13.0"
@@ -39,6 +40,7 @@
     "express": "^4.16.3",
     "express-jwt": "^5.3.1",
     "express-session": "^1.15.6",
+    "faker": "^4.1.0",
     "jsonwebtoken": "^8.3.0",
     "method-override": "^2.3.10",
     "methods": "^1.1.2",
@@ -51,6 +53,7 @@
     "pg": "^7.6.1",
     "pg-hstore": "^2.3.2",
     "request": "^2.87.0",
+    "rosie": "^2.0.1",
     "sequelize": "^4.41.2",
     "sequelize-cli": "^5.4.0",
     "sequelize-test-helpers": "^1.0.6",
@@ -73,13 +76,11 @@
     "eslint-plugin-import": "^2.14.0",
     "eslint-plugin-jsx-a11y": "^6.1.2",
     "eslint-plugin-react": "^7.11.1",
-    "faker": "^4.1.0",
     "husky": "^1.2.0",
     "mocha": "^5.2.0",
     "nock": "^10.0.3",
     "nodemon": "^1.18.7",
     "nyc": "^13.1.0",
-    "rosie": "^2.0.1",
     "sequelize-test-helpers": "^1.0.6",
     "sinon": "^7.1.1",
     "sinon-chai": "^3.3.0"

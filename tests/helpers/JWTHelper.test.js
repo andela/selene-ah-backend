@@ -5,6 +5,7 @@ import UserFactory from '../mocks/factories/userFactory';
 import removeDateStampAndPassword from
 '../../server/helpers/removeDateStampAndPassword';
 
+
 const userObject = UserFactory.build();
 const token = JWTHelper.generateToken(
   removeDateStampAndPassword(userObject), '1d'
