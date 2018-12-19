@@ -23,10 +23,10 @@ class PasswordValidation {
         msg: 'Password must not be less than 8 characters'
       });
     }
-    if (!helpers.isPasswordValid(req.body.password.trim())) {
+    if (!helpers.isPasswordValid(req.body.password)) {
       return res.status(400).json({
         success: false,
-        msg: 'Invalid Password: Password must contains a number and a symbol'
+        msg: 'Password must contain only alphabets, numbers and symbols'
       });
     }
     return next();
