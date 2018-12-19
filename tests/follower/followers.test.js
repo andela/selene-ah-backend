@@ -4,7 +4,8 @@ import sinon from 'sinon';
 import server from '../../server/index';
 import userFactory from '../mocks/factories/userFactory';
 import models from '../../server/models';
-import userAuthentication from '../../server/middlewares/userAuthentication';
+import userAuthentication from
+  '../../server/middlewares/followersAuthentication';
 import followerController from '../../server/controllers/followersController';
 
 chai.use(chaiHttp);

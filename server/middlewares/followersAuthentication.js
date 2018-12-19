@@ -4,7 +4,7 @@ const { User, Follower } = models;
 /**
  * @description - User Authentication
  */
-class UserAuthentication {
+class FollowersAuthentication {
   /**
    * @description - checks if a user exist in the database
    * @param {object} req - request sent to server
@@ -119,4 +119,4 @@ class UserAuthentication {
   }
 }
 
-export default UserAuthentication;
+export default FollowersAuthentication;

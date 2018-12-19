@@ -1,9 +1,11 @@
 import db from '../models';
 import generateUniqueSlug from '../helpers/generateUniqueSlug';
+import pagination from '../helpers/pagination';
 
 const { Article, Category, User } = db;
 /**
 * @description class will implement CRUD functionalities for articles
+*
 * @class ArticleController
 */
 class ArticlesController {
@@ -94,6 +96,7 @@ class ArticlesController {
  * @returns {object} - object representing response message
  */
   static async getAllArticles(req, res, next) {
+    const { limit, offset }= pagination.paginationHelper(req.query);
     try {
       const articles = await Article.findAndCountAll(
         {
@@ -101,8 +104,9 @@ class ArticlesController {
             model: User,
             as: 'author',
             attributes: ['userName', 'imageUrl', 'bio', 'dateOfBirth']
-
           }],
+          limit,
+          offset
         });
 
       if (!articles || articles.count == 0) {
