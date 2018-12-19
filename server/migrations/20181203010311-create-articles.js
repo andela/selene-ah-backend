@@ -23,6 +23,10 @@ export default {
         type: Sequelize.UUID,
         allowNull: false,
       },
+      readTime: {
+        type: Sequelize.STRING,
+        allowNull: false,
+      },
       published: {
         type: Sequelize.BOOLEAN,
         defaultValue: false,

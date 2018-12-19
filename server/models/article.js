@@ -31,6 +31,7 @@
     },
     slug: DataTypes.TEXT,
     published: DataTypes.BOOLEAN,
+    readTime: DataTypes.STRING,
     profileId: DataTypes.UUID,
   });
   Article.associate = (models) => {

@@ -1,5 +1,6 @@
 import db from '../models';
 import generateUniqueSlug from '../helpers/generateUniqueSlug';
+import calculateArticleReadTime from '../helpers/calculateArticleReadTime';
 
 const { Profile, Article, Category, User } = db;
 /**
@@ -19,6 +20,7 @@ class ArticlesController {
     const { id } = req.user;
     const { categoryId } = req.body;
     const articleSlug = generateUniqueSlug(req.body.title);
+    const readTime = calculateArticleReadTime(req.body.body);
     try {
 
       const category = await Category.findOne({
@@ -47,6 +49,7 @@ class ArticlesController {
         slug: articleSlug,
         published: req.body.published,
         userId: id,
+        readTime,
         profileId: profileId.dataValues.id,
         categoryId: req.body.categoryId.trim()
       });
