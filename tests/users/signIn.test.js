@@ -92,7 +92,7 @@ describe('API endpoint for POST auth/signin - Email Validations', () => {
     expect(res).to.have.status(400);
     expect(res.body).to.be.an('Object');
     expect(res.body.msg).to.be.equals(
-      'Invalid Password: Password must contains a number and a symbol');
+      'Password must contain only alphabets, numbers and symbols');
   });
 
   it('should fail if a email is not in the database', async () => {

@@ -28,7 +28,7 @@ class AuthController {
     try {
       const user = await User.create({
         email: req.body.email.trim().toLowerCase(),
-        password: password.hashPassword(req.body.password.trim()),
+        password: password.hashPassword(req.body.password),
         firstName: req.body.firstName.trim(),
         lastName: req.body.lastName.trim(),
         userName: req.body.userName.trim(),
@@ -46,7 +46,7 @@ class AuthController {
       return res.status(200).send({
         success: true,
         msg: 'User created successfully',
-        user,
+        user: removeDateStampAndPassword(user.dataValues),
         token
       });
     } catch(err) {
