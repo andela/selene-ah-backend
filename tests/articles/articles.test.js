@@ -170,8 +170,7 @@ describe('API endpoint for create articles', () => {
 
   it('Should return 200 on update an article', async () => {
     const articlesData = articlesFactory.build({
-      body: 'Test for Body',
-      title: 'test title',
+      categoryId: catId
     });
 
     const res = await chai.request(server)
