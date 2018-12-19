@@ -1,4 +1,6 @@
 import { Router } from 'express';
+import swaggerUi from 'swagger-ui-express';
+import swaggerConfig from '../docs/config/swaggerConfig';
 import userAuth from './api/auth/userAuth';
 import users from './api/users';
 import fbAuth from './api/auth/strategy/fbAuth';
@@ -17,6 +19,7 @@ router.use('/api/v1', googleAuth);
 router.use('/api/v1', followers);
 router.use('/api/v1/role', Authorize);
 router.use('/api/v1', articles);
+router.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerConfig));
 
 
 export default router;
