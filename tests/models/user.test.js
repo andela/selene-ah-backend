@@ -1,7 +1,6 @@
 import { expect } from 'chai';
 import { sequelize, dataTypes } from 'sequelize-test-helpers';
 import UserModel from '../../server/models/user';
-import Profile from '../../server/models/profile';
 import Article from '../../server/models/article';
 import Follower from '../../server/models/follower';
 
@@ -48,7 +47,6 @@ describe('User Model', () => {
   context('Check the User Model associations', () => {
     before(() => {
       User.associate({
-        Profile,
         Article,
         Follower,
       });
@@ -65,10 +63,6 @@ describe('User Model', () => {
 
     it('should have a one-to-many association with the Articles Model', () => {
       expect(User.hasMany.calledWith(Article)).to.equal(true);
-    });
-
-    it('should have one-to-one association with the Profile Model', () => {
-      expect(User.hasOne.calledWith(Profile)).to.equal(true);
     });
 
     it('should have one-to-many association with the Followers Model', () => {

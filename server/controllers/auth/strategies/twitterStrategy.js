@@ -1,9 +1,9 @@
 import passport from 'passport';
 import TwitterStrategy from 'passport-twitter';
-
+import JWTHelper from '../../../helpers/JWTHelper';
 import models from '../../../models';
-import createNewSocialMediaUser from
-'../../../helpers/createNewSocialMediaUser';
+import removeDateStampAndPassword from
+'../../../helpers/removeDateStampAndPassword';
 import generateRandomPassword from
 '../../../helpers/generatePassword';
 import { REGULAR } from '../../../helpers/constants';
@@ -12,6 +12,7 @@ const {
   User,
 } = models;
 
+const duration = '1d';
 /**
  * @description A class that implements Twitter strategy for passport
  */
@@ -33,13 +34,14 @@ export default class TwitterLogin{
 
   /**
   * @description callback for twitter strategy
-  * @param {string} token
+  * @param {string} accessToken
   * @param {string} tokenSecret
   * @param {object} profile
   * @param {object} done
   * @returns {object} passport
   */
-  static async twitterStrategyCallback (token, tokenSecret, profile, done) {
+  static async twitterStrategyCallback (accessToken, tokenSecret,
+                                        profile, done) {
     /*eslint no-underscore-dangle: ["error", { "allow": ["_json"] }]*/
     const data = profile._json;
     const userData = {
@@ -47,7 +49,7 @@ export default class TwitterLogin{
       firstname: ' ',
       lastname: ' ',
       username: data.screen_name,
-      token,
+      token: accessToken,
       profile,
     };
     User.findOrCreate({where: {email: userData.email},
@@ -62,7 +64,11 @@ export default class TwitterLogin{
         role: REGULAR,
         password: generateRandomPassword()
       }}).spread((user, created) => {
-        createNewSocialMediaUser(user,created,userData);
+        const token = JWTHelper.generateToken(
+          removeDateStampAndPassword(user.dataValues), duration
+          );
+        userData.token = token;
+        userData.isNewUser = created;
         done(null, userData);
       })
       .catch((err) => {

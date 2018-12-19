@@ -1,6 +1,6 @@
 import models from '../models';
 
-const { User, Profile } = models;
+const { User } = models;
 /**
  * @description - Performs all auth function
  */
@@ -14,10 +14,6 @@ class UserController {
   static async getAllUsers(req, res, next) {
     try {
       const user = await User.findAll({
-        include: [{
-            model: Profile,
-            as: 'profile',
-          }],
           attributes: {exclude: ['password', 'createdAt', 'updatedAt']}
       });
       return res.status(200).json({

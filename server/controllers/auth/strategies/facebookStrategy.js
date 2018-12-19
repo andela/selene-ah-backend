@@ -7,8 +7,6 @@ import db from '../../../models';
 import passwordHash from '../../../helpers/passwordHash';
 import removeDateStampAndPassword from
 '../../../helpers/removeDateStampAndPassword';
-import createNewSocialMediaUser from
-'../../../helpers/createNewSocialMediaUser';
 import { REGULAR } from '../../../helpers/constants';
 
 config();
@@ -69,7 +67,7 @@ class Facebook {
         removeDateStampAndPassword(user.dataValues), duration
         );
       userDetails.token = token;
-      createNewSocialMediaUser(user, created, userDetails);
+      userDetails.isNewUser = created;
       done(null, userDetails);
     });
   }

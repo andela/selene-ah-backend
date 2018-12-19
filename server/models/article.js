@@ -31,7 +31,6 @@
     },
     slug: DataTypes.TEXT,
     published: DataTypes.BOOLEAN,
-    profileId: DataTypes.UUID,
   });
   Article.associate = (models) => {
     Article.belongsTo(models.User, {
@@ -45,10 +44,6 @@
       foreignKey: 'articleId',
       as: 'Tags',
       through: 'ArticleTag'
-    });
-    Article.belongsTo(models.Profile, {
-      foreignKey: 'profileId',
-      as: 'authorProfile',
     });
   };
   return Article;

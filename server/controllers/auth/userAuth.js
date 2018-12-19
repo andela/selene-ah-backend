@@ -7,7 +7,7 @@ import sendEmail from '../../helpers/sendEmail';
 import emailTemplate from '../../helpers/emailTemplate';
 import { REGULAR } from '../../helpers/constants';
 
-const { User, Profile } = models;
+const { User } = models;
 const {
   verification, expiredToken, confirmation, resetPassword
 } = emailTemplate;
@@ -33,10 +33,6 @@ class AuthController {
         lastName: req.body.lastName.trim(),
         userName: req.body.userName.trim(),
         role: REGULAR
-      });
-      await Profile.create({
-        userId: user.id,
-        role: 'user'
       });
       const token = JWTHelper.generateToken(
         removeDateStampAndPassword(user.dataValues), duration);
