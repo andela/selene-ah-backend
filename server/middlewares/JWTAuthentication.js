@@ -14,7 +14,7 @@ class JWTAuthentication{
     if (!req.headers.authorization) {
       return res.status(401).json({
         success: false,
-        msg: 'Authentication failed: Please supply a valid token.'
+        message: 'Authentication failed: Please supply a valid token.'
       });
     }
     try {
@@ -23,7 +23,7 @@ class JWTAuthentication{
       if (verifiedToken.name === 'JsonWebTokenError'){
         return res.status(401).json({
           success: false,
-          msg: 'Authentication failed: Please supply a valid token.'
+          message: 'Authentication failed: Please supply a valid token.'
         });
       }
       req.user = verifiedToken.user;
@@ -31,7 +31,7 @@ class JWTAuthentication{
     } catch (err) {
       return res.status(401).json({
         success: false,
-        msg: 'Authentication failed: Please supply a valid token.'
+        message: 'Authentication failed: Please supply a valid token.'
       });
     }
   }

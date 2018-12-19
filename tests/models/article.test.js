@@ -3,6 +3,7 @@ import { sequelize, dataTypes, checkModelName } from 'sequelize-test-helpers';
 import ArticleModel from '../../server/models/article';
 import UserModel from '../../server/models/user';
 import CategoryModel from '../../server/models/category';
+import RatingModel from '../../server/models/rating';
 
 describe('Model for an Article', () => {
   const Article = ArticleModel(sequelize, dataTypes);
@@ -22,10 +23,12 @@ describe('Model for an Article', () => {
   context('check associations', () => {
     const User = UserModel(sequelize, dataTypes);
     const Category = CategoryModel(sequelize, dataTypes);
+    const Rating = RatingModel(sequelize, dataTypes);
 
     before(() => {
       Article.associate({ User });
       Article.associate({ Category });
+      Article.associate({ Rating });
     });
     it('should have a belongsTo association with UserModel', () => {
       expect(Article.belongsTo.calledWith(User)).to.equal(true);
@@ -33,6 +36,10 @@ describe('Model for an Article', () => {
 
     it('should have a belongsTo association with CategoryModel', () => {
       expect(Article.belongsTo.calledWith(Category)).to.equal(true);
+    });
+
+    it('should have a one-to-many association with the Rating Model', () => {
+      expect(Article.hasMany.calledWith(Rating)).to.equal(true);
     });
   });
 });

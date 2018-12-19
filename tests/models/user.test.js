@@ -3,6 +3,7 @@ import { sequelize, dataTypes } from 'sequelize-test-helpers';
 import UserModel from '../../server/models/user';
 import Article from '../../server/models/article';
 import Follower from '../../server/models/follower';
+import Rating from '../../server/models/rating';
 
 describe('User Model', () => {
   const User = UserModel(sequelize, dataTypes);
@@ -44,25 +45,31 @@ describe('User Model', () => {
     });
   });
 
+  context('Check the uniqueness of emails and usernames', () => {
+    it('check if the username is unique', () => {
+      expect(user.userName).to.have.property('unique');
+    });
+
+    it('check if the email is unique', () => {
+      expect(user.email).to.have.property('unique');
+    });
+  });
+
   context('Check the User Model associations', () => {
     before(() => {
       User.associate({
         Article,
+        Rating,
         Follower,
-      });
-    });
-    context('Check the uniqueness of emails and usernames', () => {
-      it('check if the username is unique', () => {
-        expect(user.userName).to.have.property('unique');
-      });
-
-      it('check if the email is unique', () => {
-        expect(user.email).to.have.property('unique');
       });
     });
 
     it('should have a one-to-many association with the Articles Model', () => {
       expect(User.hasMany.calledWith(Article)).to.equal(true);
+    });
+
+    it('should have a one-to-many association with the Rating Model', () => {
+      expect(User.hasMany.calledWith(Rating)).to.equal(true);
     });
 
     it('should have one-to-many association with the Followers Model', () => {
