@@ -10,7 +10,7 @@ export default {
         type: Sequelize.UUID,
         defaultValue: Sequelize.UUIDV4
       },
-      comment: {
+      content: {
         allowNull: false,
         type: Sequelize.TEXT
       },
@@ -35,7 +35,8 @@ export default {
         onDelete: 'CASCADE',
         references: {
           model: 'Articles',
-          key: 'id'
+          key: 'id',
+          as: 'articleId'
         }
       }
     });

@@ -20,7 +20,8 @@ class JWTAuthentication{
     try {
       const userToken = req.headers.authorization.split(' ')[1];
       const verifiedToken = JWTHelper.verifyToken(userToken);
-      if (verifiedToken.name === 'JsonWebTokenError'){
+      if (verifiedToken.name === 'JsonWebTokenError' ||
+        verifiedToken.name === 'TokenExpiredError'){
         return res.status(401).json({
           success: false,
           message: 'Authentication failed: Please supply a valid token.'
@@ -35,8 +36,6 @@ class JWTAuthentication{
       });
     }
   }
-
-
 }
 
 export default JWTAuthentication;

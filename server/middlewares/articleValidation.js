@@ -10,11 +10,10 @@ const { Article } = models;
  *  field needed to create an articleß
  */
 class ArticleValidation {
-  //title, body, categoryId, published
   /**
    * @param {object} req - Request sent to the route
    * @param {object} res - Response sent from the middleware
-   * @param {object} next - Error handler
+   * @param {object} next -
    * @returns {object} - object representing response message
    */
   static validateArticleFields(req, res, next) {
