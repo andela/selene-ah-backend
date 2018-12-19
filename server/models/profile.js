@@ -38,6 +38,10 @@ export default (sequelize, DataTypes) => {
       foreignKey: 'userId',
       onDelete: 'CASCADE',
     });
+    Profile.hasOne(models.Article, {
+      foreignKey: 'profileId',
+      as: 'articles',
+    });
   };
   return Profile;
 };

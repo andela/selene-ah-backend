@@ -11,8 +11,16 @@ export default {
         type: Sequelize.STRING,
         allowNull: false
       },
+      slug: {
+        type: Sequelize.STRING,
+        allowNull: false
+      },
       body: {
         type: Sequelize.TEXT,
+        allowNull: false,
+      },
+      profileId: {
+        type: Sequelize.UUID,
         allowNull: false,
       },
       published: {
@@ -25,6 +33,14 @@ export default {
           model: 'Users',
           key: 'id',
           as: 'userId'
+        }
+      },
+      categoryId: {
+        type: Sequelize.UUID,
+        references: {
+          model: 'Categories',
+          key: 'id',
+          as: 'categoryId'
         }
       },
       createdAt: {
