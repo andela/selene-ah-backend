@@ -45,7 +45,7 @@ describe('GET /follow Route', () => {
     .send({followerId: id1});
     expect(res).to.have.status(401);
     expect(res.body).to.be.an('object');
-    expect(res.body.msg).to.be.equal(
+    expect(res.body.message).to.be.equal(
       'Authentication failed: Please supply a valid token.');
   });
 
@@ -153,7 +153,7 @@ describe('GET /unfollow/:id route', () => {
     .delete(`/api/v1/unfollow/${id1}`);
     expect(res).to.have.status(401);
     expect(res.body).to.be.an('object');
-    expect(res.body.msg).to.be.equal(
+    expect(res.body.message).to.be.equal(
       'Authentication failed: Please supply a valid token.');
   });
 

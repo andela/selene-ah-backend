@@ -3,6 +3,7 @@ import generateUniqueSlug from '../helpers/generateUniqueSlug';
 import pagination from '../helpers/pagination';
 import calculateArticleReadTime from '../helpers/calculateArticleReadTime';
 import Vote from './votes/VoteController';
+import RatingController from './ratingController';
 
 const { Article, Category, User } = db;
 
@@ -85,6 +86,10 @@ class ArticlesController {
       const voteCount = await Vote.votesCount(req,res, next);
 
       await Article.increment('readingStat', {where: {id: article.id}});
+      const averageRating = RatingController.getAverageArticleRating(
+        article.id
+      );
+      article.averageRating = averageRating;
       return res.status(200).json({
         success: 'true',
         message: 'Retrieved article successfully',
@@ -154,7 +159,6 @@ class ArticlesController {
             model: User,
             as: 'author',
             attributes: ['userName', 'imageUrl', 'bio', 'dateOfBirth']
-
           }],
         });
 
