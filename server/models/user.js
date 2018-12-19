@@ -67,6 +67,29 @@ export default (sequelize, DataTypes) => {
         }
       }
     },
+    imageUrl: {
+      type: DataTypes.TEXT,
+    },
+    bio: {
+      type: DataTypes.TEXT,
+    },
+    gender: {
+      type: DataTypes.STRING,
+    },
+    twitterUrl: {
+      type: DataTypes.STRING,
+    },
+    facebookUrl: {
+      type: DataTypes.STRING,
+    },
+    dateOfBirth: {
+      type: DataTypes.DATE,
+      validate: {
+        isDate: {
+          msg: 'Error: must be a valid date type',
+        }
+      }
+    },
     emailNotification: {
       type: DataTypes.BOOLEAN,
       defaultValue: false,
@@ -90,10 +113,6 @@ export default (sequelize, DataTypes) => {
     User.hasMany(models.Follower, {
       foreignKey: 'userId',
       as: 'followers'
-    });
-    User.hasOne(models.Profile, {
-      foreignKey: 'userId',
-      as: 'profile'
     });
   };
 

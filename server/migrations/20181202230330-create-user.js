@@ -43,6 +43,37 @@ export default {
         defaultValue: false,
         allowNull: false
       },
+      imageUrl: {
+        type: Sequelize.TEXT,
+      },
+      bio: {
+        type: Sequelize.TEXT,
+
+      },
+      gender: {
+        type: Sequelize.STRING,
+
+      },
+      twitterUrl: {
+        type: Sequelize.STRING,
+
+      },
+      facebookUrl: {
+        type: Sequelize.STRING,
+
+      },
+      dateOfBirth: {
+        type: Sequelize.DATE,
+      },
+      userId: {
+        type: Sequelize.UUID,
+        unique: true,
+        references: {
+          model: 'Users',
+          key: 'id',
+          as: 'userId'
+        }
+      },
       emailNotification: {
         type: Sequelize.BOOLEAN,
         defaultValue: false,

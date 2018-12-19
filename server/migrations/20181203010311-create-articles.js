@@ -19,10 +19,6 @@ export default {
         type: Sequelize.TEXT,
         allowNull: false,
       },
-      profileId: {
-        type: Sequelize.UUID,
-        allowNull: false,
-      },
       published: {
         type: Sequelize.BOOLEAN,
         defaultValue: false,

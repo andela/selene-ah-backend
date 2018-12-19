@@ -1,7 +1,7 @@
 import db from '../models';
 import generateUniqueSlug from '../helpers/generateUniqueSlug';
 
-const { Profile, Article, Category, User } = db;
+const { Article, Category, User } = db;
 /**
 * @description class will implement CRUD functionalities for articles
 * @class ArticleController
@@ -32,24 +32,12 @@ class ArticlesController {
         });
       }
 
-      const profileId = await Profile.findOne({
-        where: { userId: id }
-      });
-
-      if (!profileId || profileId === null) {
-        return res.status(404).json({
-          success: false,
-          message: 'User does not exist'
-        });
-      }
-
       const article = await Article.create({
         title: title.trim(),
         body: body.trim(),
         slug: articleSlug,
         published,
         userId: id,
-        profileId: profileId.dataValues.id,
         categoryId: categoryId.trim()
       });
 
@@ -77,21 +65,8 @@ class ArticlesController {
         include: [{
           model: User,
           as: 'author',
-          attributes: ['userName']
+          attributes: ['userName', 'imageUrl', 'bio', 'dateOfBirth']
 
-        },
-        {
-          model: Profile,
-          as: 'authorProfile',
-          attributes: [
-            'id',
-            'role',
-            'bio',
-            'imageUrl',
-            'twitterUrl',
-            'facebookUrl',
-            'dateOfBirth',
-          ]
         }],
       });
 
@@ -125,21 +100,8 @@ class ArticlesController {
           include: [{
             model: User,
             as: 'author',
-            attributes: ['userName']
+            attributes: ['userName', 'imageUrl', 'bio', 'dateOfBirth']
 
-          },
-          {
-            model: Profile,
-            as: 'authorProfile',
-            attributes: [
-              'id',
-              'role',
-              'bio',
-              'imageUrl',
-              'twitterUrl',
-              'facebookUrl',
-              'dateOfBirth',
-            ]
           }],
         });
 
@@ -177,21 +139,8 @@ class ArticlesController {
           include: [{
             model: User,
             as: 'author',
-            attributes: ['userName']
+            attributes: ['userName', 'imageUrl', 'bio', 'dateOfBirth']
 
-          },
-          {
-            model: Profile,
-            as: 'authorProfile',
-            attributes: [
-              'id',
-              'role',
-              'bio',
-              'imageUrl',
-              'twitterUrl',
-              'facebookUrl',
-              'dateOfBirth',
-            ]
           }],
         });
 

@@ -6,8 +6,6 @@ import removeDateStampAndPassword from
 '../../../helpers/removeDateStampAndPassword';
 import generateRandomPassword from
 '../../../helpers/generatePassword';
-import createNewSocialMediaUser from
-'../../../helpers/createNewSocialMediaUser';
 import { REGULAR } from '../../../helpers/constants';
 
 
@@ -67,7 +65,7 @@ export default class GoogleLogin{
           removeDateStampAndPassword(user.dataValues), duration
           );
         userData.token = token;
-        createNewSocialMediaUser(user,created,userData);
+        userData.isNewUser = created;
         done(null, userData);
       })
       .catch((err) => {
