@@ -14,7 +14,7 @@ const { welcome } = template;
    const socialMediaControllerCallback = (req, res) => {
      const {user , user: {token}, user : {isNewUser} } = req;
      if ( !(isSocialMediaEmail(user.email)) ) {
-       sendEmail(user.email,'', req.headers.host, welcome);
+       sendEmail(user.email, welcome);
       }
     if (isNewUser) {
       return res.status(201).json({

@@ -7,34 +7,24 @@ sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 
 /**
  *@description sends a mail
- * @param {string} to the receipient of the mail
- * @param {string} token containing user's details
- * @param {string} hostUrl  address of the host
- * @param {object} template additional message that the receipent should have
- * @returns {object} object
+ * @param {string} to The recipient of the mail
+ * @param {object} emailTemplate Message that the recipient should have
+ * @param {object} linkUrl  The link the user should interact with in the mail
+ * @returns {object} response from sendGrid api
  */
+  const sendEmail = (to, emailTemplate, linkUrl) => {
+    const { subject, from, text } = emailTemplate;
+    let { html } = emailTemplate;
 
-  const sendEmail = (to, token, hostUrl, template) => {
-    const { subject, from, text, html } = template;
-    const url =
-     `http://${hostUrl}/api/v1/auth/verifyemail?token=${token}&email=${to}`;
-
-    if(subject === 'Expired Token' || subject === 'Email Verification'){
-      template.html = `${template.html}
-      <h2><a href="${url}" style="background-color: #6C54EC;
+    if(linkUrl){
+      html = `${html}
+      <h2><a href="${linkUrl}" style="background-color: #6C54EC;
       color: white; padding: 5px 10px; text-decoration: none;
       border-radius: 2px;">CLICK ME</a></h2>
       `;
     }
-
-    const msg = {
-        to,
-        from,
-        subject,
-        text,
-        html
-    };
-    return sgMail.send(msg);
+    const messageProperty = { to, from, subject, text, html };
+    return sgMail.send(messageProperty);
  };
 
    export default sendEmail;

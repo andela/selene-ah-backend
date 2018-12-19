@@ -2,7 +2,7 @@
  * @description creates template for sending emails
  * @returns object of temapltes for sending emails;
  */
-const template = {
+const emailTemplate = {
     verification: {
         from: 'no-reply@authorhaven.com',
         subject: 'Email Verification',
@@ -43,7 +43,18 @@ const template = {
         <p>'Thank you for confirming your account at Author Haven'</p>
         Log in into your account to start contributing.
          `
+    },
+    resetPassword: {
+        from: 'no-reply@authorhaven.com',
+        subject: 'Please Reset Password',
+        text: 'Reset Password at Author\'s Haven',
+        html: `
+        <h1 style="color: #6C54EC">Author's Haven</h1>
+        <p>'You requested to reset your Author's Haven password.'</p>
+        <p>'Please click on the button below within 
+        the next 30 minute to reset your password:'</p>
+         `
     }
 };
 
-export default template;
+export default emailTemplate;
