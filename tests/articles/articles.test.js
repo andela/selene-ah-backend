@@ -37,14 +37,6 @@ describe('API endpoint for create articles', () => {
     userId = res.body.user.id;
   });
 
-  it('Should return 404 if article not found', async () => {
-    const res = await chai.request(server)
-      .get('/api/v1/articles')
-      .set('Authorization', `Bearer ${token}`)
-      .send();
-    expect(res).to.have.status(404);
-  });
-
   it('Should create an article', async () => {
     const articlesData = articlesFactory.build({
       categoryId: catId,

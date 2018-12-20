@@ -39,6 +39,7 @@
     });
     Article.belongsTo(models.Category, {
       foreignKey: 'categoryId',
+      as: 'category'
     });
     Article.belongsToMany(models.Tag, {
       foreignKey: 'articleId',
