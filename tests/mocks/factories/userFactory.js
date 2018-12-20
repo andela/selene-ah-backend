@@ -1,5 +1,6 @@
 import { Factory } from 'rosie';
 import faker from 'faker';
+import { REGULAR } from '../../../server/helpers/constants';
 
 const UserFactory = new Factory()
 .attrs({
@@ -17,8 +18,7 @@ const UserFactory = new Factory()
   twitterUrl: faker.random.word,
   facebookUrl: faker.random.word,
   emailNotification: faker.random.boolean,
-  dateOfBirth: faker.date.recent,
-  role: faker.name.title,
+  role: REGULAR,
   createdAt: faker.date.recent,
   updatedAt: faker.date.recent
 });
