@@ -17,3 +17,6 @@ export const NO_BOOKMARK_MSG = 'No bookmarks';
 export const BOOKMARK_FOUND_MSG = 'Bookmarks found';
 export const ARTICLE_SUCESSFUL_MSG = 'Article returned successfully';
 
+export const ARTICLE_LIKED_BY_USER_MSG = 'The user liked this article';
+export const ARTICLE_NOT_LIKED_BY_USER_MSG = 'The user did not like this article';
+export const SUCCESSFULLY_RETRIVED_MSG = 'Successfully retrieved';

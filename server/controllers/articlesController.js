@@ -2,6 +2,7 @@ import db from '../models';
 import generateUniqueSlug from '../helpers/generateUniqueSlug';
 import pagination from '../helpers/pagination';
 import calculateArticleReadTime from '../helpers/calculateArticleReadTime';
+import Vote from './votes/VoteController';
 
 const { Article, Category, User } = db;
 /**
@@ -81,10 +82,16 @@ class ArticlesController {
           message: 'Article not found',
         });
       }
+
+      const voteCount = await Vote.votesCount(req,res, next);
+
       return res.status(200).json({
         success: 'true',
         message: 'Retrieved article successfully',
-        article
+        article,
+        vote: {
+          voteCount
+        }
       });
 
     } catch (error) {
