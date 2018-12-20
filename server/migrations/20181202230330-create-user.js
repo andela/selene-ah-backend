@@ -65,15 +65,6 @@ export default {
       dateOfBirth: {
         type: Sequelize.DATE,
       },
-      userId: {
-        type: Sequelize.UUID,
-        unique: true,
-        references: {
-          model: 'Users',
-          key: 'id',
-          as: 'userId'
-        }
-      },
       emailNotification: {
         type: Sequelize.BOOLEAN,
         defaultValue: false,
