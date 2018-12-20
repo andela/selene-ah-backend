@@ -23,6 +23,10 @@ export default {
         type: Sequelize.TEXT,
         allowNull: false,
       },
+      readingStat: {
+        type: Sequelize.INTEGER,
+        defaultValue: 0,
+      },
       published: {
         type: Sequelize.BOOLEAN,
         defaultValue: false,

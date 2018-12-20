@@ -5,6 +5,7 @@ import calculateArticleReadTime from '../helpers/calculateArticleReadTime';
 import Vote from './votes/VoteController';
 
 const { Article, Category, User } = db;
+
 /**
 * @description class will implement CRUD functionalities for articles
 *
@@ -26,7 +27,6 @@ class ArticlesController {
     const readTime = calculateArticleReadTime(body);
 
     try {
-
       const category = await Category.findOne({
         where: { id: categoryId }
       });
@@ -72,7 +72,6 @@ class ArticlesController {
           model: User,
           as: 'author',
           attributes: ['userName', 'imageUrl', 'bio', 'dateOfBirth']
-
         }],
       });
 
@@ -85,6 +84,7 @@ class ArticlesController {
 
       const voteCount = await Vote.votesCount(req,res, next);
 
+      await Article.increment('readingStat', {where: {id: article.id}});
       return res.status(200).json({
         success: 'true',
         message: 'Retrieved article successfully',
