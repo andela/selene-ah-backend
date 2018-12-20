@@ -55,6 +55,10 @@
       as: 'Tags',
       through: 'ArticleTag'
     });
+    Article.hasMany(models.ReportArticle, {
+      foreignKey: 'articleId',
+      as: 'articleReport'
+    });
   };
   return Article;
 };

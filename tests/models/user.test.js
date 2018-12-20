@@ -4,6 +4,7 @@ import UserModel from '../../server/models/user';
 import Article from '../../server/models/article';
 import Follower from '../../server/models/follower';
 import Rating from '../../server/models/rating';
+import ReportArticle from  '../../server/models/reportArticle';
 
 describe('User Model', () => {
   const User = UserModel(sequelize, dataTypes);
@@ -61,6 +62,7 @@ describe('User Model', () => {
         Article,
         Rating,
         Follower,
+        ReportArticle
       });
     });
 
@@ -74,6 +76,11 @@ describe('User Model', () => {
 
     it('should have one-to-many association with the Followers Model', () => {
       expect(User.hasMany.calledWith(Follower)).to.equal(true);
+    });
+
+    it('should have one-to-many association with the ReportArticle Model',
+     () => {
+      expect(User.hasMany.calledWith(ReportArticle)).to.equal(true);
     });
   });
 });

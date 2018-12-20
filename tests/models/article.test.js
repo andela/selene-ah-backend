@@ -4,6 +4,7 @@ import ArticleModel from '../../server/models/article';
 import UserModel from '../../server/models/user';
 import CategoryModel from '../../server/models/category';
 import RatingModel from '../../server/models/rating';
+import ReportArticle from  '../../server/models/reportArticle';
 
 describe('Model for an Article', () => {
   const Article = ArticleModel(sequelize, dataTypes);
@@ -29,6 +30,7 @@ describe('Model for an Article', () => {
       Article.associate({ User });
       Article.associate({ Category });
       Article.associate({ Rating });
+      Article.associate({ ReportArticle });
     });
     it('should have a belongsTo association with UserModel', () => {
       expect(Article.belongsTo.calledWith(User)).to.equal(true);
@@ -40,6 +42,8 @@ describe('Model for an Article', () => {
 
     it('should have a one-to-many association with the Rating Model', () => {
       expect(Article.hasMany.calledWith(Rating)).to.equal(true);
+    it('should have a belongsTo association with ReportArticle', () => {
+      expect(Article.hasMany.calledWith(ReportArticle)).to.equal(true);
     });
   });
 });

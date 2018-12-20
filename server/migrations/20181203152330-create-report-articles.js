@@ -13,6 +13,7 @@ const reportArticles = {
       },
       userId: {
         type: Sequelize.UUID,
+        onDelete: 'CASCADE',
         references: {
           model: 'Users',
           key: 'id'
@@ -20,6 +21,7 @@ const reportArticles = {
       },
       articleId: {
         type: Sequelize.UUID,
+        onDelete: 'CASCADE',
         references: {
           model: 'Articles',
           key: 'id'

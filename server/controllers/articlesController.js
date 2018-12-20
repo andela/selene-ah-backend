@@ -5,8 +5,12 @@ import calculateArticleReadTime from '../helpers/calculateArticleReadTime';
 import Vote from './votes/VoteController';
 import RatingController from './ratingController';
 
+<<<<<<< HEAD
 const { Article, Category, User } = db;
 
+=======
+const { Article, Category, User, ReportArticle } = db;
+>>>>>>> users are able to report an article[finishes #161779880]
 /**
 * @description class will implement CRUD functionalities for articles
 *
@@ -123,7 +127,6 @@ class ArticlesController {
           limit,
           offset
         });
-
       if (!articles || articles.count == 0) {
         return res.status(404).json({
           success: 'false',
@@ -159,6 +162,12 @@ class ArticlesController {
             model: User,
             as: 'author',
             attributes: ['userName', 'imageUrl', 'bio', 'dateOfBirth']
+<<<<<<< HEAD
+=======
+          },{
+            model: ReportArticle,
+            as: 'articleReport'
+>>>>>>> users are able to report an article[finishes #161779880]
           }],
         });
 
