@@ -1,6 +1,6 @@
 import { expect } from 'chai';
 import sequelizeHelper from 'sequelize-test-helpers';
-import ReportArticles from '../../server/models/reportArticle';
+import Report from '../../server/models/reportArticle';
 import user from '../../server/models/user';
 
 const {
@@ -9,11 +9,11 @@ const {
 } = sequelizeHelper;
 
 describe('## Report Articles model', () => {
-  const ReportArticleModel = ReportArticles(sequelize, dataTypes);
+  const ReportArticleModel = Report(sequelize, dataTypes);
   const instance = new ReportArticleModel();
   context('properties tests', () => {
-    it('should have a property of report', () => {
-      expect(instance).to.have.property('report');
+    it('should have a property of content', () => {
+      expect(instance).to.have.property('content');
     });
   });
   context('Report Articles associations should', () => {

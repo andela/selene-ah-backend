@@ -4,6 +4,7 @@ import ArticleModel from '../../server/models/article';
 import UserModel from '../../server/models/user';
 import CategoryModel from '../../server/models/category';
 import RatingModel from '../../server/models/rating';
+import Report from  '../../server/models/reportArticle';
 
 describe('Model for an Article', () => {
   const Article = ArticleModel(sequelize, dataTypes);
@@ -20,26 +21,31 @@ describe('Model for an Article', () => {
       expect(article).to.have.property('published');
     });
   });
-  context('check associations', () => {
-    const User = UserModel(sequelize, dataTypes);
-    const Category = CategoryModel(sequelize, dataTypes);
-    const Rating = RatingModel(sequelize, dataTypes);
+    context('check associations', () => {
+      const User = UserModel(sequelize, dataTypes);
+      const Category = CategoryModel(sequelize, dataTypes);
+      const Rating = RatingModel(sequelize, dataTypes);
 
-    before(() => {
-      Article.associate({ User });
-      Article.associate({ Category });
-      Article.associate({ Rating });
-    });
-    it('should have a belongsTo association with UserModel', () => {
-      expect(Article.belongsTo.calledWith(User)).to.equal(true);
-    });
+      before(() => {
+        Article.associate({ User });
+        Article.associate({ Category });
+        Article.associate({ Rating });
+        Article.associate({ Report });
+      });
+      it('should have a belongsTo association with UserModel', () => {
+        expect(Article.belongsTo.calledWith(User)).to.equal(true);
+      });
 
-    it('should have a belongsTo association with CategoryModel', () => {
-      expect(Article.belongsTo.calledWith(Category)).to.equal(true);
-    });
+      it('should have a belongsTo association with CategoryModel', () => {
+        expect(Article.belongsTo.calledWith(Category)).to.equal(true);
+      });
 
-    it('should have a one-to-many association with the Rating Model', () => {
-      expect(Article.hasMany.calledWith(Rating)).to.equal(true);
+      it('should have a one-to-many association with the Rating Model', () => {
+        expect(Article.hasMany.calledWith(Rating)).to.equal(true);
+
+      it('should have a belongsTo association with Report', () => {
+        expect(Article.hasMany.calledWith(Report)).to.equal(true);
+      });
     });
   });
 });

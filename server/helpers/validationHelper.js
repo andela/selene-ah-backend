@@ -64,6 +64,17 @@ const entityExistsInTable = async (modelName, options) => {
   return count >= 1;
 };
 
+/*
+ * @param {string} input argument to be checked
+ * @param {integer} length of the string to make it valid
+ * @returns {boolean} a values of true or false is returned
+ */
+const isFieldValid = (input, length = 1) => {
+  if (!input || input.trim().length < 1 || input.trim().length < length ) {
+      return false;
+    } else return true;
+};
+
 export default {
   isEmailValid,
   isUsernameValid,
@@ -71,5 +82,6 @@ export default {
   isPasswordValid,
   isUUIDValid,
   isSocialMediaEmail,
-  entityExistsInTable
+  entityExistsInTable,
+  isFieldValid
 };

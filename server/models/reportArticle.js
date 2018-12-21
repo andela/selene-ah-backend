@@ -1,6 +1,11 @@
 export default (sequelize, DataTypes) => {
-  const ReportArticle = sequelize.define('ReportArticle', {
-    report: {
+  const Report = sequelize.define('Report', {
+    id: {
+      type: DataTypes.UUID,
+      primaryKey: true,
+      defaultValue: DataTypes.UUIDV4
+    },
+    content: {
       type: DataTypes.STRING,
       validate: {
         notEmpty: {
@@ -10,13 +15,16 @@ export default (sequelize, DataTypes) => {
       }
     },
   });
-  ReportArticle.associate = (models) => {
-    ReportArticle.belongsTo(models.User, {
-      foreignKey: 'userId',
-    });
-    ReportArticle.belongsTo(models.Article, {
+  Report.associate = (models) => {
+    Report.belongsTo(models.Article,{
       foreignKey: 'articleId',
+      onDelete: 'CASCADE',
+      as: 'articleReport'
+    });
+    Report.belongsTo(models.User,{
+      foreignKey: 'userId',
+      onDelete: 'CASCADE',
     });
   };
-  return ReportArticle;
+  return Report;
 };

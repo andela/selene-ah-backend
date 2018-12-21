@@ -5,8 +5,8 @@ import calculateArticleReadTime from '../helpers/calculateArticleReadTime';
 import Vote from './votes/VoteController';
 import RatingController from './ratingController';
 
-const { Article, Category, User } = db;
 
+const { Article, Category, User } = db;
 /**
 * @description class will implement CRUD functionalities for articles
 *
@@ -123,7 +123,6 @@ class ArticlesController {
           limit,
           offset
         });
-
       if (!articles || articles.count == 0) {
         return res.status(404).json({
           success: 'false',
@@ -159,6 +158,7 @@ class ArticlesController {
             model: User,
             as: 'author',
             attributes: ['userName', 'imageUrl', 'bio', 'dateOfBirth']
+
           }],
         });
 

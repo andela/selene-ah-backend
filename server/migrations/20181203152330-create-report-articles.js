@@ -1,18 +1,19 @@
-const reportArticles = {
+const reports = {
   up: (queryInterface, Sequelize) => {
-    return queryInterface.createTable('ReportArticles', {
+    return queryInterface.createTable('Reports', {
       id: {
         allowNull: false,
         primaryKey: true,
         type: Sequelize.UUID,
         defaultValue: Sequelize.UUIDV4
       },
-      report: {
+      content: {
         type: Sequelize.STRING,
         allowNull: false,
       },
       userId: {
         type: Sequelize.UUID,
+        onDelete: 'CASCADE',
         references: {
           model: 'Users',
           key: 'id'
@@ -20,6 +21,7 @@ const reportArticles = {
       },
       articleId: {
         type: Sequelize.UUID,
+        onDelete: 'CASCADE',
         references: {
           model: 'Articles',
           key: 'id'
@@ -35,6 +37,6 @@ const reportArticles = {
       }
     });
   },
-  down: queryInterface => queryInterface.dropTable('ReportArticles')
+  down: queryInterface => queryInterface.dropTable('Reports')
 };
-export default reportArticles;
+export default reports;

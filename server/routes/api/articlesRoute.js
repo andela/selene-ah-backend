@@ -6,6 +6,9 @@ import articleValidation from '../../middlewares/articleValidation';
 import articleSearchController from '../../controllers/articleSearchController';
 import articleSearchValidation from '../../middlewares/articleSearchValidation';
 import paginationValidation from '../../middlewares/paginationValidation';
+import ArticleReporter from '../../controllers/reportArticleController';
+import RoleAuthorization from '../../middlewares/RoleAuthorization';
+import { SUPERADMIN } from '../../helpers/constants';
 
 const router = Router();
 
@@ -65,5 +68,33 @@ router.get('/articles/search', [
   paginationValidation.validateQueryParameter,
     articleSearchValidation.validateArticleSearchParameter],
       articleSearchController.searchArticle);
+
+/**
+* @description - Route to report an article
+* @returns - It returns a response
+*/
+  router.post('/reportarticle/:articleId',
+[uuidValidator.validateUUID,
+  JWTAuthentication.authenticateUser],
+ArticleReporter.reportAnArticle);
+
+/**
+* @description - Route to get all article that has been reported
+* @returns - It returns a response
+*/
+router.get('/allreports',
+[ JWTAuthentication.authenticateUser,
+  RoleAuthorization.authorizeUser(SUPERADMIN)],
+ArticleReporter.getAllReports);
+
+
+/**
+* @description - Route to get reports on a specific article
+* @returns - It returns a response
+*/
+router.get('/articlereports/:articleId',
+[ JWTAuthentication.authenticateUser,
+  RoleAuthorization.authorizeUser(SUPERADMIN)],
+ArticleReporter.getReportsOnAnArticle);
 
 export default router;
