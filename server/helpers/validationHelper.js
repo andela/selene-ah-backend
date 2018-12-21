@@ -57,5 +57,5 @@ export default {
   isNameValid,
   isPasswordValid,
   isUUIDValid,
-  isSocialMediaEmail
+  isSocialMediaEmail,
 };

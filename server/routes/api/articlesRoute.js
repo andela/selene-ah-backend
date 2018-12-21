@@ -3,6 +3,8 @@ import articleController from '../../controllers/articlesController';
 import JWTAuthentication from '../../middlewares/JWTAuthentication';
 import uuidValidator from '../../middlewares/validations/uuidValidator';
 import articleValidation from '../../middlewares/articleValidation';
+import articleSearchController from '../../controllers/articleSearchController';
+import articleSearchValidation from '../../middlewares/articleSearchValidation';
 import paginationValidation from '../../middlewares/paginationValidation';
 
 const router = Router();
@@ -54,4 +56,14 @@ router.delete('/article/:id', uuidValidator.validateUUID,
 */
 router.get('/article/author/:authorsId',
   articleController.getAuthorsArticles);
+
+/**
+* @description - Route to search for article using query
+* @returns - It returns a response
+*/
+router.get('/articles/search', [
+  paginationValidation.validateQueryParameter,
+    articleSearchValidation.validateArticleSearchParameter],
+      articleSearchController.searchArticle);
+
 export default router;
