@@ -95,6 +95,30 @@ describe('GET /followers/:id', () => {
     expect(res.body.followers.length).to.be.greaterThan(0);
   });
 
+  it('should return followers with length of one', async () => {
+    await chai.request(server)
+    .get(`/api/v1/followers/${id1}?page=1&limit=1`)
+    .set('Authorization', `Bearer ${token}`)
+    .then((res) => {
+      expect(res).to.have.status(200);
+      expect(res.body).to.be.an('object');
+      expect(res.body.message).to.be.equal('Followers returned successfully');
+      expect(res.body.followers.length).to.be.equals(1);
+    });
+  });
+
+  it('should return no followers with page equals to 2', async () => {
+    await chai.request(server)
+    .get(`/api/v1/followers/${id1}?page=2&limit=3`)
+    .set('Authorization', `Bearer ${token}`)
+    .then((res) => {
+      expect(res).to.have.status(200);
+      expect(res.body).to.be.an('object');
+      expect(res.body.message).to.be.equal('No followers found');
+    });
+  });
+
+
   it('should give error if an invalid UUID is supplied', async () => {
     const res = await chai.request(server)
     .get('/api/v1/followers/dgdgdvd-1771')
@@ -105,7 +129,12 @@ describe('GET /followers/:id', () => {
   });
 
   it('Fake test: Mock error in getFollowers', async () => {
-    const req = {};
+    const req = {
+      query: {
+        page: 1,
+        limit: 2
+      }
+    };
     const res = {};
     const next = sinon.stub();
     const id=1;
@@ -138,7 +167,12 @@ describe('GET /followees Route', () => {
   });
 
   it('Fake test: Mock error in getFollowees', async () => {
-    const req = {};
+    const req = {
+      query: {
+        page: 1,
+        query: 2
+      }
+    };
     const res = {};
     const next = sinon.stub();
     const id=1;

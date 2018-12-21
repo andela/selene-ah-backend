@@ -216,6 +216,9 @@ describe('API endpoint for create articles', () => {
     const req = {
       body: {
         id: 1
+      },
+      query: {
+        page: 3
       }
     };
 

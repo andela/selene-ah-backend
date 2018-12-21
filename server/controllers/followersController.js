@@ -1,4 +1,5 @@
 import models from '../models';
+import pagination from '../helpers/pagination';
 
 const { Follower } = models;
 /**
@@ -42,8 +43,7 @@ class FollowerController {
       const { id } = req.params;
       const userId = req.user.id;
       await Follower.destroy({
-        where: {userId: userId,
-        followerId: id}
+        where: {userId, followerId: id}
       });
       return res.status(200).json({
           success: true,
@@ -63,10 +63,13 @@ class FollowerController {
    * @returns {object} - get user
    */
   static async getFollowers(req, res, next, id) {
+    const { limit, offset }= pagination.paginationHelper(req.query);
     try {
       const userId = id;
       const followers = await Follower.findAll({
-        where: {userId: userId}
+        where: {userId},
+        limit,
+        offset
       });
       return followers.length >= 1 ? res.status(200).json({
         success: true,
@@ -90,9 +93,12 @@ class FollowerController {
    * @returns {object} - get user
    */
   static async getFollowees(req, res, next, id) {
+    const { limit, offset }= pagination.paginationHelper(req.query);
     try {
       const followees = await Follower.findAll({
-        where: {followerId: id}
+        where: {followerId: id},
+        limit,
+        offset
       });
       return followees.length >= 1 ? res.status(200).json({
         success: true,

@@ -1,8 +1,9 @@
 import { Router } from 'express';
 import followersController from '../../controllers/followersController';
 import JWTAuthentication from '../../middlewares/JWTAuthentication';
-import UserAuthentication from '../../middlewares/userAuthentication';
+import UserAuthentication from '../../middlewares/followersAuthentication';
 import uuidValidator from '../../middlewares/validations/uuidValidator';
+import paginationValidation from '../../middlewares/paginationValidation';
 
 const router = Router();
 
@@ -23,21 +24,25 @@ router.delete('/unfollow/:id',
         followersController.unfollowUser);
 
 router.get('/followers',
-  [JWTAuthentication.authenticateUser],
-    followersController.getAllFollowers);
+  [JWTAuthentication.authenticateUser,
+    paginationValidation.validateQueryParameter],
+      followersController.getAllFollowers);
 
 router.get('/followees',
-  [JWTAuthentication.authenticateUser],
-    followersController.getAllFollowees);
+  [JWTAuthentication.authenticateUser,
+    paginationValidation.validateQueryParameter],
+      followersController.getAllFollowees);
 
 router.get('/followers/:id',
   [JWTAuthentication.authenticateUser,
-    uuidValidator.validateUUID],
-    followersController.getUserFollowers);
+    uuidValidator.validateUUID,
+      paginationValidation.validateQueryParameter],
+        followersController.getUserFollowers);
 
 router.get('/followees/:id',
   [JWTAuthentication.authenticateUser,
-    uuidValidator.validateUUID],
-      followersController.getAnotherUserFollowees);
+    uuidValidator.validateUUID,
+      paginationValidation.validateQueryParameter],
+        followersController.getAnotherUserFollowees);
 
 export default router;

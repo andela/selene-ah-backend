@@ -3,6 +3,7 @@ import articleController from '../../controllers/articlesController';
 import JWTAuthentication from '../../middlewares/JWTAuthentication';
 import uuidValidator from '../../middlewares/validations/uuidValidator';
 import articleValidation from '../../middlewares/articleValidation';
+import paginationValidation from '../../middlewares/paginationValidation';
 
 const router = Router();
 
@@ -27,8 +28,9 @@ router.get('/article/:id', uuidValidator.validateUUID,
  * @description - Route gets all articles
  * @returns - It returns an object of articles
  */
-router.get('/articles/', JWTAuthentication.authenticateUser,
-  articleController.getAllArticles);
+router.get('/articles', [JWTAuthentication.authenticateUser,
+  paginationValidation.validateQueryParameter],
+    articleController.getAllArticles);
 
 /**
 * @description - Route updates an article
