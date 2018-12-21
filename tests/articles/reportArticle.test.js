@@ -23,7 +23,7 @@ let articleId;
 let adminToken;
 const { generateToken } = JWTHelper;
 const { getReportsOnAnArticle } = ArticleReporter;
-const { ReportArticle } = models;
+const { Report } = models;
 
 describe('API endpoint for create articles', () => {
     const user = signupFactory.build({
@@ -67,7 +67,7 @@ describe('API endpoint for create articles', () => {
     });
     it('should create the report for an article', async () => {
         const theReport = {
-            report: 'buhari cant solve your problem'
+            content: 'buhari cant solve your problem'
         };
         const res = await chai.request(server)
             .post(`/api/v1/reportarticle/${articleId}`)
@@ -77,13 +77,13 @@ describe('API endpoint for create articles', () => {
             expect(res.body).to.be.an('Object');
             expect(res.body.message).to.be
             .equals('report successfully created');
-            expect(res.body).to.haveOwnProperty('report');
+            expect(res.body).to.haveOwnProperty('content');
     });
 
     it('should not a create report for an article with invalid input',
      async () => {
         const theReport = {
-            report: 'buhari'
+            content: 'buhari'
         };
         const res = await chai.request(server)
             .post(`/api/v1/reportarticle/${articleId}`)
@@ -98,7 +98,7 @@ describe('API endpoint for create articles', () => {
     it('should not a create report for an article that doesnt exists',
      async () => {
         const theReport = {
-            report: 'buhari the nimagariaid'
+            content: 'buhari the nimagariaid'
         };
         const res = await chai.request(server)
             .post(`/api/v1/reportarticle/${userId}`)
@@ -113,7 +113,7 @@ describe('API endpoint for create articles', () => {
     it('should not a create report for an article that doesnt exists',
      async () => {
         const theReport = {
-            report: 'buhari the nimagariaid'
+            content: 'buhari the nimagariaid'
         };
         const newToken = generateToken(user2, '1d');
         const res = await chai.request(server)
@@ -163,7 +163,7 @@ describe('API endpoint for create articles', () => {
         const res = {};
         const next = sinon.stub();
 
-        sinon.stub(ReportArticle, 'findAll').throws();
+        sinon.stub(Report, 'findAll').throws();
 
         await(getReportsOnAnArticle(req, res, next));
         expect(next.called).to.be.true;

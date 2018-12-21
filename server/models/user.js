@@ -112,7 +112,7 @@ export default (sequelize, DataTypes) => {
       foreignKey: 'userId',
       as: 'followers'
     });
-    User.hasMany(models.ReportArticle, {
+    User.hasMany(models.Report, {
       foreignKey: 'userId',
       as: 'userReport'
     });

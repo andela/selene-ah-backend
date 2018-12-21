@@ -1,11 +1,11 @@
 import db from '../models';
 import helpers  from '../helpers/validationHelper';
 
-const { ReportArticle, Article } = db;
+const { Report, Article } = db;
 const { isFieldValid } = helpers;
 /**
  * @description will enable an article to be reported
- * @class ReportArticle
+ * @class Report
  */
 class ArticleReporter {
     /**
@@ -18,32 +18,32 @@ class ArticleReporter {
     static async reportAnArticle(req, res, next) {
         const { id } = req.user;
         const { articleId } = req.params;
-        const { report } = req.body;
+        const { content } = req.body;
         try{
-            if(!(isFieldValid(report, 15))){
+            if(!(isFieldValid(content, 15))){
                 return res.status(400).send({
                     success:false,
                     message:'report cant be less than 15 characters'
                 });
             }
-            const findArticle = await Article.findOne({
+            const article = await Article.findOne({
                 where: { id: articleId}
             });
-            if (!findArticle) {
+            if (!article) {
                 return res.status(404).send({
                     success:false,
                     message:'article not found'
                 });
             }
-            const reportedArticle = await ReportArticle.create({
-                report: report.trim(),
+            const reportedArticle = await Report.create({
+                content: content.trim(),
                 userId: id,
                 articleId
             });
             return res.status(201).send({
                 success: true,
                 message: 'report successfully created',
-                report: reportedArticle
+                content: reportedArticle
             });
         } catch (err) {
            return next (err);
@@ -59,7 +59,7 @@ class ArticleReporter {
      */
     static async getAllReports(req,res, next) {
         try {
-            const allReports =  await ReportArticle.findAll({});
+            const allReports =  await Report.findAll({});
             if (!allReports[0]){
                 return res.status(404).send({
                     success: false,
@@ -86,7 +86,7 @@ class ArticleReporter {
     static async getReportsOnAnArticle(req,res, next) {
         const { articleId } = req.params;
         try {
-            const allReports =  await ReportArticle.findAll({
+            const allReports =  await Report.findAll({
                 where: {articleId}
             });
             if (!allReports[0]){

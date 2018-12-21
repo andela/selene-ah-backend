@@ -55,7 +55,7 @@
       as: 'Tags',
       through: 'ArticleTag'
     });
-    Article.hasMany(models.ReportArticle, {
+    Article.hasMany(models.Report, {
       foreignKey: 'articleId',
       as: 'articleReport'
     });
