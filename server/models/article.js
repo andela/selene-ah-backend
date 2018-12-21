@@ -52,7 +52,7 @@
     });
     Article.belongsToMany(models.Tag, {
       foreignKey: 'articleId',
-      as: 'Tags',
+      as: 'tags',
       through: 'ArticleTag'
     });
     Article.hasMany(models.Report, {

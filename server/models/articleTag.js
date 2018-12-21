@@ -5,6 +5,11 @@
  */
 export default (sequelize, DataTypes) => {
   const ArticleTag = sequelize.define('ArticleTag', {
+    id: {
+      type: DataTypes.UUID,
+      primaryKey: true,
+      defaultValue: DataTypes.UUIDV4
+    },
     articleId: {
       type: DataTypes.UUID,
       defaultValue: DataTypes.UUIDV4,
@@ -16,13 +21,5 @@ export default (sequelize, DataTypes) => {
       allowNull: false
     }
   });
-  ArticleTag.associate = (models) => {
-    ArticleTag.belongsTo(models.Article, {
-      foreignKey: 'articleId'
-    });
-    ArticleTag.belongsTo(models.Tag, {
-      foreignKey: 'tagId'
-    });
-  };
   return ArticleTag;
 };
