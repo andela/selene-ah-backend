@@ -51,6 +51,19 @@ const  isSocialMediaEmail = (email) => {
   return email.includes('@facebook.com') || email.includes('@twitter.com');
 };
 
+/**
+ * @param {object} modelName - Model
+ * @param {object} options - The parameters for the where clause
+ * @returns {boolean} - true or false
+ */
+const entityExistsInTable = async (modelName, options) => {
+  const count = await modelName.count({
+    where: options
+  });
+
+  return count >= 1;
+};
+
 export default {
   isEmailValid,
   isUsernameValid,
@@ -58,4 +71,5 @@ export default {
   isPasswordValid,
   isUUIDValid,
   isSocialMediaEmail,
+  entityExistsInTable
 };

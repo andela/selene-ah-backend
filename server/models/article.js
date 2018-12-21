@@ -42,6 +42,10 @@
       foreignKey: 'userId',
       as: 'author',
     });
+    Article.hasMany(models.Rating, {
+      foreignKey: 'articleId',
+      as: 'articleRating'
+    });
     Article.belongsTo(models.Category, {
       foreignKey: 'categoryId',
       as: 'category'
