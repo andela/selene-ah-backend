@@ -29,6 +29,10 @@
         }
       }
     },
+    readingStat: {
+      type: DataTypes.INTEGER,
+      defaultValue: 0,
+    },
     slug: DataTypes.TEXT,
     published: DataTypes.BOOLEAN,
     readTime: DataTypes.INTEGER,

@@ -299,4 +299,27 @@ describe('API endpoint for create articles', () => {
     expect(next.called).to.be.true;
     sinon.restore();
   });
+
+  it('should return 500 error when creating an article', async () => {
+    const req = {
+      user: {
+        id: 'jdjj'
+      },
+      body: {
+        categoryId: 'hdhd',
+        title: 'hdhh',
+        body: 'i am in',
+        published: 'false'
+      }
+    };
+    const res = {};
+    const next = sinon.stub();
+
+    sinon.stub(Article, 'create').throws();
+
+    await articlesController.createArticle(req, res, next);
+
+    expect(next.called).to.be.true;
+    sinon.restore();
+  });
 });
