@@ -25,6 +25,8 @@ router.use('/api/v1', articles);
 router.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerConfig));
 router.use('/api/v1', bookmark);
 router.use('/api/v1', rating);
+router.use('/api/v1', rating);
+
 router.use('/api/v1', voteRouter);
 
 export default router;
