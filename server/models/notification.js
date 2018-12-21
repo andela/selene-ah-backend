@@ -19,15 +19,7 @@ const notification = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       allowNull: false
     },
-    contentType: {
-      type: DataTypes.STRING,
-      allowNull: false
-    },
-    contentTypeId: {
-      type: DataTypes.UUID,
-      allowNull: false
-    },
-    ownerId: {
+    receiverId: {
       type: DataTypes.UUID,
       allowNull: false
     }
