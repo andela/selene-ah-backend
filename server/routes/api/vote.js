@@ -7,6 +7,21 @@ from '../../middlewares/validations/articleVoteValidator';
 
 const voteRouter = Router();
 
+voteRouter.get(
+  '/votes/:articleId/count',
+  AricleValidator.articleExistInDatabase,
+  ArticleVoteValidator.validateRequest,
+  VoteController.votesCount,
+);
+
+voteRouter.get(
+  '/votes/:articleId/likedbyuser',
+  JWTAuthentication.authenticateUser,
+  AricleValidator.articleExistInDatabase,
+  ArticleVoteValidator.validateRequest,
+  VoteController.articleLikedByUser,
+);
+
 voteRouter.post(
   '/votes/:articleId/like',
   JWTAuthentication.authenticateUser,

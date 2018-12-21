@@ -12,7 +12,9 @@ import VoteFactory from '../../mocks/factories/voteFactory';
 import {
   ARTICLE_LIKE_MSG,
   ARTICLE_DISLIKE_MSG,
-  ARTICLE_RESET_MSG
+  ARTICLE_RESET_MSG,
+  ARTICLE_NOT_LIKED_BY_USER_MSG,
+  ARTICLE_LIKED_BY_USER_MSG
 } from '../../../server/helpers/responseMessages';
 
 chai.use(chaiHttp);
@@ -98,6 +100,22 @@ describe('#VoteController test', () => {
 
     it('should be a function updateArticleVote', () => {
       expect(Vote.updateArticleVote).to.be.a('function');
+    });
+
+    it('should have a function votesCount', () => {
+      expect(Vote.votesCount).to.exist;
+    });
+
+    it('should be a function votesCount', () => {
+      expect(Vote.votesCount).to.be.a('function');
+    });
+
+    it('should have a function articleLikedByUser', () => {
+      expect(Vote.articleLikedByUser).to.exist;
+    });
+
+    it('should be a function articleLikedByUser', () => {
+      expect(Vote.articleLikedByUser).to.be.a('function');
     });
   });
 
@@ -202,6 +220,59 @@ describe('#VoteController test', () => {
     it('should hit the catch block if unknown error ocurs', async () => {
       sinon.stub(ArticleVote, 'findOne').throws();
       await Vote.resetArticleVoteReaction(req, res, next);
+      next.should.have.been.called;
+    });
+  });
+
+
+  context('votesCount test', () => {
+    it('should call findAndCountAll function', async () => {
+      const findAndCountAllStub = sinon.stub(ArticleVote, 'findAndCountAll')
+                                        .returns({});
+      await Vote.votesCount(req, res, next);
+      findAndCountAllStub.should.have.been.calledTwice;
+    });
+
+    it('should set votesCount to zero', async () => {
+      sinon.stub(ArticleVote, 'findAndCountAll').returns({ count: 0 });
+      await Vote.votesCount(req, res, next);
+    });
+
+    it('should set votesCount to like count', async () => {
+      sinon.stub(ArticleVote, 'findAndCountAll').returns({ count: 1 });
+      await Vote.votesCount(req, res, next);
+    });
+
+    it('should hit the catch block if unknown error ocurs', async () => {
+      sinon.stub(ArticleVote, 'findAndCountAll').throws();
+      await Vote.votesCount(req, res, next);
+      next.should.have.been.called;
+    });
+  });
+
+
+  context('articleLikedByUser test', () => {
+    it('should call the findOne function', async () => {
+      const findOneStub = sinon.stub(ArticleVote, 'findOne').returns({});
+      await Vote.articleLikedByUser(req, res, next);
+      findOneStub.should.have.been.called;
+    });
+
+    it(`should return ${ARTICLE_NOT_LIKED_BY_USER_MSG}`, async () => {
+      sinon.stub(ArticleVote, 'findOne').returns(false);
+      const dbResponse = await Vote.articleLikedByUser(req, res, next);
+      expect(dbResponse.message).to.equal(ARTICLE_NOT_LIKED_BY_USER_MSG);
+    });
+
+    it(`should return ${ARTICLE_LIKED_BY_USER_MSG}`, async () => {
+      sinon.stub(ArticleVote, 'findOne').returns({});
+      const dbResponse = await Vote.articleLikedByUser(req, res, next);
+      expect(dbResponse.message).to.equal(ARTICLE_LIKED_BY_USER_MSG);
+    });
+
+    it('should hit the catch block if unknown error ocurs', async () => {
+      sinon.stub(ArticleVote, 'findOne').throws();
+      await Vote.articleLikedByUser(req, res, next);
       next.should.have.been.called;
     });
   });
