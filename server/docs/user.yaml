@@ -1,0 +1,158 @@
+paths:
+  /auth/resetpassword:                
+    post:
+      tags:
+        - User
+      summary: sends link for user to update password to user
+      produces:
+      - application/json
+      parameters:
+      - in: body
+        name: payload
+        description: Email of user that wants to reset password
+        required: true
+        schema:
+          type: object
+          properties:
+            email:
+              type: 'string'
+              format: 'email'
+      responses:
+        201:
+          description: Response for success
+          schema:
+            type: 'object'
+            properties:
+              status:
+                type: 'boolean'
+                format: 'false'
+              message:
+                type: string
+                example: 'Reset password link has been sent to your email'
+        400:
+          description: response for bad request(syntax)
+          schema:
+            type: 'object'
+            properties:
+              status:
+                type: 'boolean'
+                format: 'false'
+              message: 
+                type: string
+                example: 'Invalid Email: supply a valid email'
+        404:
+          description:
+          schema:
+            type: 'object'
+            properties:
+              status:
+                type: boolean
+                example: false
+              message: 
+                type: string
+                example: 'Email not found'
+  /auth/updatepassword:                
+    post:
+      tags:
+        - User
+      summary: Updates the user password
+      produces:
+      - application/json
+      parameters:
+      - in: header
+        name: resetpasswordToken
+        description: The token that contains the user details
+        schema:
+          type: object
+          properties:
+            resetPasswordToken:
+              required: true
+              type: 'string'
+              example: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c'
+      - in: body
+        name: payload
+        description: 
+        schema:
+          type: object
+          properties:
+            password:
+              type: 'string'
+              example: 'sholadayo23@'
+              required: true
+            confirmPassword:
+              type: 'string'
+              example: 'sholadayo23@'
+              required: true
+      responses:
+        201:
+          description: Response for success
+          schema:
+            type: 'object'
+            properties:
+              status:
+                type: 'boolean'
+                example: 'false'
+              message:
+                type: string
+                example: 'Reset password link has been sent to your email'
+        400:
+          description: response for bad request(syntax)
+          schema:
+            type: 'object'
+            properties:
+              status:
+                type: 'boolean'
+                example: 'false'
+              message: 
+                type: string
+                example: 'Invalid Email: supply a valid email'
+        404:
+          description:
+          schema:
+            type: 'object'
+            properties:
+              status:
+                type: boolean
+                example: false
+              message: 
+                type: string
+                example: 'Email not found'
+definitions:
+  User:
+      type: "object"
+      properties:
+        id:
+          type: string
+          format: uuid
+        username:
+          type: string
+        firstName:
+          type: string
+        lastName:
+          type: string
+        email:
+          type: string
+          format: email
+        validate:
+          type: boolean
+        blocked: 
+          type: boolean
+        role:
+          type: string
+        password:
+          type: string
+        imageUrl:
+          type: string
+        bio:
+          type: string
+        gender:
+          type: string
+        twitterUrl:
+          type: string
+        facebookUrl:
+          type: string
+        dateOfBirth:
+          type: string
+          format: date
+        emailNotification:
+          type: boolean
