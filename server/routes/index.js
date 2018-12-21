@@ -10,6 +10,7 @@ import followers from './api/follow';
 import Authorize from './api/auth/authorize';
 import articles from './api/articlesRoute';
 import voteRouter from './api/vote';
+import bookmark from './api/bookmark';
 
 const router = Router();
 router.use('/api/v1', userAuth);
@@ -21,6 +22,7 @@ router.use('/api/v1', followers);
 router.use('/api/v1/role', Authorize);
 router.use('/api/v1', articles);
 router.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerConfig));
+router.use('/api/v1', bookmark);
 
 router.use('/api/v1', voteRouter);
 

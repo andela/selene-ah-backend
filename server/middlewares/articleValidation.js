@@ -1,6 +1,13 @@
+import models from '../models';
+import {
+  ARTICLE_NOT_FOUND
+} from '../helpers/responseMessages';
+
+const { Article } = models;
+
 /**
  * @description - This class validates required
- *  field needed to create an article
+ *  field needed to create an articleß
  */
 class ArticleValidation {
   //title, body, categoryId, published
@@ -31,6 +38,26 @@ class ArticleValidation {
       });
     }
     return next();
+  }
+
+  /**
+   * @description Check if an article exists
+   * @param {object} req
+   * @param {object} res
+   * @param {function} next
+   * @returns {function} next
+   */
+  static async articleExistInDatabase(req, res, next) {
+    try {
+      const { articleId } = req.params;
+      const dbResult = await Article.findByPk(articleId);
+      if(dbResult) return next();
+      return res.status(404).json({
+        message: ARTICLE_NOT_FOUND
+      });
+    } catch (error) {
+      return next(error);
+    }
   }
 }
 

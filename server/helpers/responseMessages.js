@@ -12,3 +12,6 @@ export const ARTICLE_RESET_MSG = 'Article reaction has been reset';
 export const ARTICLE_NOT_FOUND = 'Article was not found';
 export const VOTE_REQUIRED_MSG = 'The votes field is required';
 export const VOTE_BAD_REQUEST_MSG = 'Invalid vote field passed. Please pass an integer';
+export const BOOKMARK_SUCCESSFUL_MSG = 'Bookmark successful.';
+export const NO_BOOKMARK_MSG = 'No bookmarks';
+export const BOOKMARK_FOUND_MSG = 'Bookmarks found';

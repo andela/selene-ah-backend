@@ -2,10 +2,10 @@ import { Factory } from 'rosie';
 import faker from 'faker';
 
 const articlesFactory = new Factory()
-  .attr({
-    title: faker.lorem.sentence,
+  .attrs({
+    title: faker.random.words(8),
     categoryId: faker.random.uuid,
-    body: faker.lorem.sentence,
+    body: faker.random.words(200),
     userId: faker.random.uuid,
     published: faker.random.boolean,
   });
