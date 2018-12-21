@@ -1,6 +1,7 @@
 import db from '../models';
 import generateUniqueSlug from '../helpers/generateUniqueSlug';
 import pagination from '../helpers/pagination';
+import calculateArticleReadTime from '../helpers/calculateArticleReadTime';
 
 const { Article, Category, User } = db;
 /**
@@ -21,12 +22,13 @@ class ArticlesController {
     const { id } = req.user;
     const { categoryId, title, body, published } = req.body;
     const articleSlug = generateUniqueSlug(title);
+    const readTime = calculateArticleReadTime(body);
+
     try {
 
       const category = await Category.findOne({
         where: { id: categoryId }
       });
-
       if (!category) {
         return res.status(400).send({
           success: false,
@@ -40,6 +42,7 @@ class ArticlesController {
         slug: articleSlug,
         published,
         userId: id,
+        readTime,
         categoryId: categoryId.trim()
       });
 
@@ -96,7 +99,7 @@ class ArticlesController {
  * @returns {object} - object representing response message
  */
   static async getAllArticles(req, res, next) {
-    const { limit, offset }= pagination.paginationHelper(req.query);
+    const { limit, offset } = pagination.paginationHelper(req.query);
     try {
       const articles = await Article.findAndCountAll(
         {
@@ -175,13 +178,18 @@ class ArticlesController {
  * @param {object} next - Error handler
  */
   static async updateArticle(req, res, next) {
-    const { title } = req.body;
+    const { title, body, categoryId } = req.body;
     const { id } = req.params;
 
-    let articleSlug = '';
+    let articleSlug;
+    let readTime;
 
     if (title) {
       articleSlug = generateUniqueSlug(title);
+    }
+
+    if (body) {
+      readTime = calculateArticleReadTime(body);
     }
 
     try {
@@ -197,10 +205,11 @@ class ArticlesController {
       }
       await Article.update(
         {
-          title: req.body.title || article.title,
+          title: title || article.title,
           slug: articleSlug || article.slug,
-          body: req.body.body || article.body,
-          categoryId: req.body.categoryId || article.categoryId
+          body: body || article.body,
+          readTime: readTime || article.readTime,
+          categoryId: categoryId || article.categoryId
         },
         {
           where: { id }
