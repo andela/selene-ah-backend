@@ -404,6 +404,28 @@ No additional parameters required
 
 `GET /api/tags`
 
+### Like Comment
+`POST /api/comment/:commentId/commentreaction`
+
+Example request body:
+```source-json
+{
+    "reaction": "like"
+}
+```
+Authentication required
+
+### Unlike Comment
+`POST /api/comment/:commentId/commentreaction`
+
+Example request body:
+```source-json
+{
+    "reaction": "unlike"
+}
+```
+Authentication required
+
 ### Project Setup
 
 ```

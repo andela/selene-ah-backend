@@ -38,3 +38,7 @@ export const GOT_ARTICLE_RATING_MESSAGE =
         'Successfully got the article\'s rating';
 export const NO_ARTICLE_RATING = 'Sorry, this article has not been rated';
 export const RATE_OWN_ARTICLE_ERROR = 'Sorry, you cannot rate your own article';
+
+export const COMMENT_LIKE_MSG = 'Comment liked by user';
+export const COMMENT_DISLIKE_MSG = 'Comment disliked by user';
+export const COMMENT_RESET_MSG = 'Comment reaction has been successfully removed';
