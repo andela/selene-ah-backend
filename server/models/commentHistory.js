@@ -17,9 +17,6 @@ export default (sequelize, DataTypes) => {
       validate: {
         notEmpty: {
           msg: 'The commentId is required. Please supply a valid commentId'
-        },
-        isInt: {
-          msg: 'the commentId must be an Integer'
         }
       }
     },
@@ -37,7 +34,7 @@ export default (sequelize, DataTypes) => {
   CommentHistory.associate = (models) => {
     CommentHistory.belongsTo(models.Comment, {
       foreignKey: 'commentId',
-      as: 'comhis'
+      onDelete: 'CASCADE'
     });
   };
 

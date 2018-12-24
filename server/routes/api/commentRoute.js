@@ -18,7 +18,7 @@ const router = Router();
 /**
  * @description get all comments for an article
  * @param {string}
- * @param {function} commentController.getAllComments
+ * @param {function} commentController.getArticleComments
  */
 router.get('/article/:articleId/comments',
   commentController.getArticleComments);
@@ -26,10 +26,20 @@ router.get('/article/:articleId/comments',
 /**
  * @description get a single comment
  * @param {string}
- * @param {function} commentController.getComment
+ * @param {function} commentController.getSingleComment
  */
 router.get('/comment/:id',
   commentController.getSingleComment);
+
+/**
+ * @description get a comment history for a comment
+ * @param {string}
+ * @param {function} commentController.commentHistory
+ */
+router.get('/comment/history/:commentId',
+  validateUUID,
+  validateCommentId,
+  commentController.getCommentHistory);
 
 /**
  * @description post single comment to an article
