@@ -75,6 +75,18 @@ const isFieldValid = (input, length = 1) => {
     } else return true;
 };
 
+/**
+ * @description Validates a text field Length
+ * @param {String} text
+ * @return {Boolean} returns true or false
+ */
+const validateTextLength = (text) => {
+  if (text.length >= 2 && text.length <= 200 && !!text.trim()) {
+    return true;
+  }
+  return false;
+};
+
 export default {
   isEmailValid,
   isUsernameValid,
@@ -83,5 +95,6 @@ export default {
   isUUIDValid,
   isSocialMediaEmail,
   entityExistsInTable,
-  isFieldValid
+  isFieldValid,
+  validateTextLength,
 };

@@ -1,8 +1,8 @@
-/**
-* @param {object} sequelize
-* @param {object} DataTypes
-* @returns {object} Comment model
-*/
+ /**
+ * @param {object} sequelize
+ * @param {object} DataTypes
+ * @returns {object} Comment model
+ */
 export default (sequelize, DataTypes) => {
   const Comment = sequelize.define('Comment', {
     id: {
@@ -10,12 +10,16 @@ export default (sequelize, DataTypes) => {
       primaryKey: true,
       defaultValue: DataTypes.UUIDV4
     },
-    comment: {
+    content: {
       type: DataTypes.TEXT,
       allowNull: false,
       validate: {
         notEmpty: {
-          msg: 'Invalid comment. comment field is required.'
+          msg: 'comment cannot be empty',
+        },
+        len: {
+          args: [2, 150],
+          msg: 'comment must be between 2 and 150 characters'
         }
       }
     }
@@ -28,6 +32,10 @@ export default (sequelize, DataTypes) => {
     Comment.belongsTo(models.Article, {
       foreignKey: 'articleId',
       onDelete: 'CASCADE'
+    });
+    Comment.belongsTo(models.User, {
+      foreignKey: 'userId',
+      as: 'author'
     });
   };
   return Comment;
