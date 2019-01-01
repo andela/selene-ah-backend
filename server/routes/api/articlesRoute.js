@@ -8,6 +8,7 @@ import articleSearchValidation from '../../middlewares/articleSearchValidation';
 import paginationValidation from '../../middlewares/paginationValidation';
 import ArticleReporter from '../../controllers/reportArticleController';
 import RoleAuthorization from '../../middlewares/RoleAuthorization';
+import HighlightedCommment from '../../controllers/highlightedComment';
 import { SUPERADMIN } from '../../helpers/constants';
 
 const router = Router();
@@ -94,7 +95,31 @@ ArticleReporter.getAllReports);
 */
 router.get('/articlereports/:articleId',
 [ JWTAuthentication.authenticateUser,
+  uuidValidator.validateUUID,
   RoleAuthorization.authorizeUser(SUPERADMIN)],
 ArticleReporter.getReportsOnAnArticle);
+
+/**
+* @description - Route to post hightlighted comment on an article
+* @returns - It returns a response
+*/
+router.post('/highlightedcomment/:articleId',
+[ JWTAuthentication.authenticateUser,
+  uuidValidator.validateUUID],
+  HighlightedCommment.addComment);
+
+/**
+* @description - Route to update hightlighted comment on an article
+* @returns - It returns a response
+*/
+router.put('/updatehighlightedcomment/:commentId',
+[ JWTAuthentication.authenticateUser,
+  uuidValidator.validateUUID],
+  HighlightedCommment.updateComment);
+
+  router.delete('/deletehighlightedcomment/:commentId',
+[ JWTAuthentication.authenticateUser,
+  uuidValidator.validateUUID],
+  HighlightedCommment.deleteComment);
 
 export default router;

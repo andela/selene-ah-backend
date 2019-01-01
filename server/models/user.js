@@ -116,6 +116,11 @@ export default (sequelize, DataTypes) => {
       foreignKey: 'userId',
       as: 'userReport'
     });
+    User.belongsToMany(models.HighlightedComment,{
+      foreignKey: 'userId',
+      through: 'UserHighlightedComment',
+      as: 'UsersHighlights'
+    });
   };
 
   return User;

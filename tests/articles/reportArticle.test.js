@@ -27,7 +27,7 @@ const { Report } = models;
 
 describe('API endpoint for create articles', () => {
     const user = signupFactory.build({
-      email: 'etta@outlook.com',
+      email: 'etta@aol.com',
       password: 'password123*'
     });
     const adminDetails = {
