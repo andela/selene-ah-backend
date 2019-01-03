@@ -8,17 +8,20 @@ import articlesFactory from '../mocks/factories/articlesFactory';
 import articlesController from '../../server/controllers/articlesController';
 import models from '../../server/models';
 import getRandomCategory from '../../server/helpers/checkCategory';
+import getRandomTag from '../../server/helpers/getTag';
+import articleTag from '../../server/controllers/articleTagsController';
 
 chai.should();
 chai.use(chaiHttp);
 chai.use(sinonChai);
 
-const { Article } = models;
+const { Article, ArticleTag } = models;
 
 let userId;
 let catId;
 let token;
 let articleId;
+let tagId;
 const fakeId = '14dd13b2-981c-490d-879c-71edaf5d674d';
 
 
@@ -53,6 +56,39 @@ describe('API endpoint for create articles', () => {
     articleId = res.body.article.id;
     expect(res.body).to.be.an('Object');
     expect(res.body.message).to.be.equals('Article created successfully');
+  });
+
+  it('Should create an article with tags', async () => {
+    const articlesData = {
+      'title': '2019 my year of break through with tags',
+      'body': 'This is one of the best years of my life',
+      'categoryId': catId,
+      'tags': ['andela', 'tech']
+    };
+
+    const res = await chai.request(server)
+      .post('/api/v1/article/')
+      .set('Authorization', `Bearer ${token}`)
+      .send(articlesData);
+    expect(res).to.have.status(201);
+    articleId = res.body.article.id;
+    expect(res.body).to.be.an('Object');
+    expect(res.body.message).to.be.equals('Article created successfully');
+  });
+
+  it('Should return 200 on get article tag', async () => {
+    const res = await chai.request(server)
+      .get('/api/v1/tags/')
+      .send();
+    expect(res).to.have.status(200);
+  });
+  it('Should return 200 on delete article tag', async () => {
+    tagId = await getRandomTag();
+    const res = await chai.request(server)
+      .delete(`/api/v1/tag/${articleId}/${tagId}`)
+      .set('Authorization', `Bearer ${token}`)
+      .send();
+    expect(res).to.have.status(200);
   });
 
   it('Should return error if title field is empty or null', async () => {
@@ -184,7 +220,7 @@ describe('API endpoint for create articles', () => {
       .put(`/api/v1/article/${fakeId}`)
       .set('Authorization', `Bearer ${token}`)
       .send(articlesData);
-    expect(res).to.have.status(404);
+    expect(res).to.have.status(403);
   });
 
   it('Should delete an article', async () => {
@@ -200,7 +236,7 @@ describe('API endpoint for create articles', () => {
       .delete(`/api/v1/article/${fakeId}`)
       .set('Authorization', `Bearer ${token}`)
       .send();
-    expect(res).to.have.status(404);
+    expect(res).to.have.status(403);
   });
 
   it('should fake error for get all articles', async () => {
@@ -318,6 +354,39 @@ describe('API endpoint for create articles', () => {
     sinon.stub(Article, 'create').throws();
 
     await articlesController.createArticle(req, res, next);
+
+    expect(next.called).to.be.true;
+    sinon.restore();
+  });
+
+  it('should return 500 error when getting tags', async () => {
+    const req = {
+      body: {
+        id: '1'
+      }
+    };
+    const res = {};
+    const next = sinon.stub();
+
+    sinon.stub(ArticleTag, 'findAll').throws();
+
+    await articleTag.getAllTags(req, res, next);
+
+    expect(next.called).to.be.true;
+    sinon.restore();
+  });
+  it('should return 500 error when deleting tag', async () => {
+    const req = {
+      params: {
+        tagId: '1'
+      }
+    };
+    const res = {};
+    const next = sinon.stub();
+
+    sinon.stub(ArticleTag, 'destroy').throws();
+
+    await articleTag.deleteArticleTag(req, res, next);
 
     expect(next.called).to.be.true;
     sinon.restore();

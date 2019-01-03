@@ -7,6 +7,6 @@ const calculateArticleReadTime = (article) => {
   const wordsPerMinute = 275;
   const count = article.split(' ').length;
   const timeToRead = (count / wordsPerMinute).toFixed(0);
-  return timeToRead === 0 ? 1 : timeToRead;
+  return timeToRead == 0 ? 1 : timeToRead;
 };
 export default calculateArticleReadTime;

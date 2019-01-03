@@ -4,11 +4,10 @@ import pagination from '../helpers/pagination';
 import calculateArticleReadTime from '../helpers/calculateArticleReadTime';
 import Vote from './votes/VoteController';
 import RatingController from './ratingController';
-
+import findOrCreatTag from '../helpers/findOrCreateTag';
 import Notifications from './NotificationController';
 
-const { Article, Category, User,
-   HighlightedComment } = db;
+const { Article, Category, User, Tag, HighlightedComment } = db;
 /**
 * @description class will implement CRUD functionalities for articles
 *
@@ -25,7 +24,7 @@ class ArticlesController {
   static async createArticle(req, res, next) {
 
     const { id } = req.user;
-    const { categoryId, title, body, published } = req.body;
+    const { categoryId, title, body, published, tags } = req.body;
     const articleSlug = generateUniqueSlug(title);
     const readTime = calculateArticleReadTime(body);
 
@@ -50,6 +49,13 @@ class ArticlesController {
         categoryId: categoryId.trim()
       });
       await Notifications.emitPublishArticleNotificaiton(id, articleSlug, next);
+
+      let addTags;
+      if (tags) {
+        addTags = await findOrCreatTag(tags);
+        await article.setTags(addTags);
+      }
+
       return res.status(201).send({
         success: true,
         message: 'Article created successfully',
@@ -69,13 +75,13 @@ class ArticlesController {
   static async getOneArticle(req, res, next) {
     const { id } = req.params;
     try {
-      const article = await Article.findOne({
+      let article = await Article.findOne({
         where: { id },
         include: [{
           model: User,
           as: 'author',
           attributes: ['userName', 'imageUrl', 'bio', 'dateOfBirth']
-        },{
+        }, {
           model: HighlightedComment,
           as: 'highlights',
           attributes: ['content'],
@@ -83,7 +89,12 @@ class ArticlesController {
             model: User,
             as: 'userhighlights',
             attributes: ['userName', 'imageUrl']
-            }]
+          }]
+        },
+        {
+          model: Tag,
+          as: 'tags',
+          through: { attributes: [] }
         }],
       });
 
@@ -93,13 +104,15 @@ class ArticlesController {
           message: 'Article not found',
         });
       }
+      article = article.toJSON();
+      article.tags = article.tags.map(tagname => tagname.tag);
 
-      const voteCount = await Vote.votesCount(req,res, next);
-
-      await Article.increment('readingStat', {where: {id: article.id}});
+      const voteCount = await Vote.votesCount(req, res, next);
+      await Article.increment('readingStat', { where: { id: article.id } });
       const averageRating = RatingController.getAverageArticleRating(
         article.id
       );
+
       article.averageRating = averageRating;
       return res.status(200).json({
         success: 'true',
@@ -124,12 +137,18 @@ class ArticlesController {
   static async getAllArticles(req, res, next) {
     const { limit, offset } = pagination.paginationHelper(req.query);
     try {
-      const articles = await Article.findAndCountAll(
+      let articles = await Article.findAll(
         {
           include: [{
             model: User,
             as: 'author',
             attributes: ['userName', 'imageUrl', 'bio', 'dateOfBirth']
+          },
+          {
+            model: Tag,
+            as: 'tags',
+            attributes: ['tag'],
+            through: { attributes: [] }
           }],
           limit,
           offset
@@ -141,6 +160,11 @@ class ArticlesController {
         });
       }
 
+      articles = articles.map((article) => {
+        article = article.toJSON();
+        article.tags = article.tags.map(tagName => tagName.tag);
+        return article;
+      });
       return res.status(200).json({
         success: 'true',
         message: 'Retrieved article successfully',
@@ -162,23 +186,34 @@ class ArticlesController {
   static async getAuthorsArticles(req, res, next) {
     const { authorsId } = req.params;
     try {
-      const articles = await Article.findAndCountAll(
+      let articles = await Article.findAll(
         {
           where: { userId: authorsId },
           include: [{
             model: User,
             as: 'author',
             attributes: ['userName', 'imageUrl', 'bio', 'dateOfBirth']
+          },
+          {
+            model: Tag,
+            as: 'tags',
+            attributes: ['tag'],
+            through: { attributes: [] }
           }],
         });
 
-      if (!articles || articles.count == 0) {
+      if (!articles || articles.length < 1) {
         return res.status(404).json({
           success: 'false',
           message: 'No article created yet',
         });
       }
 
+      articles = articles.map((article) => {
+        article = article.toJSON();
+        article.tags = article.tags.map(tagName => tagName.tag);
+        return article;
+      });
       return res.status(200).json({
         success: 'true',
         message: 'Retrieved article successfully',
@@ -217,13 +252,6 @@ class ArticlesController {
       const article = await Article.findOne({
         where: { id }
       });
-
-      if (!article) {
-        return res.status(404).json({
-          success: 'false',
-          message: 'Article not found',
-        });
-      }
       await Article.update(
         {
           title: title || article.title,
@@ -255,17 +283,6 @@ class ArticlesController {
   static async deleteArticle(req, res, next) {
     const { id } = req.params;
     try {
-      const article = await Article.findOne({
-        where: { id }
-      });
-
-      if (!article) {
-        return res.status(404).json({
-          success: 'false',
-          message: 'Article not found',
-        });
-      }
-
       await Article.destroy({
         where: {
           id

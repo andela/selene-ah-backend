@@ -10,6 +10,7 @@ import ArticleReporter from '../../controllers/reportArticleController';
 import RoleAuthorization from '../../middlewares/RoleAuthorization';
 import HighlightedCommment from '../../controllers/highlightedComment';
 import { SUPERADMIN } from '../../helpers/constants';
+import article from '../../middlewares/validations/checkIfArticleIsOwnedByUser';
 
 const router = Router();
 
@@ -34,9 +35,8 @@ router.get('/article/:id', uuidValidator.validateUUID,
  * @description - Route gets all articles
  * @returns - It returns an object of articles
  */
-router.get('/articles', [JWTAuthentication.authenticateUser,
-  paginationValidation.validateQueryParameter],
-    articleController.getAllArticles);
+router.get('/articles', paginationValidation.validateQueryParameter,
+  articleController.getAllArticles);
 
 /**
 * @description - Route updates an article
@@ -44,6 +44,7 @@ router.get('/articles', [JWTAuthentication.authenticateUser,
 */
 router.put('/article/:id', uuidValidator.validateUUID,
   JWTAuthentication.authenticateUser,
+  article.checkIfArticleIsOwnedByUser,
   articleController.updateArticle);
 
 /**
@@ -52,6 +53,7 @@ router.put('/article/:id', uuidValidator.validateUUID,
 */
 router.delete('/article/:id', uuidValidator.validateUUID,
   JWTAuthentication.authenticateUser,
+  article.checkIfArticleIsOwnedByUser,
   articleController.deleteArticle);
 
 /**
@@ -67,26 +69,26 @@ router.get('/article/author/:authorsId',
 */
 router.get('/articles/search', [
   paginationValidation.validateQueryParameter,
-    articleSearchValidation.validateArticleSearchParameter],
-      articleSearchController.searchArticle);
+  articleSearchValidation.validateArticleSearchParameter],
+  articleSearchController.searchArticle);
 
 /**
 * @description - Route to report an article
 * @returns - It returns a response
 */
-  router.post('/reportarticle/:articleId',
-[uuidValidator.validateUUID,
+router.post('/reportarticle/:articleId',
+  [uuidValidator.validateUUID,
   JWTAuthentication.authenticateUser],
-ArticleReporter.reportAnArticle);
+  ArticleReporter.reportAnArticle);
 
 /**
 * @description - Route to get all article that has been reported
 * @returns - It returns a response
 */
 router.get('/allreports',
-[ JWTAuthentication.authenticateUser,
+  [JWTAuthentication.authenticateUser,
   RoleAuthorization.authorizeUser(SUPERADMIN)],
-ArticleReporter.getAllReports);
+  ArticleReporter.getAllReports);
 
 
 /**
@@ -94,17 +96,17 @@ ArticleReporter.getAllReports);
 * @returns - It returns a response
 */
 router.get('/articlereports/:articleId',
-[ JWTAuthentication.authenticateUser,
+  [JWTAuthentication.authenticateUser,
   uuidValidator.validateUUID,
   RoleAuthorization.authorizeUser(SUPERADMIN)],
-ArticleReporter.getReportsOnAnArticle);
+  ArticleReporter.getReportsOnAnArticle);
 
 /**
 * @description - Route to post hightlighted comment on an article
 * @returns - It returns a response
 */
 router.post('/highlightedcomment/:articleId',
-[ JWTAuthentication.authenticateUser,
+  [JWTAuthentication.authenticateUser,
   uuidValidator.validateUUID],
   HighlightedCommment.addComment);
 
@@ -113,12 +115,12 @@ router.post('/highlightedcomment/:articleId',
 * @returns - It returns a response
 */
 router.put('/updatehighlightedcomment/:commentId',
-[ JWTAuthentication.authenticateUser,
+  [JWTAuthentication.authenticateUser,
   uuidValidator.validateUUID],
   HighlightedCommment.updateComment);
 
-  router.delete('/deletehighlightedcomment/:commentId',
-[ JWTAuthentication.authenticateUser,
+router.delete('/deletehighlightedcomment/:commentId',
+  [JWTAuthentication.authenticateUser,
   uuidValidator.validateUUID],
   HighlightedCommment.deleteComment);
 

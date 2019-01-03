@@ -13,6 +13,7 @@ import comment from './api/commentRoute';
 import voteRouter from './api/vote';
 import bookmark from './api/bookmark';
 import rating from './api/rating';
+import articleTag from './api/articleTagRoute';
 
 const router = Router();
 router.use('/api/v1', userAuth);
@@ -26,6 +27,8 @@ router.use('/api/v1', articles);
 router.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerConfig));
 router.use('/api/v1', bookmark);
 router.use('/api/v1', rating);
+router.use('/api/v1', rating);
+router.use('/api/v1', articleTag);
 router.use('/api/v1', voteRouter);
 router.use('/api/v1', comment);
 
