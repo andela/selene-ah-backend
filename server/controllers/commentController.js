@@ -1,4 +1,5 @@
 import db from '../models';
+import Notification from './NotificationController';
 
 const { Comment, User } = db;
 /**
@@ -21,6 +22,7 @@ export default class CommentController {
         articleId,
       });
       delete commentCreated.dataValues.userId;
+      await Notification.emitCommentArticleNotification(id, articleId);
       return res.status(201).send({
         success: true,
         message: 'Comment created successfully',

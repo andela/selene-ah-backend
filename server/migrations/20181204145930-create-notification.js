@@ -16,14 +16,6 @@ const notification = {
         type: Sequelize.STRING,
         allowNull: false
       },
-      contentTypeId: {
-        type: Sequelize.UUID,
-        allowNull: false
-      },
-      contentType: {
-        type: Sequelize.STRING,
-        allowNull: false
-      },
       userId: {
         type: Sequelize.UUID,
         onDelete: 'CASCADE',
@@ -32,7 +24,7 @@ const notification = {
           key: 'id'
         }
       },
-      ownerId: {
+      receiverId: {
         type: Sequelize.UUID,
         allowNull: false
       },

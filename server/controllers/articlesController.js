@@ -5,6 +5,7 @@ import calculateArticleReadTime from '../helpers/calculateArticleReadTime';
 import Vote from './votes/VoteController';
 import RatingController from './ratingController';
 
+import Notifications from './NotificationController';
 
 const { Article, Category, User } = db;
 /**
@@ -47,7 +48,7 @@ class ArticlesController {
         readTime,
         categoryId: categoryId.trim()
       });
-
+      await Notifications.emitPublishArticleNotificaiton(id, articleSlug, next);
       return res.status(201).send({
         success: true,
         message: 'Article created successfully',

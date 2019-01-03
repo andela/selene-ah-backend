@@ -54,6 +54,7 @@
     "passport-twitter": "^1.0.4",
     "pg": "^7.6.1",
     "pg-hstore": "^2.3.2",
+    "pusher": "^2.2.0",
     "request": "^2.87.0",
     "rosie": "^2.0.1",
     "sequelize": "^4.41.2",

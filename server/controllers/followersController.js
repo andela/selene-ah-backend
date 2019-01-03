@@ -1,5 +1,6 @@
 import models from '../models';
 import pagination from '../helpers/pagination';
+import Notification from './NotificationController';
 
 const { Follower } = models;
 /**
@@ -17,10 +18,12 @@ class FollowerController {
     try {
       const { followerId } = req.body;
       const userId = req.user.id;
+      const { user } = req;
       const follow = await Follower.create({
         userId,
         followerId
       });
+      await Notification.emitFollowNotifcation(user, userId, followerId);
       return res.status(200).json({
         success: true,
         message: 'Follow successful',

@@ -22,14 +22,8 @@ describe('Notification models', () => {
     it('should have property notificationType', () => {
       expect(newNotification).to.have.property('notificationType');
     });
-    it('should have property contentTypeId', () => {
-      expect(newNotification).to.have.property('contentTypeId');
-    });
-    it('should have property contentType', () => {
-      expect(newNotification).to.have.property('contentType');
-    });
-    it('should have property ownerId', () => {
-      expect(newNotification).to.have.property('ownerId');
+    it('should have property receiverId', () => {
+      expect(newNotification).to.have.property('receiverId');
     });
   });
   context('Notification associations', () => {
