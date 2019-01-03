@@ -1,0 +1,111 @@
+paths:
+  /comment/{commentId}/commentreaction:           
+    post:
+      tags:
+        - CommentReaction
+      summary: User likes a comment
+      produces:
+      - application/json
+      security:
+        - Bearer: []
+      parameters:
+      - in: path
+        name: commentId
+        description: 'The id of the comment to be liked by user'
+        required: true
+        schema:
+          type: string
+          format: uuid
+      - in: body
+        name: payload
+        description: The type of reaction
+        required: true
+        schema:
+          type: object
+          properties:
+            reaction:
+              type: 'string'
+      responses:
+        201:
+          description: Response for success liked
+          schema:
+            type: 'object'
+            properties:
+              status:
+                type: 'boolean'
+                example: 'true'
+              message:
+                type: string
+                example: 'Comment liked by user'
+        200:
+          description: Response for delete successful
+          schema:
+            type: 'object'
+            properties:
+              status:
+                type: 'boolean'
+                example: 'true'
+              message:
+                type: string
+                example: 'Comment reaction has been successfully removed'
+        400:
+          description: response for bad request(syntax)
+          schema:
+            type: 'object'
+            properties:
+              status:
+                type: 'boolean'
+                example: 'false'
+              message: 
+                type: string
+                example: 'Invalid Reaction: supply a valid reaction'
+        401:
+          description: response for unauthorized
+          schema:
+            type: 'object'
+            properties:
+              status:
+                type: 'boolean'
+                example: 'false'
+              message: 
+                type: string
+                example: 'Authentication failed: Please supply a valid token'
+        404:
+          description: Response for comment reaction not found
+          schema:
+            type: 'object'
+            properties:
+              status:
+                type: boolean
+                example: false
+              message: 
+                type: string
+                example: 'You cannot unlike a comment you have not liked'
+        409:
+          description:
+          schema:
+            type: 'object'
+            properties:
+              status:
+                type: boolean
+                example: false
+              message: 
+                type: string
+                example: 'User already liked this comment'
+
+definitions:
+  CommentReaction:
+      type: "object"
+      properties:
+        id:
+          type: string
+          format: uuid
+        reaction:
+          type: string
+        commentId:
+          type: string
+          format: uuid
+        userId:
+          type: string
+          format: uuid
+

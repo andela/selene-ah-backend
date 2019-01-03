@@ -21,7 +21,12 @@ const swaggerDefinition = {
   basePath: '/api/v1',
   consumes: 'application/json',
   produces: 'application/json',
-  schemes: { HTTP:'HTTP', HTTPS:'HTTPS' }
+  schemes: { HTTP:'HTTP', HTTPS:'HTTPS' },
+  securityDefinitions:
+    {Bearer:
+      {type: 'apiKey',  name: 'Authorization', in: 'header'}
+    },
+  security: { Bearer: [] }
 };
 
 

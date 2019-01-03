@@ -121,6 +121,10 @@ export default (sequelize, DataTypes) => {
       through: 'UserHighlightedComment',
       as: 'UsersHighlights'
     });
+    User.hasMany(models.CommentReaction, {
+      foreignKey: 'userId',
+      as: 'commentReaction'
+    });
   };
 
   return User;

@@ -14,8 +14,10 @@ import voteRouter from './api/vote';
 import bookmark from './api/bookmark';
 import rating from './api/rating';
 import articleTag from './api/articleTagRoute';
+import commentReaction from './api/commentReaction';
 
 const router = Router();
+router.use('/api/v1', commentReaction);
 router.use('/api/v1', userAuth);
 router.use('/api/v1', users);
 router.use('/api/v1', fbAuth);
@@ -31,5 +33,6 @@ router.use('/api/v1', rating);
 router.use('/api/v1', articleTag);
 router.use('/api/v1', voteRouter);
 router.use('/api/v1', comment);
+
 
 export default router;

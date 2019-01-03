@@ -1,7 +1,8 @@
 import db from '../models';
 import Notification from './NotificationController';
+import LikesCount from '../helpers/LikesCount';
 
-const { Comment, User } = db;
+const { Comment, User, CommentReaction } = db;
 /**
  * @description contains the controller methods for commenting on an article
  */
@@ -50,9 +51,15 @@ export default class CommentController {
             as: 'author',
             attributes: ['userName', 'imageUrl', 'bio']
 
-          }],
-          attributes: { exclude: ['userId'] },
-          where: { articleId }
+          },
+          {
+            model: CommentReaction,
+            as: 'commentReaction',
+            attributes: ['id', 'reaction']
+          }
+        ],
+        attributes: { exclude: ['userId'] },
+        where: { articleId }
         });
 
       if (comments.count == 0) {
@@ -61,11 +68,10 @@ export default class CommentController {
           message: 'No Comment for this Article',
         });
       }
-
       return res.status(200).json({
         success: true,
         message: 'Retrieved Comments successfully',
-        comments
+        comments: LikesCount.allLikeCount(comments)
       });
 
     } catch (error) {
@@ -89,7 +95,17 @@ export default class CommentController {
             as: 'author',
             attributes: ['userName', 'imageUrl', 'bio']
 
-          }],
+          },
+          {
+            model: CommentReaction,
+            as: 'commentReaction',
+            attributes: ['userId', 'reaction'],
+            include: [{
+              model: User,
+              attributes: ['userName', 'imageUrl', 'bio']
+            }]
+          }
+        ],
           attributes: { exclude: ['userId'] },
           where: { id }
         });
@@ -100,11 +116,10 @@ export default class CommentController {
           message: 'No Comment found',
         });
       }
-
       return res.status(200).json({
         success: true,
         message: 'Retrieved comment successfully',
-        comment
+        comment: LikesCount.singleLikeCount(comment)
       });
 
     } catch (error) {
