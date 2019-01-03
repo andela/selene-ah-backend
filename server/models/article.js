@@ -59,6 +59,11 @@
       foreignKey: 'articleId',
       as: 'articleReport'
     });
+    Article.hasMany(models.HighlightedComment, {
+      foreignKey: 'articleId',
+      as: 'highlights'
+    });
+
   };
   return Article;
 };

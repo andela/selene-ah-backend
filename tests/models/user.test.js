@@ -5,6 +5,8 @@ import Article from '../../server/models/article';
 import Follower from '../../server/models/follower';
 import Rating from '../../server/models/rating';
 import Report from  '../../server/models/reportArticle';
+import HighlightedComment from '../../server/models/highlightedcomment';
+import UserHighlightedComment from '../../server/models/userhighlightedcomment';
 
 describe('User Model', () => {
   const User = UserModel(sequelize, dataTypes);
@@ -62,7 +64,9 @@ describe('User Model', () => {
         Article,
         Rating,
         Follower,
-        Report
+        Report,
+        HighlightedComment,
+        UserHighlightedComment
       });
     });
 
@@ -81,6 +85,11 @@ describe('User Model', () => {
     it('should have one-to-many association with the Report Model',
      () => {
       expect(User.hasMany.calledWith(Report)).to.equal(true);
+    });
+
+    it('has many-to-many association with the HighlightedComments Model',
+    () => {
+      expect(User.belongsToMany.calledWith(HighlightedComment)).to.equal(true);
     });
   });
 });

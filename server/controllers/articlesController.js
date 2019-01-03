@@ -7,7 +7,8 @@ import RatingController from './ratingController';
 
 import Notifications from './NotificationController';
 
-const { Article, Category, User } = db;
+const { Article, Category, User,
+   HighlightedComment } = db;
 /**
 * @description class will implement CRUD functionalities for articles
 *
@@ -74,6 +75,15 @@ class ArticlesController {
           model: User,
           as: 'author',
           attributes: ['userName', 'imageUrl', 'bio', 'dateOfBirth']
+        },{
+          model: HighlightedComment,
+          as: 'highlights',
+          attributes: ['content'],
+          include: [{
+            model: User,
+            as: 'userhighlights',
+            attributes: ['userName', 'imageUrl']
+            }]
         }],
       });
 
@@ -159,7 +169,6 @@ class ArticlesController {
             model: User,
             as: 'author',
             attributes: ['userName', 'imageUrl', 'bio', 'dateOfBirth']
-
           }],
         });
 
