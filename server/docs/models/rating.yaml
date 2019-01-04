@@ -1,0 +1,13 @@
+definitions:
+  Rating:
+    type: "object"
+    properties:
+      id:
+        type: string
+        format: uuid
+      articleRating:
+        type: integer
+      userId:
+        $ref: '#/definitions/User'
+      articleId: 
+        $ref: '#/definitions/Article'

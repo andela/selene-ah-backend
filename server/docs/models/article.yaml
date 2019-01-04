@@ -1,0 +1,24 @@
+definitions:
+  Article:
+    type: "object"
+    properties:
+      id:
+        type: string
+        format: uuid
+        primaryKey: true
+      title:
+        type: string
+      readTime:
+        type: integer
+      slug:
+        type: string
+      body:
+        type: string
+      readingStat: 
+        type: integer
+      published:
+        type: boolean
+      userId:
+        $ref: '#/definitions/User'
+      categoryId:
+        $ref: '#/definitions/Category'

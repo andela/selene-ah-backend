@@ -1,0 +1,10 @@
+
+definitions:
+  Role:
+    type: "object"
+    properties:
+      id:
+        type: string
+        format: uuid
+      type:
+        type: string

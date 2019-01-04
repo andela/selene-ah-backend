@@ -1,0 +1,12 @@
+definitions:
+  ArticlesTag:
+    type: "object"
+    properties:
+      id:
+        type: string
+        format: uuid
+      articleId:
+        $ref: '#/definitions/Article'
+      tagId:
+        $ref: '#/definitions/Tag'
+

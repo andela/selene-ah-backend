@@ -93,19 +93,4 @@ paths:
                 type: string
                 example: 'User already liked this comment'
 
-definitions:
-  CommentReaction:
-      type: "object"
-      properties:
-        id:
-          type: string
-          format: uuid
-        reaction:
-          type: string
-        commentId:
-          type: string
-          format: uuid
-        userId:
-          type: string
-          format: uuid
 

@@ -1,0 +1,15 @@
+definitions:
+  Notification:
+    type: "object"
+    properties:
+      id:
+        type: string
+        format: uuid
+      isSeen:
+        type: string
+      notificationType:
+        type: string
+      userId:
+        $ref: '#/definitions/User'
+      receiverId: 
+        type: string

@@ -1,0 +1,11 @@
+definitions:
+  Follower:
+    type: "object"
+    properties:
+      id:
+        type: string
+        format: uuid
+      followerId:
+        $ref: '#/definitions/User'
+      userId: 
+        $ref: '#/definitions/User'

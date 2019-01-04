@@ -1,0 +1,11 @@
+definitions:
+  UserHighlightedComment:
+    type: "object"
+    properties:
+      id:
+        type: string
+        format: uuid
+      highlightedCommentId:
+        $ref: '#/definitions/HighlightedComment'
+      userId: 
+        $ref: '#/definitions/User'
