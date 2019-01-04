@@ -1,0 +1,13 @@
+definitions:
+  ArticleVote:
+    type: "object"
+    properties:
+      id:
+        type: string
+        format: uuid
+      userId:
+        $ref: '#/definitions/User'
+      articleId: 
+        $ref: '#/definitions/Article'
+      vote:
+        type: integer

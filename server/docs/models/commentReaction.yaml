@@ -1,0 +1,13 @@
+definitions:
+  CommentReaction:
+      type: "object"
+      properties:
+        id:
+          type: string
+          format: uuid
+        reaction:
+          type: string
+        commentId:
+          $ref: '#/definitions/Comment'
+        userId:
+          $ref: '#/definitions/User'

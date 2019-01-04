@@ -1,0 +1,13 @@
+definitions:
+  Reports:
+    type: "object"
+    properties:
+      id:
+        type: string
+        format: uuid
+      content:
+        type: string
+      userId:
+        $ref: '#/definitions/User'
+      articleId: 
+        $ref: '#/definitions/Article'

@@ -1,0 +1,11 @@
+definitions:
+  LoginMethod:
+    type: "object"
+    properties:
+      id:
+        type: string
+        format: uuid
+      authMethodUsed:
+        type: string
+      userId: 
+        $ref: '#/definitions/User'
