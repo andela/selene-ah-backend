@@ -27,7 +27,8 @@ const user2 = userFactory.build({
 });
 let user1Id, adminToken, user1Token,
   user2Token, articleId,
-    articleId2, commentId;
+    articleId2, commentId,
+    commentId2;
 
 describe('Test for comments crud operations', async () => {
   before(async ()  => {
@@ -183,6 +184,59 @@ describe('Test for comments crud operations', async () => {
     });
   });
 
+  describe('Users comment Histories', async () => {
+    before(async () => {
+      const comment2 = {
+        content: 'test comment'
+      };
+      const res = await chai.request(app)
+      .post(`/api/v1/article/${articleId}/comment`)
+      .set('Authorization', `Bearer ${user2Token}`)
+      .send(comment2);
+      commentId2 = res.body.comment.id;
+    });
+    it('should increase comment history count by 1', async () => {
+      const comment = {
+        content: 'updated test comment 2'
+      };
+      const res = await chai.request(app)
+      .patch(`/api/v1/comment/${commentId}`)
+      .set('Authorization', `Bearer ${user2Token}`)
+      .send(comment);
+      expect(res).to.have.status(200);
+      expect(res.body.success).to.be.equal(true);
+      expect(res.body.message).to.be.equal('Comment updated successfully');
+      expect(res.body.previousComment.commentHistory).to.be
+        .equal('updated test comment');
+
+    });
+    it('should return all update histories of a comment', async () => {
+      const res = await chai.request(app)
+      .get(`/api/v1/comment/history/${commentId}`);
+      expect(res).to.have.status(200);
+      expect(res.body.success).to.equal(true);
+      expect(res.body.message).to.be
+        .equals('Retrieved previous Comments successfully');
+      expect(res.body.commentHistory.count).to.equal(2);
+    });
+    it('should return 404 if there are no histories', async () => {
+      const res = await chai.request(app)
+      .get(`/api/v1/comment/history/${commentId2}`);
+      expect(res).to.have.status(404);
+      expect(res.body.success).to.equal(false);
+      expect(res.body.message).to.be
+        .equals('No previous comment found');
+    });
+    it('should return 404 if commentId is not found', async () => {
+      const fakeCommentId = '1ac3dc07-f69c-4f93-aaf3-4449e6c6c4cc';
+      const res = await chai.request(app)
+      .get(`/api/v1/comment/history/${fakeCommentId}`);
+      expect(res).to.have.status(404);
+      expect(res.body.success).to.equal(false);
+      expect(res.body.message).to.be
+        .equals('Comment ID Not Found');
+    });
+  });
   describe('Delete Comment Route Test', async () => {
 
     it('should return 403 if non-owner tries to delete comment', async () => {
@@ -248,6 +302,19 @@ describe('Test for comments crud operations', async () => {
       const next = sinon.stub();
       sinon.stub(Comment, 'findOne').throws();
       await commentController.getSingleComment(req, res, next);
+      expect(next.called).to.be.true;
+      sinon.restore();
+    });
+    it('should stub error for get comment history', async () => {
+      const req = {
+        params: {
+          id: 1
+        }
+      };
+      const res = {};
+      const next = sinon.stub();
+      sinon.stub(Comment, 'findAndCountAll').throws();
+      await commentController.getCommentHistory(req, res, next);
       expect(next.called).to.be.true;
       sinon.restore();
     });
@@ -317,7 +384,7 @@ describe('Test for comments crud operations', async () => {
       sinon.restore();
     });
 
-    it('should stub error for to check Valid CommentId', async () => {
+    it('should stub error to check Valid CommentId', async () => {
       const id = 8;
       const error = sinon.stub();
       sinon.stub(Comment, 'findOne').throws();
@@ -326,5 +393,4 @@ describe('Test for comments crud operations', async () => {
       sinon.restore();
     });
   });
-
 });

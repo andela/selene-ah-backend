@@ -40,14 +40,18 @@ export default class validateComments{
     try{
       const { params:{ commentId } } = req;
       const isCommentIdValid = await checkValidCommentId(commentId);
-      if (isCommentIdValid) {
+      if (isCommentIdValid && req.user) {
         req.user.ownerId = isCommentIdValid;
         return next();
+      }else if(isCommentIdValid ){
+        return next();
       }
-      return res.status(404).json({
-        success: false,
-        message: 'Comment ID Not Found',
-      });
+      else{
+        return res.status(404).json({
+          success: false,
+          message: 'Comment ID Not Found',
+        });
+      }
     }catch(error){
       next(error);
     }

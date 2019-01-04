@@ -7,13 +7,19 @@ export default {
         type: Sequelize.UUID,
         defaultValue: Sequelize.UUIDV4
       },
-      commentId: {
-        allowNull: false,
-        type: Sequelize.INTEGER
-      },
       commentHistory: {
         allowNull: false,
         type: Sequelize.STRING
+      },
+      commentId: {
+        allowNull: false,
+        type: Sequelize.UUID,
+        onDelete: 'CASCADE',
+        references: {
+          model: 'Comments',
+          key: 'id',
+          as: 'commentId'
+        }
       },
       createdAt: {
         allowNull: false,

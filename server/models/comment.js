@@ -25,17 +25,17 @@ export default (sequelize, DataTypes) => {
     }
   });
   Comment.associate = (models) => {
-    Comment.belongsTo(models.User, {
-      foreignKey: 'userId',
-      onDelete: 'CASCADE'
-    });
     Comment.belongsTo(models.Article, {
       foreignKey: 'articleId',
       onDelete: 'CASCADE'
     });
     Comment.belongsTo(models.User, {
       foreignKey: 'userId',
-      as: 'author'
+      as: 'author',
+      onDelete: 'CASCADE',
+    });
+    Comment.hasMany(models.CommentHistory, {
+      foreignKey: 'commentId',
     });
     Comment.hasMany(models.CommentReaction, {
       foreignKey: 'commentId',

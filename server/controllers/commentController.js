@@ -2,7 +2,8 @@ import db from '../models';
 import Notification from './NotificationController';
 import LikesCount from '../helpers/LikesCount';
 
-const { Comment, User, CommentReaction } = db;
+const { Comment, User, CommentReaction, CommentHistory  } = db;
+
 /**
  * @description contains the controller methods for commenting on an article
  */
@@ -104,10 +105,14 @@ export default class CommentController {
               model: User,
               attributes: ['userName', 'imageUrl', 'bio']
             }]
+          },
+          {
+            model: CommentHistory,
+            attributes: ['commentHistory', 'createdAt', 'updatedAt'],
           }
         ],
           attributes: { exclude: ['userId'] },
-          where: { id }
+          where: { id },
         });
 
       if (!comment) {
@@ -126,6 +131,58 @@ export default class CommentController {
       return next(error);
     }
   }
+
+   /**
+   * @description Get all Comments for a particular article
+   * @param {object} req - req from route
+   * @param {object} res - respose to route
+   * @param {object} next - callback function
+   * @returns {object} a response object
+   */
+  static async getCommentHistory(req, res, next) {
+    const { params: { commentId }} = req;
+    try {
+      const commentHistory = await CommentHistory.findAndCountAll({
+        where: {
+          commentId
+        }
+      });
+
+      if (commentHistory.count == 0) {
+        return res.status(404).json({
+          success: false,
+          message: 'No previous comment found',
+        });
+      }
+
+      return res.status(200).json({
+        success: true,
+        message: 'Retrieved previous Comments successfully',
+        commentHistory,
+      });
+
+    } catch (error) {
+      return next(error);
+    }
+  }
+
+   /**
+   * @description create a comment history
+   * @param {object} commentObject
+   * @returns {object} a response object
+   */
+  static async createCommentHistory(commentObject) {
+    const {
+      content,
+      id
+    } = commentObject;
+    const previousComment = await CommentHistory.create({
+      commentHistory: content.trim(),
+      commentId: id,
+    });
+    return previousComment;
+  }
+
 
   /**
    * @description only owners of comment should be able to update
@@ -149,6 +206,8 @@ export default class CommentController {
           message: 'User is not authorized to update comment',
         });
       }
+      const previousComment = await CommentController
+        .createCommentHistory(comments.dataValues);
       await Comment.update(
         {
           content
@@ -160,6 +219,8 @@ export default class CommentController {
       return res.status(200).json({
         success: true,
         message: 'Comment updated successfully',
+        currentComment: content,
+        previousComment,
       });
     } catch (error) {
       return next(error);
