@@ -5,9 +5,9 @@ import chai, { expect } from 'chai';
 import server from '../../server/index';
 import userFactory from '../mocks/factories/userFactory';
 import articlesFactory from '../mocks/factories/articlesFactory';
-import getRandomCategory from '../../server/helpers/checkCategory';
+import getRandomCategory from '../../server/helpers/category/checkCategory';
 import commentReactionController from
-  '../../server/controllers/CommentReactionController';
+  '../../server/controllers/comment/CommentReactionController';
 import models from '../../server/models';
 import ReactionsValidation
   from '../../server/middlewares/validations/ReactionValidation';
@@ -140,7 +140,7 @@ describe('', () => {
       reaction: 'like'
     };
     const res = await chai.request(server)
-      .post(`/api/v1/comment/${firstCommentId}/commentreaction`)
+      .post(`/api/v1/comment/${firstCommentId}/reaction`)
       .set('Authorization', `Bearer ${firstUserToken}`)
       .send(ReactionType);
     expect(res).to.have.status(201);
@@ -153,7 +153,7 @@ describe('', () => {
       reaction: 'like'
     };
     const res = await chai.request(server)
-      .post(`/api/v1/comment/${firstCommentId}/commentreaction`)
+      .post(`/api/v1/comment/${firstCommentId}/reaction`)
       .set('Authorization', `Bearer ${firstUserToken}`)
       .send(ReactionType);
     expect(res).to.have.status(409);
@@ -166,7 +166,7 @@ describe('', () => {
       reaction: 'unlike'
     };
     const res = await chai.request(server)
-      .post(`/api/v1/comment/${firstCommentId}/commentreaction`)
+      .post(`/api/v1/comment/${firstCommentId}/reaction`)
       .set('Authorization', `Bearer ${firstUserToken}`)
       .send(newReactionType);
     expect(res).to.have.status(200);
@@ -180,7 +180,7 @@ describe('', () => {
       reaction: 'like'
     };
     const res = await chai.request(server)
-      .post(`/api/v1/comment/${firstCommentId}/commentreaction`)
+      .post(`/api/v1/comment/${firstCommentId}/reaction`)
       .set('Authorization', `Bearer ${firstUserToken}`)
       .send(ReactionType);
     expect(res).to.have.status(201);
@@ -192,7 +192,7 @@ describe('', () => {
       reaction: 'unlike'
     };
     const res = await chai.request(server)
-      .post(`/api/v1/comment/${firstCommentId}/commentreaction`)
+      .post(`/api/v1/comment/${firstCommentId}/reaction`)
       .set('Authorization', `Bearer ${secondUserToken}`)
       .send(newReactionType);
     expect(res).to.have.status(404);

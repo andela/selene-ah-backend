@@ -4,7 +4,7 @@ import sinon from 'sinon';
 import url from '../../server/index';
 import userFactory from '../mocks/factories/userFactory';
 import models from '../../server/models';
-import UserController from '../../server/controllers/userController';
+import UserController from '../../server/controllers/user/userController';
 import { REGULAR } from '../../server/helpers/constants';
 
 
@@ -34,7 +34,7 @@ describe('GET List Users', () => {
     expect(res).to.have.status(200);
     expect(res.body).to.be.an('object');
     expect(res.body.users).to.be.an('Array');
-    expect(res.body.msg).to.be.equal('User(s) returned successfully');
+    expect(res.body.message).to.be.equal('User(s) returned successfully');
   });
 
   it('should give error if Token is not supplied', async () => {
@@ -52,7 +52,7 @@ describe('GET List Users', () => {
     .set('Authorization', `Bearer ${token}`);
     expect(res).to.have.status(200);
     expect(res.body).to.be.an('object');
-    expect(res.body.msg).to.be.equal('User(s) returned successfully');
+    expect(res.body.message).to.be.equal('User(s) returned successfully');
     expect(res.body.users.length).to.be.equals(1);
   });
 
@@ -62,7 +62,7 @@ describe('GET List Users', () => {
     .set('Authorization', `Bearer ${token}`);
     expect(res).to.have.status(200);
     expect(res.body).to.be.an('object');
-    expect(res.body.msg).to.be.equal('User(s) returned successfully');
+    expect(res.body.message).to.be.equal('User(s) returned successfully');
     expect(res.body.users.length).to.be.equals(3);
   });
 
@@ -72,7 +72,7 @@ describe('GET List Users', () => {
     .set('Authorization', `Bearer ${token}`);
     expect(res).to.have.status(404);
     expect(res.body).to.be.an('object');
-    expect(res.body.msg).to.be.equal('No User returned');
+    expect(res.body.message).to.be.equal('No User returned');
   });
 
   it('should give error if Token is Invalid',  async ()=> {

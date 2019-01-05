@@ -1,6 +1,6 @@
 import chai, {expect} from 'chai';
 import server from '../../server/index';
-import getRandomCategory from '../../server/helpers/checkCategory';
+import getRandomCategory from '../../server/helpers/category/checkCategory';
 import signupFactory from '../mocks/factories/userFactory';
 import articleFactory from '../mocks/factories/articlesFactory';
 import models from '../../server/models';
@@ -8,7 +8,8 @@ import models from '../../server/models';
 const { Article } = models;
 const user = signupFactory.build({
   email: 'ettaigona@gmail.com',
-  password: 'password123*'
+  password: 'password123*',
+  userName: 'show@#*&$^#@'
 });
 
 let userId, token, articleId;

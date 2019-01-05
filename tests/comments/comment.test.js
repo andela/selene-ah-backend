@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 import chai, { expect } from 'chai';
 import chaiHttp from 'chai-http';
 import sinon from 'sinon';
@@ -7,9 +8,11 @@ import app from '../../server/index';
 import models from '../../server/models';
 import userFactory from '../mocks/factories/userFactory';
 import articlesFactory from '../mocks/factories/articlesFactory';
-import getRandomCategory from '../../server/helpers/checkCategory';
-import commentController from '../../server/controllers/commentController';
-import checkValidCommentId from '../../server/helpers/checkValidCommentId';
+import getRandomCategory from '../../server/helpers/category/checkCategory';
+import commentController
+from '../../server/controllers/comment/commentController';
+import checkValidCommentId
+from '../../server/helpers/comment/checkValidCommentId';
 
 chai.should();
 
@@ -31,6 +34,7 @@ let user1Id, adminToken, user1Token,
     commentId2;
 
 describe('Test for comments crud operations', async () => {
+  afterEach(() => sinon.restore());
   before(async ()  => {
     const catId = await getRandomCategory();
     const res = await chai.request(app)
@@ -303,7 +307,6 @@ describe('Test for comments crud operations', async () => {
       sinon.stub(Comment, 'findOne').throws();
       await commentController.getSingleComment(req, res, next);
       expect(next.called).to.be.true;
-      sinon.restore();
     });
     it('should stub error for get comment history', async () => {
       const req = {
@@ -316,7 +319,6 @@ describe('Test for comments crud operations', async () => {
       sinon.stub(Comment, 'findAndCountAll').throws();
       await commentController.getCommentHistory(req, res, next);
       expect(next.called).to.be.true;
-      sinon.restore();
     });
 
     it('should stub error for get article comments', async () => {
@@ -330,7 +332,6 @@ describe('Test for comments crud operations', async () => {
       sinon.stub(Comment, 'findOne').throws();
       await commentController.getArticleComments(req, res, next);
       expect(next.called).to.be.true;
-      sinon.restore();
     });
 
     it('should stub error for post comment', async () => {
@@ -346,7 +347,6 @@ describe('Test for comments crud operations', async () => {
       sinon.stub(Comment, 'create').throws();
       await commentController.postComment(req, res, next);
       expect(next.called).to.be.true;
-      sinon.restore();
     });
 
     it('should stub error for update comment', async () => {
@@ -362,7 +362,6 @@ describe('Test for comments crud operations', async () => {
       sinon.stub(Comment, 'update').throws();
       await commentController.updateComment(req, res, next);
       expect(next.called).to.be.true;
-      sinon.restore();
     });
 
     it('should stub error for delete comment', async () => {
@@ -381,7 +380,6 @@ describe('Test for comments crud operations', async () => {
       sinon.stub(Comment, 'update').throws();
       await commentController.deleteComment(req, res, next);
       expect(next.called).to.be.true;
-      sinon.restore();
     });
 
     it('should stub error to check Valid CommentId', async () => {
@@ -390,7 +388,13 @@ describe('Test for comments crud operations', async () => {
       sinon.stub(Comment, 'findOne').throws();
       await checkValidCommentId(id);
       expect(error.called).to.be.false;
-      sinon.restore();
+    });
+  });
+
+  context('Check valid comment Test', () => {
+    it('should reach the else block', async () => {
+      sinon.stub(Comment, 'findOne').returns({});
+      await checkValidCommentId(29371);
     });
   });
 });

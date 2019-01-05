@@ -15,6 +15,9 @@ export default {
         type: Sequelize.INTEGER,
         allowNull: false
       },
+      imageUrl: {
+        type: Sequelize.STRING,
+      },
       slug: {
         type: Sequelize.STRING,
         allowNull: false

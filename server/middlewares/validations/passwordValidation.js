@@ -1,4 +1,4 @@
-import helpers from '../../helpers/validationHelper';
+import Validation from '../../helpers/validation/validations';
 /**
  * @description This class is for validating password fields
  */
@@ -14,19 +14,19 @@ class PasswordValidation {
     if (!req.body.password || req.body.password.trim().length < 1) {
       return res.status(400).json({
         success: false,
-        msg: 'Password field cannot be empty'
+        message: 'Password field cannot be empty'
       });
     }
     if (req.body.password.trim().length < 8) {
       return res.status(400).json({
         success: false,
-        msg: 'Password must not be less than 8 characters'
+        message: 'Password must not be less than 8 characters'
       });
     }
-    if (!helpers.isPasswordValid(req.body.password)) {
+    if (!Validation.isPasswordValid(req.body.password)) {
       return res.status(400).json({
         success: false,
-        msg: 'Password must contain only alphabets, numbers and symbols'
+        message: 'Password must contain only alphabets, numbers and symbols'
       });
     }
     return next();

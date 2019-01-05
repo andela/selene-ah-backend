@@ -1,11 +1,11 @@
 import passport from 'passport';
 import TwitterStrategy from 'passport-twitter';
-import JWTHelper from '../../../helpers/JWTHelper';
+import JWTHelper from '../../../helpers/auth/JWTHelper';
 import models from '../../../models';
 import removeDateStampAndPassword from
 '../../../helpers/removeDateStampAndPassword';
 import generateRandomPassword from
-'../../../helpers/generatePassword';
+'../../../helpers/auth/generatePassword';
 import { REGULAR } from '../../../helpers/constants';
 
 const {

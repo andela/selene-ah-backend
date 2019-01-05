@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 import chaiHttp from 'chai-http';
 import chai, { expect } from 'chai';
 import url from '../../server/index';
@@ -15,7 +16,7 @@ describe('API endpoint for POST auth/signup - Name Validations', () => {
     .send(user);
     expect(res).to.have.status(200);
     expect(res.body).to.be.an('Object');
-    expect(res.body.msg).to.be.equals('User created successfully');
+    expect(res.body.message).to.be.equals('User created successfully');
   });
 
   it('should return a 404 status for invalid routes', async () => {
@@ -36,7 +37,7 @@ describe('API endpoint for POST auth/signup - Name Validations', () => {
     .send(user);
     expect(res).to.have.status(400);
     expect(res.body).to.be.an('Object');
-    expect(res.body.msg).to.be.equals('Firstname must be supplied');
+    expect(res.body.message).to.be.equals('Firstname must be supplied');
   });
 
   it('should return an error if firstName is a number', async () => {
@@ -49,7 +50,7 @@ describe('API endpoint for POST auth/signup - Name Validations', () => {
     .send(user);
     expect(res).to.have.status(400);
     expect(res.body).to.be.an('Object');
-    expect(res.body.msg).to.be.equals(
+    expect(res.body.message).to.be.equals(
       'Invalid Firstname: Supply a valid firstName');
   });
 });
@@ -65,7 +66,7 @@ describe('API endpoint for POST auth/signup - Lastname Validations', () => {
     .send(user);
     expect(res).to.have.status(400);
     expect(res.body).to.be.an('Object');
-    expect(res.body.msg).to.be.equals('Lastname must be supplied');
+    expect(res.body.message).to.be.equals('Lastname must be supplied');
   });
 
   it('should register a user with a valid lastName', async () => {
@@ -78,7 +79,7 @@ describe('API endpoint for POST auth/signup - Lastname Validations', () => {
     .send(user);
     expect(res).to.have.status(200);
     expect(res.body).to.be.an('Object');
-    expect(res.body.msg).to.be.equals('User created successfully');
+    expect(res.body.message).to.be.equals('User created successfully');
   });
 
   it('should return an error if lastName is a number', async () => {
@@ -91,7 +92,7 @@ describe('API endpoint for POST auth/signup - Lastname Validations', () => {
     .send(user);
     expect(res).to.have.status(400);
     expect(res.body).to.be.an('Object');
-    expect(res.body.msg).to.be.equals(
+    expect(res.body.message).to.be.equals(
       'Invalid Lastname: Supply a valid lastName');
   });
 });
@@ -108,7 +109,7 @@ describe('API endpoint for POST auth/signup - UserName Validations', () => {
     .send(user);
     expect(res).to.have.status(200);
     expect(res.body).to.be.an('Object');
-    expect(res.body.msg).to.be.equals('User created successfully');
+    expect(res.body.message).to.be.equals('User created successfully');
   });
 
   it('should return an error if userName field is null', async () => {
@@ -121,7 +122,7 @@ describe('API endpoint for POST auth/signup - UserName Validations', () => {
     .send(user);
     expect(res).to.have.status(400);
     expect(res.body).to.be.an('Object');
-    expect(res.body.msg).to.be.equals('Username must be supplied');
+    expect(res.body.message).to.be.equals('Username must be supplied');
   });
 
   it('should return an error if userName is invalid', async () => {
@@ -134,7 +135,7 @@ describe('API endpoint for POST auth/signup - UserName Validations', () => {
     .send(user);
     expect(res).to.have.status(400);
     expect(res.body).to.be.an('Object');
-    expect(res.body.msg).to.be.equals(
+    expect(res.body.message).to.be.equals(
       'Invalid Username: supply a valid userName');
   });
 
@@ -148,7 +149,7 @@ describe('API endpoint for POST auth/signup - UserName Validations', () => {
     .send(user);
     expect(res).to.have.status(400);
     expect(res.body).to.be.an('Object');
-    expect(res.body.msg).to.be.equals(
+    expect(res.body.message).to.be.equals(
       'Invalid Username: Username length must not be less than 3');
   });
 
@@ -162,6 +163,6 @@ describe('API endpoint for POST auth/signup - UserName Validations', () => {
     .send(user);
     expect(res).to.have.status(400);
     expect(res.body).to.be.an('Object');
-    expect(res.body.msg).to.be.equals('Username already exist, Try another');
+    expect(res.body.message).to.be.equals('Username already exist, Try another');
   });
 });

@@ -8,14 +8,13 @@ describe('API endpoint for POST auth/signup - Password Validations', () => {
   it('should register a user with a valid password', async () => {
     const user = signupFactory.build({
       password: 'danielshow1#',
-      userName: 'opeyeyeemib456'
     });
     const res = await chai.request(url)
     .post('/api/v1/auth/signup')
     .send(user);
     expect(res).to.have.status(200);
     expect(res.body).to.be.an('Object');
-    expect(res.body.msg).to.be.equals('User created successfully');
+    expect(res.body.message).to.be.equals('User created successfully');
   });
 
   it('should fail if password field is empty', async () => {
@@ -27,7 +26,7 @@ describe('API endpoint for POST auth/signup - Password Validations', () => {
     .send(user);
     expect(res).to.have.status(400);
     expect(res.body).to.be.an('Object');
-    expect(res.body.msg).to.be.equals('Password field cannot be empty');
+    expect(res.body.message).to.be.equals('Password field cannot be empty');
   });
 
   it('should fail for invalid password', async () => {
@@ -39,7 +38,7 @@ describe('API endpoint for POST auth/signup - Password Validations', () => {
     .send(user);
     expect(res).to.have.status(400);
     expect(res.body).to.be.an('Object');
-    expect(res.body.msg).to.be.equals(
+    expect(res.body.message).to.be.equals(
       'Password must contain only alphabets, numbers and symbols');
   });
 
@@ -52,7 +51,7 @@ describe('API endpoint for POST auth/signup - Password Validations', () => {
     .send(user);
     expect(res).to.have.status(400);
     expect(res.body).to.be.an('Object');
-    expect(res.body.msg).to.be.equals(
+    expect(res.body.message).to.be.equals(
       'Password must contain only alphabets, numbers and symbols');
   });
 
@@ -65,7 +64,7 @@ describe('API endpoint for POST auth/signup - Password Validations', () => {
     .send(user);
     expect(res).to.have.status(400);
     expect(res.body).to.be.an('Object');
-    expect(res.body.msg).to.be.equals(
+    expect(res.body.message).to.be.equals(
       'Password must not be less than 8 characters');
   });
 });

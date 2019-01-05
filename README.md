@@ -12,6 +12,40 @@ by leveraging the modern web.
 
 ---
 
+## File Structure
+
+-- .github
+-- public
+---|
+   |-- index.html
+-- server
+---|
+   --- config
+   --- controllers
+   --- docs
+   --- helpers
+   --- middlewares
+   --- migrations
+   --- models
+   --- routes
+   --- seeders
+   --- services
+   - index.js
+-- tests
+-- .babelrc
+-- .coveralls.yml
+-- .editorconfig
+-- .env.sample
+-- .eslintrc
+-- .eslintignore
+-- .gitignore
+-- .hound.yml
+-- .sequelizerc
+-- .travis.yml
+-- app.json
+-- package.json
+-- README.md
+
 ## API Spec
 The preferred JSON object to be returned by the API should be structured as follows:
 

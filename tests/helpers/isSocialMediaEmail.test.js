@@ -1,8 +1,8 @@
 import { expect } from 'chai';
 import faker from 'faker';
-import helpers from '../../server/helpers/validationHelper';
+import Validation from '../../server/helpers/validation/validations';
 
-const  { isSocialMediaEmail } = helpers;
+const  { isSocialMediaEmail } = Validation;
 
 describe('If an email is a social media email or not', () => {
     it('Should fail if a non social media email is supplied', () => {

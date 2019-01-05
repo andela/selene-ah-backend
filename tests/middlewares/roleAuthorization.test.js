@@ -89,6 +89,30 @@ describe('#Role Middleware', () => {
       responseFn(request, response, next);
       next.should.have.been.called;
     });
+
+    it('should return error when user is not authorised', () => {
+      const request = {
+        user: {
+          role: REGULAR
+        },
+        headers: {
+          token: 'null'
+        }
+      };
+      const response = {
+        status() {
+          return this;
+        },
+        json(obj) {
+          return obj;
+        }
+      };
+
+      const next = sinon.stub();
+      sinon.stub(RoleAuthorization, 'isPermitted').returns(false);
+      const responseFn = RoleAuthorization.authorizeUser(REGULAR);
+      responseFn(request, response, next);
+    });
   });
 
   context('isPermitted Test', () => {
@@ -96,6 +120,12 @@ describe('#Role Middleware', () => {
       const response = RoleAuthorization.isPermitted(REGULAR, 'regular');
       expect(response).to.be.a('boolean');
       expect(response).to.equal(true);
+    });
+
+    it('should return false if user is not authorized', () => {
+      const response = RoleAuthorization.isPermitted(REGULAR, 'faker');
+      expect(response).to.be.a('boolean');
+      expect(response).to.equal(false);
     });
   });
 });

@@ -5,7 +5,7 @@ import {
   ARTICLE_RESET_MSG,
   ARTICLE_LIKED_BY_USER_MSG,
   ARTICLE_NOT_LIKED_BY_USER_MSG,
-} from '../../helpers/responseMessages';
+} from '../../helpers/article/responseMessage';
 
 const { ArticleVote } = models;
 /**

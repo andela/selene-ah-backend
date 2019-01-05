@@ -1,4 +1,4 @@
-import JWTHelper from '../helpers/JWTHelper';
+import JWTHelper from '../helpers/auth/JWTHelper';
 /**
  * @description this class handles user authentication
  */
@@ -30,10 +30,7 @@ class JWTAuthentication{
       req.user = verifiedToken.user;
       return next();
     } catch (err) {
-      return res.status(401).json({
-        success: false,
-        message: 'Authentication failed: Please supply a valid token.'
-      });
+      return next(err);
     }
   }
 }

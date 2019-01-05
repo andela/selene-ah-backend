@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 import chaiHttp from 'chai-http';
 import nock from 'nock';
 import sinon from 'sinon';
@@ -10,7 +11,7 @@ import chai, {
 import models from '../../server/models';
 import app from '../../server/index';
 import authMock from '../mocks/authMock';
-import generatePassword from '../../server/helpers/generatePassword';
+import generatePassword from '../../server/helpers/auth/generatePassword';
 import GoogleStrategy
 from '../../server/controllers/auth/strategies/googleStrategy';
 import socialMediaControllerCallback from
@@ -86,7 +87,7 @@ describe('Google passport authentication',() => {
         return obj;
       }
     };
-    expect(socialMediaControllerCallback(req, res).message)
+    expect(socialMediaControllerCallback.socialMediaControllerCallback(req, res).message)
     .to.equal('Registration Successfull');
   });
 
@@ -106,7 +107,7 @@ describe('Google passport authentication',() => {
         return obj;
       }
     };
-    expect(socialMediaControllerCallback(req, res).message)
+    expect(socialMediaControllerCallback.socialMediaControllerCallback(req, res).message)
     .to.equal('Login Successfull');
   });
 

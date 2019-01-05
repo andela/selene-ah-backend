@@ -1,7 +1,7 @@
 import { expect } from 'chai';
 import sinon from 'sinon';
 import bcrypt from 'bcryptjs';
-import passwordHash from '../../server/helpers/passwordHash';
+import passwordHash from '../../server/helpers/auth/passwordHash';
 
 describe('#PasswordHash', () => {
   afterEach(()=> sinon.restore());

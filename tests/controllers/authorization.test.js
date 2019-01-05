@@ -2,7 +2,8 @@ import chai, { should, expect, request } from 'chai';
 import chaiHttp from 'chai-http';
 import sinon from 'sinon';
 import sinonChai from 'sinon-chai';
-import Authorization from '../../server/controllers/Authorization';
+import Authorization
+from '../../server/controllers/auth/AuthorizationController';
 import models from '../../server/models';
 import server from '../../server';
 import UserFactory from '../mocks/factories/userFactory';

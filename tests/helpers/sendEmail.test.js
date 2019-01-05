@@ -1,6 +1,6 @@
 import { expect } from 'chai';
 import faker from 'faker';
-import sendEmail from '../../server/helpers/sendEmail';
+import sendEmail from '../../server/helpers/sendgrid/sendEmail';
 
 describe('Sends an email', () => {
     const template = {

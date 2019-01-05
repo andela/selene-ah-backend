@@ -1,10 +1,10 @@
 import passport from 'passport';
 import { Strategy as FacebookStrategy } from 'passport-facebook';
 import { config } from 'dotenv';
-import JWTHelper from '../../../helpers/JWTHelper';
+import JWTHelper from '../../../helpers/auth/JWTHelper';
 
 import db from '../../../models';
-import passwordHash from '../../../helpers/passwordHash';
+import passwordHash from '../../../helpers/auth/passwordHash';
 import removeDateStampAndPassword from
 '../../../helpers/removeDateStampAndPassword';
 import { REGULAR } from '../../../helpers/constants';

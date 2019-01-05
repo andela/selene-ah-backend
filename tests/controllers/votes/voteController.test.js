@@ -4,7 +4,7 @@ import sinonChai from 'sinon-chai';
 import chaiHttp from 'chai-http';
 import Vote from '../../../server/controllers/votes/VoteController';
 import models from '../../../server/models';
-import getCategory from '../../../server/helpers/checkCategory';
+import getCategory from '../../../server/helpers/category/checkCategory';
 import server from '../../../server';
 import ArticleFactory from '../../mocks/factories/articleFactory';
 import UserFactory from '../../mocks/factories/userFactory';
@@ -15,7 +15,7 @@ import {
   ARTICLE_RESET_MSG,
   ARTICLE_NOT_LIKED_BY_USER_MSG,
   ARTICLE_LIKED_BY_USER_MSG
-} from '../../../server/helpers/responseMessages';
+} from '../../../server/helpers/article/responseMessage';
 
 chai.use(chaiHttp);
 chai.use(sinonChai);
@@ -54,7 +54,7 @@ let categoryId;
 let token;
 
 describe('#VoteController test', () => {
-  afterEach(() => { sinon.restore(); });
+  afterEach(() => sinon.restore());
 
   before( async () => {
     categoryId = await getCategory();

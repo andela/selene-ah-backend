@@ -1,4 +1,4 @@
-import helpers from '../../helpers/validationHelper';
+import Validation from '../../helpers/validation/validations';
 import models from '../../models';
 
 const { User } = models;
@@ -16,13 +16,13 @@ class EmailValidations {
     if (!req.body.email || req.body.email.trim().length === '') {
       return res.status(400).json({
         success: false,
-        msg: 'Email field cannot be empty'
+        message: 'Email field cannot be empty'
       });
     }
-    if (!helpers.isEmailValid(req.body.email.trim())) {
+    if (!Validation.isEmailValid(req.body.email.trim())) {
       return res.status(400).json({
         success: false,
-        msg: 'Invalid Email: supply a valid email'
+        message: 'Invalid Email: supply a valid email'
       });
     }
     return next();
@@ -43,8 +43,8 @@ class EmailValidations {
           return next();
         }
         return res.status(400).json({
-          success: 'failed',
-          msg: 'Email already exist, Login'
+          success: false,
+          message: 'Email already exist, Login'
         });
       });
   }
@@ -63,8 +63,29 @@ class EmailValidations {
       }).then(data => {
         if (!data || data === null) {
           return res.status(400).json({
-            success: 'failed',
-            msg: 'Invalid email or password'
+            success: false,
+            message: 'Invalid email or password'
+          });
+        }
+        return next();
+      });
+  }
+      /**
+   * @param {object} req - request to be sent to server
+   * @param {object} res - responses gotton from server
+   * @param {object} next - callback function
+   * @returns {object} A response object from server
+   */
+  static doesResetPasswordEmailExist(req, res, next) {
+    User.findOne({
+      where: {
+        email: req.body.email.trim()
+        }
+      }).then(data => {
+        if (!data || data === null) {
+          return res.status(400).json({
+            success: false,
+            message: 'Invalid email'
           });
         }
         return next();

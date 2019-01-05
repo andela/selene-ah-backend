@@ -4,10 +4,11 @@ import chai, { expect } from 'chai';
 import models from '../../server/models';
 import server from '../../server/index';
 import signupFactory from '../mocks/factories/userFactory';
-import authController from '../../server/controllers/auth/userAuth';
-import JWTHelper from '../../server/helpers/JWTHelper';
+import authController from '../../server/controllers/auth/userAuthController';
+import JWTHelper from '../../server/helpers/auth/JWTHelper';
 import PasswordValidation
 from '../../server/middlewares/validations/passwordValidation';
+import { REGULAR } from '../../server/helpers/constants';
 
 const { User } = models;
 chai.use(chaiHttp);
@@ -27,7 +28,7 @@ describe('API endpoint for POST Reset password ', () => {
       .send(user);
     expect(res).to.have.status(200);
     expect(res.body).to.be.an('Object');
-    expect(res.body.msg).to.be.equals('User created successfully');
+    expect(res.body.message).to.be.equals('User created successfully');
     userDetails = { ...res.body };
     token = userDetails.token;
     expiredToken = JWTHelper.generateToken(userDetails.user, '0.0s');
@@ -79,6 +80,21 @@ describe('API endpoint for POST Reset password ', () => {
     expect(res).to.have.status(400);
     expect(res.body).to.be.an('Object');
     expect(res.body.message).to.be.equals('Reset password token is required');
+  });
+
+  it('should fail if a email is not in the database', async () => {
+    const user = signupFactory.build({
+      password: 'fdghjku',
+      email: 'opeyemi@yahhhhoo.com',
+      role: REGULAR
+    });
+    const res = await chai.request(server)
+    .post('/api/v1/auth/resetpassword')
+    .send(user);
+    expect(res).to.have.status(400);
+    expect(res.body).to.be.an('Object');
+    expect(res.body.message).to.be.equals(
+      'Invalid email');
   });
 
   it('should return error when given an expired headers token', async () => {

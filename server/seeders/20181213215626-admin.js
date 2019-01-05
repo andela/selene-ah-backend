@@ -1,5 +1,5 @@
 import UserFactory from '../../tests/mocks/factories/userFactory';
-import passwordHash from '../helpers/passwordHash';
+import passwordHash from '../helpers/auth/passwordHash';
 
 const hashed = passwordHash.hashPassword('password123!');
 

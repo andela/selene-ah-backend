@@ -6,7 +6,7 @@ from '../../server/middlewares/validations/articleVoteValidator';
 import {
   VOTE_BAD_REQUEST_MSG,
   VOTE_REQUIRED_MSG
-} from '../../server/helpers/responseMessages';
+} from '../../server/helpers/vote/responseMessage';
 
 chai.use(sinonChai);
 
