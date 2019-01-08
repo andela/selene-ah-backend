@@ -1,0 +1,317 @@
+paths:
+  /articles/{articleId}/rating:
+    post:
+      tags:
+        - Rating
+      summary: Rates an article
+      produces:
+      - application/json
+      security:
+        - Bearer: []
+      parameters:
+      - in: path
+        name: articleId
+        description: 'The id of the article to be rated by user'
+        required: true
+        schema:
+          type: string
+          format: uuid
+      - in: body
+        name: payload
+        description: The article rating
+        required: true
+        schema:
+          type: object
+          properties:
+            rating:
+              type: 'integer'
+              example: 5
+      - in: header
+        name: user.id
+        description: The user id
+        required: true
+        schema:
+          type: integer
+          format: uuid
+      responses:
+        201:
+          description: Response for successful rating
+          schema:
+            type: 'object'
+            properties:
+              success:
+                type: 'boolean'
+                example: 'true'
+              message:
+                type: string
+                example: 'The article has been successfully rated.'
+        400:
+          description: response for invalid articleId or rating
+          schema:
+            type: 'object'
+            properties:
+              success:
+                type: 'boolean'
+                example: 'false'
+              message:
+                type: string
+                example: 'IInvalid rating: The rating must be an integer between 1 and 5'
+        401:
+          description: response for unauthorized
+          schema:
+            type: 'object'
+            properties:
+              success:
+                type: 'boolean'
+                example: 'false'
+              message:
+                type: string
+                example: 'Authentication failed: Please supply a valid token'
+        403:
+          description: Response for when user wants to rate his own article
+          schema:
+            type: 'object'
+            properties:
+              success:
+                type: boolean
+                example: false
+              message:
+                type: string
+                example: 'Sorry, you cannot rate your own article'
+        404:
+          description: Response non-existent article
+          schema:
+            type: 'object'
+            properties:
+              success:
+                type: boolean
+                example: false
+              message:
+                type: string
+                example: 'No article with this id was found.'
+    put:
+      tags:
+        - Rating
+      summary: Updates an article
+      produces:
+      - application/json
+      security:
+        - Bearer: []
+      parameters:
+      - in: path
+        name: articleId
+        description: 'The id of the article which rating is to be updated'
+        required: true
+        schema:
+          type: string
+          format: uuid
+      - in: body
+        name: payload
+        description: The article rating
+        required: true
+        schema:
+          type: object
+          properties:
+            rating:
+              type: 'integer'
+              example: 5
+      - in: header
+        name: user.id
+        description: The user id
+        required: true
+        schema:
+          type: integer
+          format: uuid
+      responses:
+        200:
+          description: Response for successful update
+          schema:
+            type: 'object'
+            properties:
+              success:
+                type: 'boolean'
+                example: 'true'
+              message:
+                type: string
+                example: 'The rating has been updated successfuly.'
+        400:
+          description: response for invalid articleId or rating
+          schema:
+            type: 'object'
+            properties:
+              success:
+                type: 'boolean'
+                example: 'false'
+              message:
+                type: string
+                example: 'IInvalid rating: The rating must be an integer between 1 and 5'
+        401:
+          description: response for unauthorized
+          schema:
+            type: 'object'
+            properties:
+              success:
+                type: 'boolean'
+                example: 'false'
+              message:
+                type: string
+                example: 'Authentication failed: Please supply a valid token'
+        404:
+          description: Response non-existent article
+          schema:
+            type: 'object'
+            properties:
+              success:
+                type: boolean
+                example: false
+              message:
+                type: string
+                example: 'No article with this id was found.'
+    get:
+      tags:
+        - Rating
+      summary: Gets an article's rating
+      produces:
+      - application/json
+      security:
+        - Bearer: []
+      parameters:
+      - in: path
+        name: articleId
+        description: 'The id of the article with ratings'
+        required: true
+        schema:
+          type: string
+          format: uuid
+      responses:
+        200:
+          description: Response for successful fetching article average rating
+          schema:
+            type: 'object'
+            properties:
+              success:
+                type: 'boolean'
+                example: 'true'
+              message:
+                type: string
+                example: 'Successfully got the article ratings'
+              averageRating:
+                type: integer
+                example: 4
+        400:
+          description: response for invalid articleId
+          schema:
+            type: 'object'
+            properties:
+              success:
+                type: 'boolean'
+                example: 'false'
+              message:
+                type: string
+                example: 'Invalid articleId: Please supply a valid articleId.'
+        401:
+          description: response for unauthorized
+          schema:
+            type: 'object'
+            properties:
+              success:
+                type: 'boolean'
+                example: 'false'
+              message:
+                type: string
+                example: 'Authentication failed: Please supply a valid token'
+        404:
+          description: Response non-existent article or no rating
+          schema:
+            type: 'object'
+            properties:
+              success:
+                type: boolean
+                example: false
+              message:
+                type: string
+                example: 'No article with this id was found.'
+
+  /user/articles/:articleId/rating:
+    get:
+      tags:
+        - Rating
+      summary: Gets a user's rating for an article
+      produces:
+      - application/json
+      security:
+        - Bearer: []
+      parameters:
+      - in: path
+        name: articleId
+        description: 'The id of the article with ratings'
+        required: true
+        schema:
+          type: string
+          format: uuid
+      - in: header
+        name: user.id
+        description: The user id
+        required: true
+        schema:
+          type: integer
+          format: uuid
+      responses:
+        200:
+          description: Response for successful fetching the user article's rating
+          schema:
+            type: 'object'
+            properties:
+              success:
+                type: 'boolean'
+                example: 'true'
+              message:
+                type: string
+                example: 'Successfully got the article ratings'
+              userRating:
+                type: integer
+                example: 4
+        400:
+          description: response for invalid articleId
+          schema:
+            type: 'object'
+            properties:
+              success:
+                type: 'boolean'
+                example: 'false'
+              message:
+                type: string
+                example: 'Invalid articleId: Please supply a valid articleId.'
+        401:
+          description: response for unauthorized
+          schema:
+            type: 'object'
+            properties:
+              success:
+                type: 'boolean'
+                example: 'false'
+              message:
+                type: string
+                example: 'Authentication failed: Please supply a valid token'
+        404:
+          description: Response non-existent article or no rating
+          schema:
+            type: 'object'
+            properties:
+              success:
+                type: boolean
+                example: false
+              message:
+                type: string
+                example: 'No article with this id was found.'
+
+
+
+
+
+
+
+
+
+
+
