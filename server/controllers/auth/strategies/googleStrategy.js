@@ -1,11 +1,11 @@
 import passport from 'passport';
 import googleStrategyOauth2 from 'passport-google-oauth';
 import models from '../../../models';
-import JWTHelper from '../../../helpers/JWTHelper';
+import JWTHelper from '../../../helpers/auth/JWTHelper';
 import removeDateStampAndPassword from
 '../../../helpers/removeDateStampAndPassword';
 import generateRandomPassword from
-'../../../helpers/generatePassword';
+'../../../helpers/auth/generatePassword';
 import { REGULAR } from '../../../helpers/constants';
 
 

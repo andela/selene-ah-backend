@@ -1,10 +1,10 @@
 import express from 'express';
-import session from 'express-session';
 import cors from 'cors';
 import morgan from 'morgan';
+import session from 'express-session';
 import methodOverride from 'method-override';
-import routes from './routes';
-import passport from './controllers/auth/passport';
+import v1Routes from './routes/api/v1';
+import passport from './services/passport';
 // const isProduction = process.env.NODE_ENV === 'production';
 const port = process.env.PORT || 3000;
 // Create global app object
@@ -19,8 +19,17 @@ app.use(express.json());
 
 app.use(methodOverride());
 
-
 app.use(express.static('public'));
+
+passport(app);
+app.use(v1Routes);
+
+// / catch 404 and forward to error handler
+app.use((req, res, next) => {
+  const err = new Error('Not Found');
+  err.status = 404;
+  next(err);
+});
 
 app.use(
   session({
@@ -30,17 +39,6 @@ app.use(
     saveUninitialized: false
   })
 );
-
-
-passport(app);
-app.use(routes);
-
-// / catch 404 and forward to error handler
-app.use((req, res, next) => {
-  const err = new Error('Not Found');
-  err.status = 404;
-  next(err);
-});
 
 /* eslint-disable-next-line */
 app.use((err, req, res, next) => {

@@ -5,11 +5,11 @@ import sinon from 'sinon';
 import server from '../../server/index';
 import signupFactory from '../mocks/factories/userFactory';
 import articlesFactory from '../mocks/factories/articlesFactory';
-import getRandomCategory from '../../server/helpers/checkCategory';
-import JWTHelper from '../../server/helpers/JWTHelper';
+import getRandomCategory from '../../server/helpers/category/checkCategory';
+import JWTHelper from '../../server/helpers/auth/JWTHelper';
 
 import ArticleReporter
- from '../../server/controllers/reportArticleController';
+ from '../../server/controllers/article/reportArticleController';
  import models from '../../server/models';
 
 chai.should();
@@ -26,6 +26,7 @@ const { getReportsOnAnArticle } = ArticleReporter;
 const { Report } = models;
 
 describe('API endpoint for create articles', () => {
+  afterEach(() => sinon.restore());
     const user = signupFactory.build({
       email: 'etta@aol.com',
       password: 'password123*'
@@ -167,6 +168,30 @@ describe('API endpoint for create articles', () => {
 
         await(getReportsOnAnArticle(req, res, next));
         expect(next.called).to.be.true;
-        sinon.restore();
       });
+
+  context('getAllReports Test', () => {
+    it('###Faker Test for  getReportsOnAnArticle', async () => {
+      const req = {
+        params: 'jdjdnjndjjdnjd'
+      };
+      const res = {};
+      const next = sinon.stub();
+
+      sinon.stub(Report, 'findAll').throws();
+
+      await ArticleReporter.getAllReports(req, res, next);
+      expect(next.called).to.be.true;
+    });
+
+    it('should eturn no article has been reported', async () => {
+      const req = {
+        params: 'jdjdnjndjjdnjd'
+      };
+      const res = {};
+      const next = sinon.stub();
+      sinon.stub(Report, 'findAll').returns([]);
+      await ArticleReporter.getAllReports(req, res, next);
+    });
+  });
 });

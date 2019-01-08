@@ -5,8 +5,9 @@ import server from '../../server/index';
 import userFactory from '../mocks/factories/userFactory';
 import models from '../../server/models';
 import userAuthentication from
-  '../../server/middlewares/followersAuthentication';
-import followerController from '../../server/controllers/followersController';
+  '../../server/middlewares/validations/followersAuthentication';
+import followerController
+from '../../server/controllers/user/followersController';
 
 chai.use(chaiHttp);
 

@@ -1,7 +1,7 @@
 import {
   VOTE_BAD_REQUEST_MSG,
   VOTE_REQUIRED_MSG
-} from '../../helpers/responseMessages';
+} from '../../helpers/vote/responseMessage';
 
 const REQUIRED_PARAMS = [1, -1, 0];
 

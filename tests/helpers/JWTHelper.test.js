@@ -1,5 +1,5 @@
 import { expect } from 'chai';
-import JWTHelper from '../../server/helpers/JWTHelper';
+import JWTHelper from '../../server/helpers/auth/JWTHelper';
 import UserFactory from '../mocks/factories/userFactory';
 import removeDateStampAndPassword from
 '../../server/helpers/removeDateStampAndPassword';

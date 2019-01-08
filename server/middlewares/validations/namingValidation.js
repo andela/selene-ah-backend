@@ -1,4 +1,4 @@
-import helpers from '../../helpers/validationHelper';
+import Validation from '../../helpers/validation/validations';
 import models from '../../models';
 
 const { User } = models;
@@ -15,16 +15,17 @@ class NamingValidations {
    */
   static isNameValid(req, res, next) {
     const body = req.body;
-    if (body.firstName.trim() && !helpers.isNameValid(body.firstName.trim())) {
+    // eslint-disable-next-line max-len
+    if (body.firstName.trim() && !Validation.isNameValid(body.firstName.trim())) {
       return res.status(400).json({
         success: false,
-        msg: 'Invalid Firstname: Supply a valid firstName'
+        message: 'Invalid Firstname: Supply a valid firstName'
       });
     }
-    if (body.lastName.trim() && !helpers.isNameValid(body.lastName.trim())) {
+    if (body.lastName.trim() && !Validation.isNameValid(body.lastName.trim())) {
       return res.status(400).json({
         success: false,
-        msg: 'Invalid Lastname: Supply a valid lastName'
+        message: 'Invalid Lastname: Supply a valid lastName'
       });
     }
     return next();
@@ -41,13 +42,13 @@ class NamingValidations {
     if (!req.body.firstName || !req.body.firstName.trim()) {
       return res.status(400).json({
         success: false,
-        msg: 'Firstname must be supplied'
+        message: 'Firstname must be supplied'
       });
     }
     if (!req.body.lastName || !req.body.lastName.trim()) {
       return res.status(400).json({
         success: false,
-        msg: 'Lastname must be supplied'
+        message: 'Lastname must be supplied'
       });
     }
     return next();
@@ -64,19 +65,19 @@ class NamingValidations {
     if (!req.body.userName || req.body.userName.trim().length < 1) {
       return res.status(400).json({
         success: false,
-        msg: 'Username must be supplied'
+        message: 'Username must be supplied'
       });
     }
     if (req.body.userName.trim().length < 3) {
       return res.status(400).json({
         success: false,
-        msg: 'Invalid Username: Username length must not be less than 3'
+        message: 'Invalid Username: Username length must not be less than 3'
       });
     }
-    if (!helpers.isUsernameValid(req.body.userName.trim())) {
+    if (!Validation.isUsernameValid(req.body.userName.trim())) {
       return res.status(400).json({
         success: false,
-        msg: 'Invalid Username: supply a valid userName'
+        message: 'Invalid Username: supply a valid userName'
       });
     }
     return next();
@@ -99,7 +100,7 @@ class NamingValidations {
         }
         return res.status(400).json({
           success: 'failed',
-          msg: 'Username already exist, Try another'
+          message: 'Username already exist, Try another'
         });
       });
   }

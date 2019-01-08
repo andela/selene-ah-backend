@@ -5,9 +5,9 @@ import chai, { expect, should } from 'chai';
 import server from '../../server/index';
 import signupFactory from '../mocks/factories/userFactory';
 import models from '../../server/models';
-import userController from '../../server/controllers/auth/userAuth';
-import JWTHelper from '../../server/helpers/JWTHelper';
-import sendEmail from '../../server/helpers/sendEmail';
+import userController from '../../server/controllers/auth/userAuthController';
+import JWTHelper from '../../server/helpers/auth/JWTHelper';
+import sendEmail from '../../server/helpers/sendgrid/sendEmail';
 
 
 
@@ -25,15 +25,15 @@ describe('API endpoint for POST auth/signup - Email Validations', () => {
   it('should register a user with a correct email', async () => {
     const user = signupFactory.build({
       email: 'opeyemidaniel@gmail.com',
-      password: 'password123*',
-      userName: 'followers345'
+      password: 'password123*'
     });
+
     const res = await chai.request(server)
       .post('/api/v1/auth/signup')
       .send(user);
       expect(res).to.have.status(200);
       expect(res.body).to.be.an('Object');
-      expect(res.body.msg).to.be.equals('User created successfully');
+      expect(res.body.message).to.be.equals('User created successfully');
         userDetails = { ...res.body };
         expiredToken = JWTHelper.generateToken(userDetails.user, '0.2s');
   });
@@ -47,7 +47,7 @@ describe('API endpoint for POST auth/signup - Email Validations', () => {
       .send(user);
     expect(res).to.have.status(400);
     expect(res.body).to.be.an('Object');
-    expect(res.body.msg).to.be.equals('Email field cannot be empty');
+    expect(res.body.message).to.be.equals('Email field cannot be empty');
   });
 
   it('should fail if user supply invalid email', async () => {
@@ -59,7 +59,7 @@ describe('API endpoint for POST auth/signup - Email Validations', () => {
       .send(user);
     expect(res).to.have.status(400);
     expect(res.body).to.be.an('Object');
-    expect(res.body.msg).to.be
+    expect(res.body.message).to.be
       .equals('Invalid Email: supply a valid email');
   });
 
@@ -72,7 +72,7 @@ describe('API endpoint for POST auth/signup - Email Validations', () => {
       .send(user);
     expect(res).to.have.status(400);
     expect(res.body).to.be.an('Object');
-    expect(res.body.msg).to.be.equals('Email already exist, Login');
+    expect(res.body.message).to.be.equals('Email already exist, Login');
   });
 
   it('fake test: should throw 500 error ', async () => {
@@ -101,7 +101,7 @@ describe('Email Verification', () => {
     .get(`/api/v1/auth/verifyemail?token=${token}&email=${email}`);
     expect(res).to.have.status(200);
     expect(res.body).to.be.an('Object');
-    expect(res.body.msg).to.be.equals('Email successfully confirmed');
+    expect(res.body.message).to.be.equals('Email successfully confirmed');
   });
 
   context('###', (done) => {

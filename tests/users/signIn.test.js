@@ -1,11 +1,12 @@
+/* eslint-disable max-len */
 import chaiHttp from 'chai-http';
 import chai, { expect } from 'chai';
 import sinon from 'sinon';
-import userController from '../../server/controllers/auth/userAuth';
+import userController from '../../server/controllers/auth/userAuthController';
 import server from '../../server/index';
 import models from '../../server/models';
 import valid
-  from '../../server/helpers/passwordHash';
+  from '../../server/helpers/auth/passwordHash';
 import loginFactory from '../mocks/factories/userFactory';
 import { REGULAR } from '../../server/helpers/constants';
 
@@ -36,7 +37,7 @@ describe('API endpoint for POST auth/signin - Email Validations', () => {
     .send(user);
     expect(res).to.have.status(400);
     expect(res.body).to.be.an('Object');
-    expect(res.body.msg).to.be.equals('Invalid email or password');
+    expect(res.body.message).to.be.equals('Invalid email or password');
   });
 
   it('should fail if email field is empty', async () => {
@@ -50,7 +51,7 @@ describe('API endpoint for POST auth/signin - Email Validations', () => {
     .send(user);
     expect(res).to.have.status(400);
     expect(res.body).to.be.an('Object');
-    expect(res.body.msg).to.be.equals('Email field cannot be empty');
+    expect(res.body.message).to.be.equals('Email field cannot be empty');
   });
 
   it('should fail if user supply invalid email', async () => {
@@ -63,7 +64,7 @@ describe('API endpoint for POST auth/signin - Email Validations', () => {
     .send(user);
     expect(res).to.have.status(400);
     expect(res.body).to.be.an('Object');
-    expect(res.body.msg).to.be.equals('Invalid Email: supply a valid email');
+    expect(res.body.message).to.be.equals('Invalid Email: supply a valid email');
   });
 
   it('should fail if a password is not supplied', async () => {
@@ -77,7 +78,7 @@ describe('API endpoint for POST auth/signin - Email Validations', () => {
     .send(user);
     expect(res).to.have.status(400);
     expect(res.body).to.be.an('Object');
-    expect(res.body.msg).to.be.equals('Password field cannot be empty');
+    expect(res.body.message).to.be.equals('Password field cannot be empty');
   });
 
   it('should fail if a password is not valid', async () => {
@@ -91,7 +92,7 @@ describe('API endpoint for POST auth/signin - Email Validations', () => {
     .send(user);
     expect(res).to.have.status(400);
     expect(res.body).to.be.an('Object');
-    expect(res.body.msg).to.be.equals(
+    expect(res.body.message).to.be.equals(
       'Password must contain only alphabets, numbers and symbols');
   });
 
@@ -106,7 +107,7 @@ describe('API endpoint for POST auth/signin - Email Validations', () => {
     .send(user);
     expect(res).to.have.status(400);
     expect(res.body).to.be.an('Object');
-    expect(res.body.msg).to.be.equals(
+    expect(res.body.message).to.be.equals(
       'Invalid email or password');
   });
 
@@ -121,7 +122,7 @@ describe('API endpoint for POST auth/signin - Email Validations', () => {
     .send(user);
     expect(res).to.have.status(200);
     expect(res.body).to.be.an('Object');
-    expect(res.body.msg).to.be.equals('Login successful');
+    expect(res.body.message).to.be.equals('Login successful');
   });
 
   it('fake test: should return 500 error', async () => {

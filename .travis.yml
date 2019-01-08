@@ -3,6 +3,8 @@ node_js:
   - "node"
 services:
   - postgresql
+after_install:
+  - npm run db:migrate
 before_script:
   - psql -c 'create database selene_ah_test;' -U postgres
 after_success:

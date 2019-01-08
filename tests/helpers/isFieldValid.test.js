@@ -1,7 +1,7 @@
 import { expect } from 'chai';
-import helpers from '../../server/helpers/validationHelper';
+import Validation from '../../server/helpers/validation/validations';
 
-const  { isFieldValid } = helpers;
+const  { isFieldValid } = Validation;
 
 describe('An Input field validity based on the supplied arguments', () => {
     it('Should return fail if an empty string is provided', () => {

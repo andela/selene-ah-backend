@@ -1,4 +1,4 @@
-import checkIfUserOwnsArticle from '../../helpers/checkIfUserOwnsTheArticle';
+import ArticleHelper from '../../helpers/article/articleHelper';
 
 
 /**
@@ -15,7 +15,8 @@ class CheckArticle {
   static async checkIfArticleIsOwnedByUser(req, res, next) {
     const articleId = req.params.articleId || req.params.id;
     const userId = req.user.id;
-    const article = await checkIfUserOwnsArticle(articleId, userId);
+    const article = await ArticleHelper.checkIfUserOwnsArticle(articleId,
+                                                                userId);
     if (!article) {
       return res.status(403).json({
         success: false,

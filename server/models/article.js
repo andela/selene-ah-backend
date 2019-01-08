@@ -2,7 +2,8 @@
  * @param {object} sequelize
  * @param {object} DataTypes
  * @returns {object} model
- */export default (sequelize, DataTypes) => {
+ */
+export default (sequelize, DataTypes) => {
   const Article = sequelize.define('Article', {
     id: {
       type: DataTypes.UUID,
@@ -36,6 +37,7 @@
     slug: DataTypes.TEXT,
     published: DataTypes.BOOLEAN,
     readTime: DataTypes.INTEGER,
+    imageUrl: DataTypes.STRING,
   });
   Article.associate = (models) => {
     Article.belongsTo(models.User, {

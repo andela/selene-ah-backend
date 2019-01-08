@@ -2,11 +2,11 @@ import chai, { expect, should } from 'chai';
 import sinonChai from 'sinon-chai';
 import sinon from 'sinon';
 import ArticleValidator
-from '../../server/middlewares/articleValidation';
+from '../../server/middlewares/validations/articleValidation';
 import models from '../../server/models';
 import {
   ARTICLE_NOT_FOUND
-} from '../../server/helpers/responseMessages';
+} from '../../server/helpers/article/responseMessage';
 
 const { Article } = models;
 should();

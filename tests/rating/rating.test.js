@@ -5,20 +5,27 @@ import app from '../../server/index';
 import UserFactory from '../mocks/factories/userFactory';
 import models from '../../server/models';
 import ArticleFactory from '../mocks/factories/roleArticleFactory';
-import RatingController from '../../server/controllers/ratingController';
+import RatingController from '../../server/controllers/rating/ratingController';
 
 import {
   SUCCESSFUL_RATING,
-  AUTHENTICATION_ERROR_MSG,
-  INVALID_ARTICLE_ID_ERROR,
-  NOT_EXISTS_ARTICLE_ID_ERROR,
   SUCCESSFUL_RATING_UPDATE,
   GOT_ARTICLE_RATING_MESSAGE,
   NO_ARTICLE_RATING,
   RATE_OWN_ARTICLE_ERROR
-} from '../../server/helpers/responseMessages';
-import calculateArticleReadTime
-      from '../../server/helpers/calculateArticleReadTime';
+} from '../../server/helpers/rating/responseMessage';
+
+import {
+  INVALID_ARTICLE_ID_ERROR,
+  NOT_EXISTS_ARTICLE_ID_ERROR,
+} from '../../server/helpers/article/responseMessage';
+
+import {
+  AUTHENTICATION_ERROR_MSG,
+} from '../../server/helpers/auth/responseMessage';
+
+import ArticleHelper
+      from '../../server/helpers/article/articleHelper';
 
 chai.use(chaiHttp);
 
@@ -68,7 +75,9 @@ describe('Rating controller', () => {
 
     newArticle.userId = userObject.author.user.id;
     newArticle.categoryId = category.id;
-    newArticle.readTime = calculateArticleReadTime(newArticle.body);
+    newArticle.readTime = ArticleHelper.calculateArticleReadTime(
+                                        newArticle.body
+                                        );
     article = await Article.create(newArticle);
 
     const reader = await chai.request(app)
@@ -84,7 +93,9 @@ describe('Rating controller', () => {
 
     newArticle2.userId = userObject.reader.user.id;
     newArticle2.categoryId = category.id;
-    newArticle2.readTime = calculateArticleReadTime(newArticle2.body);
+    newArticle2.readTime = ArticleHelper.calculateArticleReadTime(
+                                          newArticle2.body
+                                          );
     article2 = await Article.create(newArticle2);
 
     ratingObject.articleId = article.id;

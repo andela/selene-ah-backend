@@ -1,17 +1,26 @@
-import chai, { expect } from 'chai';
+import chai, { expect, should } from 'chai';
 import chaiHttp from 'chai-http';
-import BookmarkController from '../../server/controllers/bookmarkController';
+import sinon from 'sinon';
+import sinonChai from 'sinon-chai';
+import BookmarkController
+from '../../server/controllers/bookmark/bookmarkController';
 import ArticleFactory from '../mocks/factories/articlesFactory';
 import UserFactory from '../mocks/factories/userFactory';
-import getCategory from '../../server/helpers/checkCategory';
+import getCategory from '../../server/helpers/category/checkCategory';
 import server from '../../server';
+import fakeResponse from '../mocks/auth/fakeResponse';
+import models from '../../server/models';
 import {
   BOOKMARK_SUCCESSFUL_MSG,
-  BOOKMARK_FOUND_MSG
-} from '../../server/helpers/responseMessages';
+  BOOKMARK_FOUND_MSG,
+  NO_BOOKMARK_MSG
+} from '../../server/helpers/bookmark/responseMessage';
 
 
 chai.use(chaiHttp);
+chai.use(sinonChai);
+should();
+const { Bookmark } = models;
 
 const BOOKMARK_ROUTE_URL = '/api/v1/bookmark';
 const SIGNUP_ROUTE_URL = '/api/v1/auth/signup';
@@ -21,6 +30,7 @@ let token;
 let articleId;
 
 describe('BookmarkController Test', () => {
+  afterEach(() => { sinon.restore(); });
   before(async () => {
     const user = UserFactory.build({
       password: 'passioe$82!'
@@ -72,6 +82,18 @@ describe('BookmarkController Test', () => {
       expect(response.body).to.have.property('message');
       expect(response.body).to.have.property('data');
       expect(response.body.message).to.equal(BOOKMARK_FOUND_MSG);
+    });
+
+    // eslint-disable-next-line max-len
+    it(`should return ${NO_BOOKMARK_MSG} when user has does not have a bookmarked article`,
+    async() => {
+      sinon.stub(Bookmark, 'findAll').returns(false);
+      const req = { user: { id: 1 }};
+      const response = await BookmarkController
+                      .getUsersBookmarks(req, fakeResponse);
+      expect(200);
+      expect(response).to.have.property('message');
+      expect(response.message).to.equal(NO_BOOKMARK_MSG);
     });
   });
 });

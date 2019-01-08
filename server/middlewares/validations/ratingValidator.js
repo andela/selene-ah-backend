@@ -1,15 +1,17 @@
-import validationHelper from '../../helpers/validationHelper';
-import generalHelpers from '../../helpers/generalHelpers';
+import Validation from '../../helpers/validation/validations';
+import generalHelpers from '../../helpers/responseHandler';
 import models from '../../models';
 import {
-  INVALID_ARTICLE_ID_ERROR,
   INVALID_RATING_ERROR,
-  REQUIRED_ARTICLE_ID_ERROR,
-  NOT_EXISTS_ARTICLE_ID_ERROR,
   NO_ARTICLE_RATING,
   RATE_OWN_ARTICLE_ERROR,
-}
-  from '../../helpers/responseMessages';
+} from '../../helpers/rating/responseMessage';
+
+import {
+  REQUIRED_ARTICLE_ID_ERROR,
+  NOT_EXISTS_ARTICLE_ID_ERROR,
+  INVALID_ARTICLE_ID_ERROR,
+} from '../../helpers/article/responseMessage';
 
   const { Article, Rating } = models;
 
@@ -33,13 +35,13 @@ class RatingValidator {
         );
     }
 
-    if(!validationHelper.isUUIDValid(articleId)){
+    if(!Validation.isUUIDValid(articleId)){
       return generalHelpers.responseMessageHandler(
         res, INVALID_ARTICLE_ID_ERROR, 400, false
         );
     }
 
-    const articleExists = await validationHelper.entityExistsInTable(
+    const articleExists = await Validation.entityExistsInTable(
       Article, {id: articleId}
       );
 
@@ -82,7 +84,7 @@ class RatingValidator {
    */
   static async checkIfArticleIsRated(req, res, next){
     const { articleId } = req.params;
-    const articleIsRated = await validationHelper.entityExistsInTable(
+    const articleIsRated = await Validation.entityExistsInTable(
       Rating, { articleId }
       );
 
@@ -105,7 +107,7 @@ class RatingValidator {
   static async checkIfOwnerWantsToRate(req, res, next){
     const userId = req.user.id;
     const articleId = req.params.articleId;
-    const articleBelongsToLoggedInUser = await validationHelper
+    const articleBelongsToLoggedInUser = await Validation
           .entityExistsInTable(
       Article, {id: articleId, userId:userId}
     );

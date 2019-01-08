@@ -2,20 +2,22 @@ import chaiHttp from 'chai-http';
 import chai, { expect } from 'chai';
 import sinon from 'sinon';
 import sinonChai from 'sinon-chai';
+import faker from 'faker';
 import server from '../../server/index';
 import signupFactory from '../mocks/factories/userFactory';
 import articlesFactory from '../mocks/factories/articlesFactory';
-import articlesController from '../../server/controllers/articlesController';
+import articlesController
+from '../../server/controllers/article/articlesController';
 import models from '../../server/models';
-import getRandomCategory from '../../server/helpers/checkCategory';
-import getRandomTag from '../../server/helpers/getTag';
-import articleTag from '../../server/controllers/articleTagsController';
+import getRandomCategory from '../../server/helpers/category/checkCategory';
+import getRandomTag from '../../server/helpers/tag/getTag';
+import articleTag from '../../server/controllers/article/articleTagsController';
 
 chai.should();
 chai.use(chaiHttp);
 chai.use(sinonChai);
 
-const { Article, ArticleTag } = models;
+const { Article, ArticleTag, Tag } = models;
 
 let userId;
 let catId;
@@ -26,9 +28,11 @@ const fakeId = '14dd13b2-981c-490d-879c-71edaf5d674d';
 
 
 describe('API endpoint for create articles', () => {
+  afterEach(() => sinon.restore());
   const user = signupFactory.build({
     email: 'etta@gmail.com',
-    password: 'password123*'
+    password: 'password123*',
+    userName: 'ced#$%@'
   });
 
   before(async () => {
@@ -257,7 +261,6 @@ describe('API endpoint for create articles', () => {
     await articlesController.getAllArticles(req, res, next);
 
     expect(next.calledOnce).to.be.true;
-    sinon.restore();
   });
 
 
@@ -279,7 +282,6 @@ describe('API endpoint for create articles', () => {
     await articlesController.updateArticle(req, res, next);
 
     expect(next.calledOnce).to.be.true;
-    sinon.restore();
   });
 
   it('should fake error for getOneArticle', async () => {
@@ -297,7 +299,6 @@ describe('API endpoint for create articles', () => {
     await articlesController.getOneArticle(req, res, next);
 
     expect(next.called).to.be.true;
-    sinon.restore();
   });
 
   it('should fake error for deleteArticle', async () => {
@@ -315,7 +316,6 @@ describe('API endpoint for create articles', () => {
     await articlesController.deleteArticle(req, res, next);
 
     expect(next.called).to.be.true;
-    sinon.restore();
   });
 
   it('should fake error for get author article', async () => {
@@ -333,7 +333,6 @@ describe('API endpoint for create articles', () => {
     await articlesController.getAuthorsArticles(req, res, next);
 
     expect(next.called).to.be.true;
-    sinon.restore();
   });
 
   it('should return 500 error when creating an article', async () => {
@@ -356,7 +355,6 @@ describe('API endpoint for create articles', () => {
     await articlesController.createArticle(req, res, next);
 
     expect(next.called).to.be.true;
-    sinon.restore();
   });
 
   it('should return 500 error when getting tags', async () => {
@@ -373,7 +371,6 @@ describe('API endpoint for create articles', () => {
     await articleTag.getAllTags(req, res, next);
 
     expect(next.called).to.be.true;
-    sinon.restore();
   });
   it('should return 500 error when deleting tag', async () => {
     const req = {
@@ -389,6 +386,54 @@ describe('API endpoint for create articles', () => {
     await articleTag.deleteArticleTag(req, res, next);
 
     expect(next.called).to.be.true;
-    sinon.restore();
+  });
+
+  it('should return Article not found', async () => {
+    const req = {
+      params: {
+        id: 1
+      },
+      query: {}
+    };
+
+    const res = {};
+    const next = sinon.stub();
+
+    sinon.stub(Article, 'findAll').returns({count: 0});
+    await articlesController.getAllArticles(req, res, next);
+  });
+
+  it('should fake error for getOneArticle', async () => {
+    const req = {
+      params: {
+        id: 1
+      },
+      body: {}
+    };
+
+    const res = {};
+    const next = sinon.stub();
+
+    sinon.stub(Article, 'findOne').returns({
+      title: 'nda',
+      slug: 'kjfjkadj',
+      readTime: 938,
+      categoryId: faker.random.uuid()
+    });
+    await articlesController.updateArticle(req, res, next);
+  });
+
+  context('ArticleTags Test', () => {
+    it('should reach the else block', async () => {
+      const req = {
+        params: {
+          tagId: '1'
+        }
+      };
+      const res = {};
+      const next = sinon.stub();
+      sinon.stub(Tag, 'findAll').returns(false);
+      await articleTag.getAllTags(req, res, next);
+    });
   });
 });

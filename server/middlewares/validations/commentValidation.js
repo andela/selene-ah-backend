@@ -1,5 +1,5 @@
-import validationHelper  from '../../helpers/validationHelper';
-import checkValidCommentId from '../../helpers/checkValidCommentId';
+import Validation  from '../../helpers/validation/validations';
+import checkValidCommentId from '../../helpers/comment/checkValidCommentId';
 
 
 /**
@@ -20,7 +20,7 @@ export default class validateComments{
         message: 'Cannot Post an empty Text'
       });
     }
-    if(!validationHelper.validateTextLength(content)){
+    if(!Validation.validateTextLength(content)){
       return res.status(400).json({
         success: false,
         message:
@@ -53,8 +53,7 @@ export default class validateComments{
         });
       }
     }catch(error){
-      next(error);
+      return next(error);
     }
-    return null;
   }
 }

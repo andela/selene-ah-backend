@@ -1,4 +1,4 @@
-import checkUUID from '../../helpers/validationHelper';
+import Validation from '../../helpers/validation/validations';
 /**
  * @description this class handles user UUID validation
  */
@@ -14,7 +14,7 @@ class UuidValidator {
       req.body.followerId || req.body.categoryId ||
        req.params.articleId || req.params.commentId ||
       req.body.followerId || req.body.categoryId || req.params.articleId;
-    const isValidateUUID = checkUUID.isUUIDValid(userUUID);
+    const isValidateUUID = Validation.isUUIDValid(userUUID);
     if (!isValidateUUID) {
       return res.status(400).json({
         success: false,

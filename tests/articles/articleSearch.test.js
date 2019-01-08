@@ -3,11 +3,15 @@ import sinon from 'sinon';
 import server from '../../server/index';
 import articleFactory from '../mocks/factories/articlesFactory';
 import userFactory from '../mocks/factories/userFactory';
-import getRandomCategory from '../../server/helpers/checkCategory';
-import { INVALID_STRING_MSG, ARTICLE_NOT_FOUND, ARTICLE_SUCESSFUL_MSG } from
+import getRandomCategory from '../../server/helpers/category/checkCategory';
+import { INVALID_STRING_MSG } from
   '../../server/helpers/responseMessages';
+import {
+  ARTICLE_NOT_FOUND,
+  ARTICLE_SUCESSFUL_MSG
+} from '../../server/helpers/article/responseMessage';
 import articleSearchController from
-  '../../server/controllers/articleSearchController';
+  '../../server/controllers/article/articleSearchController';
 import models from '../../server/models';
 
 const { Article } = models;
@@ -35,6 +39,7 @@ describe('## Filtering Article Endpoint', () => {
     const article = articleFactory.build({
       categoryId: await getRandomCategory(),
       userId,
+      tags: ['daniel', 'andela'],
       title: 'Daniel is a good boy',
       body: 'Lorem ipsum lorem ipsum'
     });
@@ -57,6 +62,13 @@ describe('## Filtering Article Endpoint', () => {
       .get(`${ARTICLE_SEARCH_URL}?author=gh`);
     expect(res).to.have.status(400);
     expect(res.body.message).to.be.equal(`Author: ${INVALID_STRING_MSG}`);
+  });
+
+  it('should return error when an invalid tag is supplied', async () => {
+    const res = await chai.request(server)
+      .get(`${ARTICLE_SEARCH_URL}?tag=12f`);
+    expect(res).to.have.status(400);
+    expect(res.body.message).to.be.equal(`Tag: ${INVALID_STRING_MSG}`);
   });
 
   it('should return error when an invalid category is supplied', async () => {
@@ -99,7 +111,6 @@ describe('## Filtering Article Endpoint', () => {
   it('should return status 500 for server error', async ()=> {
     const req = {
       query: {
-        author: 'dabnn',
         limit: 1,
         page: 3,
         keyword: 'jjj',

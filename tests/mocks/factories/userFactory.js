@@ -1,14 +1,17 @@
 import { Factory } from 'rosie';
 import faker from 'faker';
+import { Chance } from 'chance';
 import { REGULAR } from '../../../server/helpers/constants';
+
+const chance = new Chance();
 
 const UserFactory = new Factory()
 .attrs({
   id: faker.random.uuid,
   email: faker.internet.email,
   password: faker.internet.password,
-  firstName: faker.name.firstName,
-  lastName: faker.name.firstName,
+  firstName: chance.first(),
+  lastName: chance.last(),
   userName: faker.internet.userName,
   verified: faker.random.boolean,
   blocked: faker.random.boolean,
