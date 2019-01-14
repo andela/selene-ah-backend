@@ -39,7 +39,7 @@ describe('API endpoint for POST auth/signup - Password Validations', () => {
     expect(res).to.have.status(400);
     expect(res.body).to.be.an('Object');
     expect(res.body.message).to.be.equals(
-      'Password must contain only alphabets, numbers and symbols');
+      'Password must contain at least a number');
   });
 
   it('should fail for invalid password', async () => {
@@ -52,7 +52,7 @@ describe('API endpoint for POST auth/signup - Password Validations', () => {
     expect(res).to.have.status(400);
     expect(res.body).to.be.an('Object');
     expect(res.body.message).to.be.equals(
-      'Password must contain only alphabets, numbers and symbols');
+      'Password must contain at least a number');
   });
 
   it('should fail if password length is less than 8', async () => {

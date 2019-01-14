@@ -50,6 +50,19 @@ describe('API endpoint for POST auth/signup - Email Validations', () => {
     expect(res.body.message).to.be.equals('Email field cannot be empty');
   });
 
+  it('should register a user with a valid email', async () => {
+    const user = signupFactory.build({
+      email: 'danielshotonwa@yahoo.co',
+      password: 'opeyemi11'
+    });
+    const res = await chai.request(server)
+      .post('/api/v1/auth/signup')
+      .send(user);
+    expect(res).to.have.status(200);
+    expect(res.body).to.be.an('Object');
+    expect(res.body.message).to.be.equals('User created successfully');
+  });
+
   it('should fail if user supply invalid email', async () => {
     const user = signupFactory.build({
       email: 'danieiopeyey@djjdd'
@@ -65,7 +78,8 @@ describe('API endpoint for POST auth/signup - Email Validations', () => {
 
   it('should fail if a duplicate email is found', async () => {
     const user = signupFactory.build({
-      email: 'opeyemidaniel@gmail.com'
+      email: 'opeyemidaniel@gmail.com',
+      password: 'daniel1234'
     });
     const res = await chai.request(server)
       .post('/api/v1/auth/signup')

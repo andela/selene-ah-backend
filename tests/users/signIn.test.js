@@ -81,21 +81,6 @@ describe('API endpoint for POST auth/signin - Email Validations', () => {
     expect(res.body.message).to.be.equals('Password field cannot be empty');
   });
 
-  it('should fail if a password is not valid', async () => {
-    const user = loginFactory.build({
-      password: 'gyhhjjkjj',
-      email: 'opeyemi@yahoo.com',
-      role: REGULAR
-    });
-    const res = await chai.request(server)
-    .post('/api/v1/auth/signin')
-    .send(user);
-    expect(res).to.have.status(400);
-    expect(res.body).to.be.an('Object');
-    expect(res.body.message).to.be.equals(
-      'Password must contain only alphabets, numbers and symbols');
-  });
-
   it('should fail if a email is not in the database', async () => {
     const user = loginFactory.build({
       password: 'fdghjku',

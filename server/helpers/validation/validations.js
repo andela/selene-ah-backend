@@ -9,7 +9,7 @@ class Validation {
  * @returns {Boolean} Boolean
  */
   static isEmailValid(email) {
-    const emailRegex = /^([a-z_.!@#$%^&*0-9]{3,25})@([a-z]{3,20})\.([a-z]){3,7}(\.[a-z]{2,5})?$/i;
+    const emailRegex = /^([a-z_.!@#$%^&*0-9]{3,25})@([a-z]{3,20})\.([a-z]){2,7}(\.[a-z]{2,5})?$/i;
     return emailRegex.test(email);
   }
 
@@ -19,7 +19,7 @@ class Validation {
  * @returns {Boolean} returns true or false
  */
   static isPasswordValid(password) {
-    const passwordRegex = /^(?=.*[0-9])(?=.*[!@#$%^.&_*])([a-zA-Z0-9!@#$.%^&*]{8,20})$/;
+    const passwordRegex = /^(?=.*[0-9])([a-zA-Z0-9!@#$.%^&*~`?><,.';"|}{}+-=)()|]{8,20})$/;
     return passwordRegex.test(password);
   }
 
