@@ -64,9 +64,9 @@ class RatingValidator {
     const { articleRating } = req.body;
     if(
       !articleRating ||
-      typeof articleRating !== 'number' ||
-      articleRating <= 0 ||
-      articleRating > 5
+      isNaN(articleRating) ||
+      parseInt(articleRating, 10) <= 0 ||
+      parseInt(articleRating, 10) > 5
       ){
       return generalHelpers.responseMessageHandler(
         res, INVALID_RATING_ERROR, 400, false
