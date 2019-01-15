@@ -13,6 +13,7 @@ import commentController
 from '../../server/controllers/comment/commentController';
 import checkValidCommentId
 from '../../server/helpers/comment/checkValidCommentId';
+import validateComments from '../../server/middlewares/validations/commentValidation';
 
 chai.should();
 
@@ -240,7 +241,20 @@ describe('Test for comments crud operations', async () => {
       expect(res.body.message).to.be
         .equals('Comment ID Not Found');
     });
+    it('should throw 500 error if there is server error', async () => {
+    const fakeCommentId = '1ac3dc07-f69c-4f93-aaf3-4449e6c6c4cc';
+      const req={
+        params: {
+          commentId: fakeCommentId
+        }
+      };
+      const res = {};
+      const next = sinon.stub();
+      sinon.stub(Comment, 'findOne').throws();
+      await validateComments.validateCommentId(req, res, next);
+      expect(next.called).to.be.true;
   });
+});
   describe('Delete Comment Route Test', async () => {
 
     it('should return 403 if non-owner tries to delete comment', async () => {

@@ -10,13 +10,13 @@ import
 const router = Router();
 
 router.post('/auth/signup',
-  [email.isEmailValid, email.doesEmailExist, password.isPasswordValid,
-    name.isNameSupplied, name.isNameValid, name.isUsernameValid,
-    name.doesUsernameExist], authController.signupUser);
+  [email.isEmailValid, email.doesEmailExist, password.isPasswordFieldEmpty,
+    password.isPasswordValid, name.isNameSupplied, name.isNameValid,
+      name.isUsernameValid, name.doesUsernameExist], authController.signupUser);
 
 router.post('/auth/signin',
   [email.isEmailValid, email.doesLoginEmailExist,
-    password.isPasswordValid], authController.loginUser);
+    password.isPasswordFieldEmpty], authController.loginUser);
 
 router.get('/auth/verifyemail', authController.verifyEmail);
 
