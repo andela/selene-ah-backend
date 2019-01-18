@@ -15,6 +15,7 @@ import bookmark from './bookmarkRoute';
 import rating from './ratingRoute';
 import articleTag from './articleTagRoute';
 import categories from './categoryRoutes';
+import userProfile from './userProfileRoute';
 
 const v1Router = Router();
 
@@ -33,6 +34,7 @@ v1Router.use('/api/v1', articleTag);
 v1Router.use('/api/v1', voteRouter);
 v1Router.use('/api/v1', comment);
 v1Router.use('/api/v1', categories);
+v1Router.use('/api/v1', userProfile);
 
 
 export default v1Router;

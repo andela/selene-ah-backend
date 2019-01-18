@@ -13,7 +13,8 @@ class UuidValidator {
     const userUUID = req.params.id || req.body.userId ||
       req.body.followerId || req.body.categoryId ||
        req.params.articleId || req.params.commentId ||
-      req.body.followerId || req.body.categoryId || req.params.articleId;
+      req.body.followerId || req.body.categoryId || req.params.articleId
+      || req.params.userId;
     const isValidateUUID = Validation.isUUIDValid(userUUID);
     if (!isValidateUUID) {
       return res.status(400).json({
