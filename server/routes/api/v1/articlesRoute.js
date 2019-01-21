@@ -36,6 +36,14 @@ router.get('/article/:id',
   );
 
 /**
+* @description - Route gets  a particular article by a slug
+* @returns - It returns just one article object
+*/
+router.get('/article/s/:slug',
+  articleController.getArticleBySlug
+  );
+
+/**
  * @description - Route gets all articles
  * @returns - It returns an object of articles
  */

@@ -56,7 +56,9 @@ class ArticleHelper {
  * @returns {string} random string
  */
   static generateUniqueSlug(title) {
-    return `${slug(title)}-${Math.random().toString(36).substr(2, 10)}`;
+    const options = { lower: true };
+    // eslint-disable-next-line max-len
+    return `${slug(title, options)}-${Math.random().toString(36).substr(2, 10)}`;
   }
 }
 

@@ -128,6 +128,68 @@ class ArticlesController {
     }
   }
 
+    /**
+   * @param {object} req - Request sent to the route
+   * @param {object} res - Response sent from the controller
+   *  @param {object} next - Error handler
+   * @returns {object} - object representing response message
+   */
+  static async getArticleBySlug(req, res, next) {
+    const { slug } = req.params;
+    try {
+      let article = await Article.findOne({
+        where: { slug },
+        include: [{
+          model: User,
+          as: 'author',
+          attributes: ['userName', 'imageUrl', 'bio', 'dateOfBirth']
+        }, {
+          model: HighlightedComment,
+          as: 'highlights',
+          attributes: ['content'],
+          include: [{
+            model: User,
+            as: 'userhighlights',
+            attributes: ['userName', 'imageUrl']
+          }]
+        },
+        {
+          model: Tag,
+          as: 'tags',
+          through: { attributes: [] }
+        }],
+      });
+
+      if (!article) {
+        return res.status(404).json({
+          success: 'false',
+          message: 'Article not found',
+        });
+      }
+      article = article.toJSON();
+      article.tags = article.tags.map(tagname => tagname.tag);
+
+      const voteCount = await Vote.votesCount(req, res, next);
+      await Article.increment('readingStat', { where: { id: article.id } });
+      const averageRating = RatingController.getAverageArticleRating(
+        article.id
+      );
+
+      article.averageRating = averageRating;
+      return res.status(200).json({
+        success: 'true',
+        message: 'Retrieved article successfully',
+        article,
+        vote: {
+          voteCount
+        }
+      });
+
+    } catch (error) {
+      return next(error);
+    }
+  }
+
   /**
  * @param {object} req - Request sent to the route
  * @param {object} res - Response sent from the controller

@@ -24,6 +24,7 @@ let catId;
 let token;
 let articleId;
 let tagId;
+let slug;
 const fakeId = '14dd13b2-981c-490d-879c-71edaf5d674d';
 
 
@@ -58,6 +59,7 @@ describe('API endpoint for create articles', () => {
       .send(articlesData);
     expect(res).to.have.status(201);
     articleId = res.body.article.id;
+    slug = res.body.article.slug;
     expect(res.body).to.be.an('Object');
     expect(res.body.message).to.be.equals('Article created successfully');
   });
@@ -141,6 +143,19 @@ describe('API endpoint for create articles', () => {
       .send(articlesData);
     expect(res).to.have.status(400);
     expect(res.body.message).to.be.equals('categoryId is required');
+  });
+
+  it('Should return article', async () => {
+    const res = await chai.request(server)
+      .get(`/api/v1/article/s/${slug}`);
+    expect(res.body.message).to.be.equals('Retrieved article successfully');
+  });
+
+  it('Should return 404 for invalid article slug', async () => {
+    const res = await chai.request(server)
+      .get('/api/v1/article/s/fakeSlug');
+    expect(res).to.have.status(404);
+    expect(res.body.message).to.be.equals('Article not found');
   });
 
   it('Should return 400 error for category does not exist', async () => {
@@ -298,6 +313,22 @@ describe('API endpoint for create articles', () => {
 
     await articlesController.getOneArticle(req, res, next);
 
+    expect(next.called).to.be.true;
+  });
+
+  it('should fake error for getOneArticle', async () => {
+    const req = {
+      params: {
+        id: 1
+      }
+    };
+
+    const res = {};
+    const next = sinon.stub();
+
+    sinon.stub(Article, 'findOne').throws();
+
+    await articlesController.getArticleBySlug(req, res, next);
     expect(next.called).to.be.true;
   });
 
