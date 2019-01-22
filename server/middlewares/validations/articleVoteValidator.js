@@ -36,7 +36,7 @@ class ArticleVoteValidator {
    * @returns {boolean} True or False
    */
   static isAValidParam(vote) {
-    return REQUIRED_PARAMS.includes(vote);
+    return REQUIRED_PARAMS.includes(Number(vote));
   }
 }
 

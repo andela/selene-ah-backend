@@ -229,8 +229,9 @@ describe('#VoteController test', () => {
     it('should call findAndCountAll function', async () => {
       const findAndCountAllStub = sinon.stub(ArticleVote, 'findAndCountAll')
                                         .returns({});
-      await Vote.votesCount(req, res, next);
-      findAndCountAllStub.should.have.been.calledTwice;
+      const id= 'myfakeId';
+      await Vote.votesCount(req, res, next, id);
+      findAndCountAllStub.should.have.been.calledOnce;
     });
 
     it('should set votesCount to zero', async () => {

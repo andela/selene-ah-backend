@@ -6,7 +6,7 @@ import RatingController from '../rating/ratingController';
 import findOrCreatTag from '../../helpers/tag/findOrCreateTag';
 import Notifications from '../notification/NotificationController';
 
-const { Article, Category, User, Tag, HighlightedComment } = db;
+const { Article, Category, User, Tag, HighlightedComment, ArticleVote } = db;
 /**
 * @description class will implement CRUD functionalities for articles
 *
@@ -95,6 +95,10 @@ class ArticlesController {
           model: Tag,
           as: 'tags',
           through: { attributes: [] }
+        },{
+          model: ArticleVote,
+          as: 'likedUsers',
+          attributes: ['articleId', 'userId', 'vote'],
         }],
       });
 
@@ -107,7 +111,7 @@ class ArticlesController {
       article = article.toJSON();
       article.tags = article.tags.map(tagname => tagname.tag);
 
-      const voteCount = await Vote.votesCount(req, res, next);
+      const voteCount = await Vote.votesCount(req, res, next, article.id);
       await Article.increment('readingStat', { where: { id: article.id } });
       const averageRating = RatingController.getAverageArticleRating(
         article.id
@@ -157,6 +161,10 @@ class ArticlesController {
           model: Tag,
           as: 'tags',
           through: { attributes: [] }
+        },{
+          model: ArticleVote,
+          as: 'likedUsers',
+          attributes: ['articleId', 'userId', 'vote'],
         }],
       });
 
@@ -169,7 +177,7 @@ class ArticlesController {
       article = article.toJSON();
       article.tags = article.tags.map(tagname => tagname.tag);
 
-      const voteCount = await Vote.votesCount(req, res, next);
+      const voteCount = await Vote.votesCount(req, res, next, article.id);
       await Article.increment('readingStat', { where: { id: article.id } });
       const averageRating = RatingController.getAverageArticleRating(
         article.id

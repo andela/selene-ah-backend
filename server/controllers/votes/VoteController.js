@@ -25,20 +25,19 @@ class Vote {
       const { articleId } = req.params;
       const userId = req.user.id;
       const { vote } = req.body;
-
       const dbResult = await ArticleVote.findOrCreate(
         { where: { userId, articleId },
           defaults: { vote } }
       );
       if(!dbResult[1]) {
-        await Vote.updateArticleVote(1, userId, articleId);
+        await Vote.updateArticleVote(vote, userId, articleId);
         return res.status(200).json({
-          message: vote === 1 ? ARTICLE_LIKE_MSG
+          message: Number(vote) === 1 ? ARTICLE_LIKE_MSG
                               : ARTICLE_DISLIKE_MSG
         });
       }
       return res.status(201).json({
-        message: vote === 1 ? ARTICLE_LIKE_MSG
+        message: Number(vote) === 1 ? ARTICLE_LIKE_MSG
                             : ARTICLE_DISLIKE_MSG
       });
     } catch (error) {
@@ -94,24 +93,18 @@ class Vote {
    * @param {object} req
    * @param {object} res
    * @param {function} next
+   * @param {string} id
    * @returns {object} Like and Dislike count
    */
-  static async votesCount(req, res, next) {
+  static async votesCount(req, res, next, id) {
     try {
-      const { articleId } = req.params;
       const likeResult = await ArticleVote.findAndCountAll({
-        where: { articleId, vote: 1 },
+        where: { articleId:id, vote: 1},
         raw: true
       });
 
-      const dislikeResult = await ArticleVote.findAndCountAll({
-        where: { articleId, vote: -1 },
-        raw: true
-      });
-
-      const likeCount = likeResult.count ? likeResult.count : 0;
-      const dislikeCount = dislikeResult.count ? dislikeResult.count : 0;
-      const  voteCount = { likeCount, dislikeCount };
+      const likeCount = likeResult.count;
+      const  voteCount = { likeCount };
       return voteCount;
 
     } catch (error) {
