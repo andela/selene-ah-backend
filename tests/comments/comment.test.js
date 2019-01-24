@@ -154,7 +154,7 @@ describe('Test for comments crud operations', async () => {
     it('should return 404 if article has no comment', async () => {
       const res = await chai.request(app)
       .get(`/api/v1/article/${articleId2}/comments`);
-      expect(res).to.have.status(404);
+      expect(res).to.have.status(200);
       expect(res.body.success).to.equal(false);
       expect(res.body.message).to.be.equals('No Comment for this Article');
     });

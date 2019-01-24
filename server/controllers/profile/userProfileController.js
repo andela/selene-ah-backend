@@ -86,17 +86,10 @@ class UserProfileController {
    * @param {object} next - Error handler
    */
   static async updateUserProfile(req, res, next) {
-    const { userId } = req.params;
     try {
       const { id } = req.user;
-      if(userId !==  id){
-        return res.status(403).json({
-          success: 'false',
-          message: 'You are not permitted to edit this user profile',
-        });
-      }
       const getUser = await User.findOne({
-        where: { id: userId }
+        where: { id }
       });
 
       await User.update(
@@ -111,7 +104,7 @@ class UserProfileController {
           dateOfBirthday: req.body.dob || getUser.dateOfBirthday,
         },
         {
-          where: { id: getUser.userId }
+          where: { id: getUser.id }
         }
       );
 

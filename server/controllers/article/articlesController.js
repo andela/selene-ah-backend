@@ -259,11 +259,11 @@ class ArticlesController {
  * @returns {object} - object representing response message
  */
   static async getAuthorsArticles(req, res, next) {
-    const { authorsId } = req.params;
+    const { id } = req.user;
     try {
       let articles = await Article.findAll(
         {
-          where: { userId: authorsId },
+          where: { userId: id },
           include: [{
             model: User,
             as: 'author',

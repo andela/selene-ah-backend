@@ -41,7 +41,7 @@ describe('API endpoint for user pofile', () => {
       userId: userId,
     });
     await chai.request(url)
-      .put(`/api/v1/user/profile/${userId}`)
+      .put('/api/v1/user/profile/')
       .set('Authorization', `Bearer ${token}`)
       .send(userData)
       .then((res) => {
@@ -49,25 +49,11 @@ describe('API endpoint for user pofile', () => {
       });
   });
 
-  it('should return user not found', async () => {
-    const userData = userProfileFactory.build({
-      userId: fakeId,
-      bio: 'lorem ipsum'
-    });
-    await chai.request(url)
-      .put(`/api/v1/user/profile/${userData.fakeId}`)
-      .set('Authorization', `Bearer ${token}`)
-      .send(userData)
-      .then((res) => {
-        expect(res).to.have.status(403);
-        expect(res.body.message).to.be
-            .equals('You are not permitted to edit this user profile');
-      });
-  });
+
 
   it('should get a login user profile', async () => {
     await chai.request(url)
-      .get('/api/v1/user/profile/auth/')
+      .get('/api/v1/user/profile/auth')
       .set('Authorization', `Bearer ${token}`)
       .send()
       .then((res) => {

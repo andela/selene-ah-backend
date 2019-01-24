@@ -59,12 +59,15 @@ export default class CommentController {
             attributes: ['id', 'reaction']
           }
         ],
+        order: [
+          ['createdAt', 'DESC'],
+      ],
         attributes: { exclude: ['userId'] },
         where: { articleId }
         });
 
       if (comments.count == 0) {
-        return res.status(404).json({
+        return res.status(200).json({
           success: false,
           message: 'No Comment for this Article',
         });

@@ -11,7 +11,7 @@ router.get('/user/profile/auth',
   userProfileController.getLoginUser);
 router.get('/user/profile/:id', uuidValidator.validateUUID,
   userProfileController.getAnyUserProfile);
-router.put('/user/profile/:userId', uuidValidator.validateUUID,
+router.put('/user/profile',
   JWTAuthentication.authenticateUser,
   userProfileController.updateUserProfile);
 export default router;
