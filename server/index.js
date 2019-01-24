@@ -21,6 +21,15 @@ app.use(methodOverride());
 
 app.use(express.static('public'));
 
+app.use(
+  session({
+    secret: 'authorshaven',
+    cookie: { maxAge: 60000 },
+    resave: false,
+    saveUninitialized: false
+  })
+);
+
 passport(app);
 app.use(v1Routes);
 
@@ -31,14 +40,6 @@ app.use((req, res, next) => {
   next(err);
 });
 
-app.use(
-  session({
-    secret: 'authorshaven',
-    cookie: { maxAge: 60000 },
-    resave: false,
-    saveUninitialized: false
-  })
-);
 
 /* eslint-disable-next-line */
 app.use((err, req, res, next) => {
