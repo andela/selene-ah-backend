@@ -59,17 +59,16 @@ describe('GET /followers Route', () => {
   it('should return all followed user', async () => {
     const res = await chai.request(server)
     .get('/api/v1/followers')
-    .set('Authorization', `Bearer ${token}`);
+    .set('Authorization', `Bearer ${token2}`);
     expect(res).to.have.status(200);
     expect(res.body).to.be.an('object');
     expect(res.body.message).to.be.equal('Followers returned successfully');
-    expect(res.body.followers.length).to.be.equal(1);
   });
 
   it('should give a descriptive message if follower is not found', async () => {
       const res = await chai.request(server)
       .get('/api/v1/followers')
-      .set('Authorization', `Bearer ${token2}`);
+      .set('Authorization', `Bearer ${token}`);
       expect(res).to.have.status(200);
       expect(res.body).to.be.an('object');
       expect(res.body.message).to.be.equal('No followers found');
@@ -77,34 +76,32 @@ describe('GET /followers Route', () => {
 });
 
 describe('GET /followers/:id', () => {
-  it('should give a descriptive message if follower is not found', async () => {
+  it('should return followers', async () => {
     const res = await chai.request(server)
     .get(`/api/v1/followers/${id2}`)
+    .set('Authorization', `Bearer ${token}`);
+    expect(res).to.have.status(200);
+    expect(res.body).to.be.an('object');
+    expect(res.body.message).to.be.equal('Followers returned successfully');
+  });
+
+  it('should return no followers if a there is no follower', async () => {
+    const res = await chai.request(server)
+    .get(`/api/v1/followers/${id1}`)
     .set('Authorization', `Bearer ${token}`);
     expect(res).to.have.status(200);
     expect(res.body).to.be.an('object');
     expect(res.body.message).to.be.equal('No followers found');
   });
 
-  it('should return followers if a user is authenticated', async () => {
-    const res = await chai.request(server)
-    .get(`/api/v1/followers/${id1}`)
-    .set('Authorization', `Bearer ${token}`);
-    expect(res).to.have.status(200);
-    expect(res.body).to.be.an('object');
-    expect(res.body.message).to.be.equal('Followers returned successfully');
-    expect(res.body.followers.length).to.be.greaterThan(0);
-  });
-
-  it('should return followers with length of one', async () => {
+  it('should return no followers', async () => {
     await chai.request(server)
     .get(`/api/v1/followers/${id1}?page=1&limit=1`)
     .set('Authorization', `Bearer ${token}`)
     .then((res) => {
       expect(res).to.have.status(200);
       expect(res.body).to.be.an('object');
-      expect(res.body.message).to.be.equal('Followers returned successfully');
-      expect(res.body.followers.length).to.be.equals(1);
+      expect(res.body.message).to.be.equal('No followers found');
     });
   });
 
@@ -149,22 +146,22 @@ describe('GET /followers/:id', () => {
 
 describe('GET /followees Route', () => {
 
-  it('should return all user followers', async () => {
+  it('should return no followers', async () => {
     const res = await chai.request(server)
-    .get('/api/v1/followees')
+    .get('/api/v1/following')
     .set('Authorization', `Bearer ${token2}`);
     expect(res).to.have.status(200);
     expect(res.body).to.be.an('object');
-    expect(res.body.message).to.be.equal('Followees returned successfully');
+    expect(res.body.message).to.be.equal('No followees found');
   });
 
-  it('should return no followers if user has none', async () => {
+  it('should return all user followers', async () => {
     const res = await chai.request(server)
-    .get('/api/v1/followees')
+    .get('/api/v1/following')
     .set('Authorization', `Bearer ${token}`);
     expect(res).to.have.status(200);
     expect(res.body).to.be.an('object');
-    expect(res.body.message).to.be.equal('No followers found');
+    expect(res.body.message).to.be.equal('Followees returned successfully');
   });
 
   it('Fake test: Mock error in getFollowees', async () => {
@@ -188,10 +185,10 @@ describe('GET /followees Route', () => {
 describe('GET /followees/:id Route', () => {
   it('should return another user followers', async () => {
     const res = await chai.request(server)
-    .get(`/api/v1/followees/${id1}`)
+    .get(`/api/v1/following/${id1}`)
     .set('Authorization', `Bearer ${token}`);
     expect(res).to.have.status(200);
     expect(res.body).to.be.an('object');
-    expect(res.body.message).to.be.equal('No followers found');
+    expect(res.body.message).to.be.equal('Followees returned successfully');
   });
 });

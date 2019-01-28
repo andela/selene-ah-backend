@@ -8,6 +8,10 @@ import paginationValidation from '../../../middlewares/validations/paginationVal
 
 const router = Router();
 
+/**
+ * @description - Route is used to follow a user
+ * @returns - It returns a response
+ */
 router.post('/follow',
   [JWTAuthentication.authenticateUser,
     UserAuthentication.isFollowerIdSupplied,
@@ -17,6 +21,10 @@ router.post('/follow',
       UserAuthentication.checkIfUserIsFollowed],
         followersController.followAuthor);
 
+        /**
+ * @description - Route is used to unfollow a user based on its id
+ * @returns - It returns a response
+ */
 router.delete('/unfollow/:id',
   [JWTAuthentication.authenticateUser,
     uuidValidator.validateUUID,
@@ -24,23 +32,39 @@ router.delete('/unfollow/:id',
       UserAuthentication.checkIfUserNotFollowed],
         followersController.unfollowUser);
 
+/**
+ * @description - Route is used to get the followers of a user
+ * @returns - It returns a response
+ */
 router.get('/followers',
   [JWTAuthentication.authenticateUser,
     paginationValidation.validateQueryParameter],
       followersController.getAllFollowers);
 
-router.get('/followees',
+/**
+ * @description - user following
+ * @returns - It returns a response
+ */
+router.get('/following',
   [JWTAuthentication.authenticateUser,
     paginationValidation.validateQueryParameter],
       followersController.getAllFollowees);
 
+/**
+ * @description - get user followers by id
+ * @returns - It returns a response
+ */
 router.get('/followers/:id',
   [JWTAuthentication.authenticateUser,
     uuidValidator.validateUUID,
       paginationValidation.validateQueryParameter],
         followersController.getUserFollowers);
 
-router.get('/followees/:id',
+/**
+ * @description - user following by id
+ * @returns - It returns a response
+ */
+router.get('/following/:id',
   [JWTAuthentication.authenticateUser,
     uuidValidator.validateUUID,
       paginationValidation.validateQueryParameter],

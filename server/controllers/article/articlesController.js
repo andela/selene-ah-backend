@@ -6,7 +6,12 @@ import RatingController from '../rating/ratingController';
 import findOrCreatTag from '../../helpers/tag/findOrCreateTag';
 import Notifications from '../notification/NotificationController';
 
-const { Article, Category, User, Tag, HighlightedComment, ArticleVote } = db;
+const { Article,
+  Category,
+  User,
+  Tag,
+  HighlightedComment,
+  ArticleVote, } = db;
 /**
 * @description class will implement CRUD functionalities for articles
 *
@@ -80,7 +85,7 @@ class ArticlesController {
         include: [{
           model: User,
           as: 'author',
-          attributes: ['userName', 'imageUrl', 'bio', 'dateOfBirth']
+          attributes: ['userName', 'imageUrl', 'bio', 'dateOfBirth'],
         }, {
           model: HighlightedComment,
           as: 'highlights',
@@ -88,7 +93,7 @@ class ArticlesController {
           include: [{
             model: User,
             as: 'userhighlights',
-            attributes: ['userName', 'imageUrl']
+            attributes: ['userName', 'imageUrl'],
           }]
         },
         {

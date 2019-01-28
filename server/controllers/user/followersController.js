@@ -2,7 +2,7 @@ import models from '../../models';
 import pagination from '../../helpers/pagination/pagination';
 import Notification from '../notification/NotificationController';
 
-const { Follower } = models;
+const { Follower, User } = models;
 /**
  * @description - Followers Controller
  */
@@ -58,37 +58,7 @@ class FollowerController {
   }
 
   /**
-   * @description - This function get all user followers using the id supplied
-   * @param {object} req - request to be sent
-   * @param {object} res - response gotten from server
-   * @param {object} next - callback function
-   * @param {string} id - ID
-   * @returns {object} - get user
-   */
-  static async getFollowers(req, res, next, id) {
-    const { limit, offset }= pagination.paginationHelper(req.query);
-    try {
-      const userId = id;
-      const followers = await Follower.findAll({
-        where: {userId},
-        limit,
-        offset
-      });
-      return followers.length >= 1 ? res.status(200).json({
-        success: true,
-        message: 'Followers returned successfully',
-        followers
-      }):res.status(200).json({
-        success: true,
-        message: 'No followers found'
-      });
-    } catch(err) {
-      return next(err);
-    }
-  }
-
-   /**
-   * @description - This function get user followees using the id supplied
+   * @description - This function get all user followeess using the id supplied
    * @param {object} req - request to be sent
    * @param {object} res - response gotten from server
    * @param {object} next - callback function
@@ -98,15 +68,55 @@ class FollowerController {
   static async getFollowees(req, res, next, id) {
     const { limit, offset }= pagination.paginationHelper(req.query);
     try {
+      const userId = id;
       const followees = await Follower.findAll({
-        where: {followerId: id},
+        where: {userId},
         limit,
-        offset
+        offset,
+        include: [{
+          model: User,
+          attributes: ['id', 'userName', 'email',
+            'imageUrl', 'createdAt', 'updatedAt', 'bio'],
+        }],
       });
       return followees.length >= 1 ? res.status(200).json({
         success: true,
         message: 'Followees returned successfully',
         followees
+      }):res.status(200).json({
+        success: true,
+        message: 'No followees found'
+      });
+    } catch(err) {
+      return next(err);
+    }
+  }
+
+   /**
+   * @description - This function get user followers using the id supplied
+   * @param {object} req - request to be sent
+   * @param {object} res - response gotten from server
+   * @param {object} next - callback function
+   * @param {string} id - ID
+   * @returns {object} - get user
+   */
+  static async getFollowers(req, res, next, id) {
+    const { limit, offset }= pagination.paginationHelper(req.query);
+    try {
+      const followers = await Follower.findAll({
+        where: {followerId: id},
+        limit,
+        offset,
+        include: [{
+          model: User,
+          attributes: ['id', 'userName', 'email',
+          'imageUrl', 'createdAt', 'updatedAt', 'bio'],
+        }],
+      });
+      return followers.length >= 1 ? res.status(200).json({
+        success: true,
+        message: 'Followers returned successfully',
+        followers
       }):res.status(200).json({
         success: true,
         message: 'No followers found'
