@@ -97,7 +97,7 @@ class RatingController{
    */
   static async getArticleRatingForUser(req, res, next) {
     try {
-      const {articleId} = req.params.articleId;
+      const {articleId} = req.params;
       const userId = req.user.id;
       const userRating = await Rating.findOne({
         where: { articleId, userId}
@@ -123,13 +123,9 @@ class RatingController{
       where: { articleId },
       raw: true
     });
-
-    const totalRatings = articleRatings.map((rating) => rating.articleRating)
-          .reduce((total, rating) => {
-            total + rating;
-          }, 0);
-
-    return totalRatings / articleRatings.length;
+    const totalRatings = articleRatings
+    .reduce((total, current) => total + current.articleRating, 0);
+    return totalRatings/articleRatings.length;
   }
 }
 
