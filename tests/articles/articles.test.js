@@ -183,7 +183,7 @@ describe('API endpoint for create articles', () => {
 
   it('Should return 200 for get an author articles', async () => {
     const res = await chai.request(server)
-      .get(`/api/v1/article/author/${userId}`)
+      .get('/api/v1/article/author')
       .set('Authorization', `Bearer ${token}`)
       .send();
     expect(res).to.have.status(200);
@@ -351,7 +351,7 @@ describe('API endpoint for create articles', () => {
 
   it('should fake error for get author article', async () => {
     const req = {
-      params: {
+      user: {
         id: 1
       }
     };
@@ -359,7 +359,7 @@ describe('API endpoint for create articles', () => {
     const res = {};
     const next = sinon.stub();
 
-    sinon.stub(Article, 'findOne').throws();
+    sinon.stub(Article, 'findAll').throws();
 
     await articlesController.getAuthorsArticles(req, res, next);
 

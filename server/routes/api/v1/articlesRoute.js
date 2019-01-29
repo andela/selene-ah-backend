@@ -15,6 +15,18 @@ import article from '../../../middlewares/validations/checkIfArticleIsOwnedByUse
 
 const router = Router();
 
+
+
+/**
+* @description - Route to get all articles by an author
+* @returns - It returns a response
+*/
+router.get('/article/author/',
+  JWTAuthentication.authenticateUser,
+  articleController.getAuthorsArticles
+  );
+
+
 /**
  * @description - Route is use to create an article
  * @returns - It returns an article object
@@ -74,13 +86,6 @@ router.delete('/article/:id',
   articleController.deleteArticle
   );
 
-/**
-* @description - Route to get all articles by an author
-* @returns - It returns a response
-*/
-router.get('/article/author/:authorsId',
-  articleController.getAuthorsArticles
-  );
 
 /**
 * @description - Route to search for article using query

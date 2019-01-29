@@ -1,0 +1,137 @@
+paths:
+  /user/profile/:           
+    post:
+      tags:
+        - Profile
+      summary: User profile
+      produces:
+      - application/json
+      security:
+        - Bearer: []
+      responses:
+        200:
+          description: Response for successful update
+          schema:
+            type: 'object'
+            properties:
+              status:
+                type: 'boolean'
+                example: 'true'
+              message:
+                type: string
+                example: Profile updated successfully
+        401:
+          description: response for unauthorized
+          schema:
+            type: 'object'
+            properties:
+              status:
+                type: 'boolean'
+                example: 'false'
+              message: 
+                type: string
+                example: 'Authentication failed: Please supply a valid token'
+
+  /user/profile/auth:           
+    get:
+      tags:
+        - Profile
+      summary: Get an authenticated user
+      produces:
+      - application/json
+      security:
+        - Bearer: []
+      parameters:
+      - in: path
+        name: userId
+        description: 'The id of the user to be liked by user'
+        required: true
+        schema:
+          type: string
+          format: uuid
+      responses:
+        200:
+          description: Response for successul profile
+          schema:
+            type: 'object'
+            properties:
+              status:
+                type: 'boolean'
+                example: 'true'
+              message:
+                type: string
+                example: User profile gotten successfully
+        401:
+          description: response for unauthorized
+          schema:
+            type: 'object'
+            properties:
+              status:
+                type: 'boolean'
+                example: 'false'
+              message: 
+                type: string
+                example: 'Authentication failed: Please supply a valid token'
+
+  /user/profile/{id}:           
+    get:
+      tags:
+        - Profile
+      summary: Get an anybody profile
+      produces:
+      - application/json
+      security:
+        - Bearer: []
+      parameters:
+      - in: path
+        name: userId
+        description: The id of the user to be gotten
+        required: true
+        schema:
+          type: string
+          format: uuid
+      responses:
+        200:
+          description: Response for delete successful
+          schema:
+            type: 'object'
+            properties:
+              status:
+                type: 'boolean'
+                example: 'true'
+              message:
+                type: string
+                example: User 
+        400:
+          description: response for bad request(syntax)
+          schema:
+            type: 'object'
+            properties:
+              status:
+                type: 'boolean'
+                example: 'false'
+              message: 
+                type: string
+                example: 'Invalid Reaction: supply a valid reaction'
+        401:
+          description: response for unauthorized
+          schema:
+            type: 'object'
+            properties:
+              status:
+                type: 'boolean'
+                example: 'false'
+              message: 
+                type: string
+                example: 'Authentication failed: Please supply a valid token'
+        404:
+          description: Response for profile reaction not found
+          schema:
+            type: 'object'
+            properties:
+              status:
+                type: boolean
+                example: false
+              message: 
+                type: string
+                example: User not found
