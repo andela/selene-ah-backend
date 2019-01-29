@@ -116,6 +116,15 @@ describe('Rating controller', () => {
       expect(response.body.message).to.equal(SUCCESSFUL_RATING);
     });
 
+    it('should update an article rating', async () => {
+      const response = await chai.request(app)
+      .post(`${ratingUrl}`)
+      .send({'articleRating': ratingObject.articleRating})
+      .set('Authorization', readerToken);
+      expect(response).to.have.status(200);
+      expect(response.body).to.be.an('object');
+      expect(response.body.message).to.equal(SUCCESSFUL_RATING_UPDATE);
+    });
 
     it('should not rate an article if the user is the author', async () => {
       const response = await chai.request(app)
