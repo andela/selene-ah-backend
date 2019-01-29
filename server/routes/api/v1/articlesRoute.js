@@ -60,9 +60,19 @@ router.get('/article/s/:slug',
  * @returns - It returns an object of articles
  */
 router.get('/articles',
-  paginationValidation.validateQueryParameter,
-  articleController.getAllArticles
+paginationValidation.validateQueryParameter,
+articleController.getAllArticles
   );
+
+  /**
+ * @description - Route gets all articles stat by user
+ * @returns - It returns an object of articles
+ */
+router.get('/articles/stat',
+JWTAuthentication.authenticateUser,
+articleController.getArticlesStatByUser
+);
+
 
 /**
 * @description - Route updates an article

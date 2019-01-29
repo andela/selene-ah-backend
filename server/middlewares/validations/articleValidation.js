@@ -47,6 +47,7 @@ class ArticleValidation {
    * @returns {function} next
    */
   static async articleExistInDatabase(req, res, next) {
+
     try {
       const { articleId } = req.params;
       const dbResult = await Article.findByPk(articleId);

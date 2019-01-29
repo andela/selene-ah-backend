@@ -111,7 +111,28 @@ class Vote {
       return next(error);
     }
   }
-
+/**
+   * @description Gets a user total like count
+   * @param {object} req
+   * @param {object} res
+   * @param {function} next
+   * @returns {object} total number of likes
+   */
+  static async userLikeCount(req, res, next) {
+    try {
+      const { id } = req.user;
+      const likeCountResult = await ArticleVote.findAndCountAll({
+        where: { userId: id, vote: 1 },
+        raw: true
+      });
+      return res.status(200).json({
+        message: 'success',
+        data: likeCountResult,
+      });
+    } catch (error) {
+      return next(error);
+    }
+  }
   /**
    * @description Was the article liked by the authenticated user
    * @param {object} req

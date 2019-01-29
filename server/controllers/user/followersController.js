@@ -103,7 +103,7 @@ class FollowerController {
   static async getFollowers(req, res, next, id) {
     const { limit, offset }= pagination.paginationHelper(req.query);
     try {
-      const followers = await Follower.findAll({
+      const followers = await Follower.findAndCountAll({
         where: {followerId: id},
         limit,
         offset,
@@ -113,13 +113,14 @@ class FollowerController {
           'imageUrl', 'createdAt', 'updatedAt', 'bio'],
         }],
       });
-      return followers.length >= 1 ? res.status(200).json({
+      return followers.count > 0 ? res.status(200).json({
         success: true,
         message: 'Followers returned successfully',
         followers
       }):res.status(200).json({
         success: true,
-        message: 'No followers found'
+        message: 'No followers found',
+        followers
       });
     } catch(err) {
       return next(err);

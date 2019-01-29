@@ -97,7 +97,7 @@ describe('Test for comments crud operations', async () => {
           .equal('No article found matching this criteria');
 
     });
-    it('should return status 400 if comment is empty', async () => {
+    it('should return status 400 if comment body is empty', async () => {
       const comment = {
         content: ''
       };
@@ -157,6 +157,14 @@ describe('Test for comments crud operations', async () => {
       expect(res).to.have.status(200);
       expect(res.body.success).to.equal(false);
       expect(res.body.message).to.be.equals('No Comment for this Article');
+    });
+    it('should return all the user comments stats', async () => {
+      const res = await chai.request(app)
+      .get('/api/v1/comments/user/count')
+      .set('Authorization', `Bearer ${user2Token}`);
+      expect(res).to.have.status(200);
+      expect(res.body.success).to.equal(true);
+      expect(res.body.data.count).to.be.equals(1);
     });
   });
 
@@ -403,12 +411,26 @@ describe('Test for comments crud operations', async () => {
       await checkValidCommentId(id);
       expect(error.called).to.be.false;
     });
+    it(  'should stub error for get users comment', async () => {
+      const req = {
+        user: {
+          id: 3,
+          role: true,
+          ownerId: 4
+        }
+      };
+      const res = {};
+      const next = sinon.stub();
+      sinon.stub(Comment, 'findAndCountAll').throws();
+      await commentController.getUserComment(req, res, next);
+      expect(next.called).to.be.true;
+    });
   });
-
   context('Check valid comment Test', () => {
     it('should reach the else block', async () => {
       sinon.stub(Comment, 'findOne').returns({});
       await checkValidCommentId(29371);
     });
   });
+
 });

@@ -48,6 +48,7 @@ const { ArticleVote } = models;
 const VOTE_ROUTE_URL = '/api/v1/votes';
 const ARTICLE_ROUTE_URL = '/api/v1/article';
 const SIGNUP_ROUTE_URL = '/api/v1/auth/signup';
+const COUNT_USER_LIKES = '/api/v1/votes/user';
 
 let articleId;
 let categoryId;
@@ -290,6 +291,14 @@ describe('#VoteController test', () => {
       expect(articleResponse.body.message)
             .to.equal(ARTICLE_LIKE_MSG);
     });
+    it('should return all the Likes count', async () => {
+      const res = await chai.request(server)
+      .get(COUNT_USER_LIKES)
+      .set('Authorization', `Bearer ${token}`);
+      expect(res).to.have.status(200);
+      expect(res.body.message).to.equal('success');
+      expect(res.body.data.count).to.be.equals(1);
+    });
   });
 
   context(`POST ${VOTE_ROUTE_URL}/:articleId/dislike`, () => {
@@ -320,5 +329,21 @@ describe('#VoteController test', () => {
       expect(articleResponse.body.message)
             .to.equal(ARTICLE_RESET_MSG);
     });
+  });
+});
+
+describe('##Error mocks', () => {
+  it('should stub error for Like count', async () => {
+    const req = {
+      user: {
+        id: 3,
+        role: true,
+        ownerId: 4
+      }
+    };
+    const res = {};
+    sinon.stub(models.ArticleVote, 'findAndCountAll').throws();
+    await Vote.userLikeCount(req, res, next);
+    expect(next.called).to.be.true;
   });
 });
