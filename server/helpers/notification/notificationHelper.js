@@ -30,7 +30,7 @@ class NotificationHelper {
   static async stripOptedOutUsers(userIds) {
     const usersForEmailNotification = userIds.map(async userId => {
       await User.findAll({
-        where: { emailNotification: true, id: userId },
+        where: { emailNotification: true, id: userId.userId },
         raw: true,
         attributes: ['email']
       });

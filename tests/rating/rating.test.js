@@ -6,6 +6,8 @@ import UserFactory from '../mocks/factories/userFactory';
 import models from '../../server/models';
 import ArticleFactory from '../mocks/factories/roleArticleFactory';
 import RatingController from '../../server/controllers/rating/ratingController';
+import RatingValidator from
+'../../server/middlewares/validations/ratingValidator';
 
 import {
   SUCCESSFUL_RATING,
@@ -105,7 +107,50 @@ describe('Rating controller', () => {
     ratingUrl = `/api/v1/articles/${ratingObject.articleId}/rating`;
  });
 
-  describe(`#POST ${ratingUrl} - Endpoint to add a rating -`,() => {
+  describe(`#POST ${ratingUrl} - Endpoint to add a rating -`, () => {
+
+    it('should return error when no article id is passed',
+    async () => {
+      const req = {
+        params: {
+          articleId: '',
+        }
+      };
+      const res = {
+        status() {
+          return this;
+        },
+        json(obj) {
+          return obj;
+        }
+      };
+
+      const next = sinon.stub();
+      const response = await RatingValidator.validateArticleId(req, res, next);
+      expect(response.message).to.equal('Please the ariticleId is required');
+    });
+
+    it('should return error when no article rating is not present',
+    async () => {
+      const req = {
+        body: {
+          articleId: '',
+        }
+      };
+      const res = {
+        status() {
+          return this;
+        },
+        json(obj) {
+          return obj;
+        }
+      };
+
+      const next = sinon.stub();
+      const response = await RatingValidator.validateRating(req, res, next);
+      expect(response.message).to
+      .equal('Invalid rating: The rating must be an integer between 1 and 5');
+    });
     it('should rate an article', async () => {
       const response = await chai.request(app)
       .post(`${ratingUrl}`)

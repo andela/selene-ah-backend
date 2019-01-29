@@ -147,7 +147,7 @@ describe('#Notifications', () => {
       sinon.stub(NotificationHelper, 'getAuthorsFollowers')
            .returns([{ id: faker.random.uuid() }]);
       sinon.stub(NotificationHelper, 'stripOptedOutUsers')
-           .returns([{email: faker.internet.email()}]);
+           .returns([{email: faker.internet.email()}, { email: faker.internet.email() }]);
       sinon.stub(NotificationHelper, 'getNotificationMessage')
            .returns([true,{ link: articleSlug }]);
       sinon.stub(NotificationHelper, 'getUsersWhoLikedArticle')

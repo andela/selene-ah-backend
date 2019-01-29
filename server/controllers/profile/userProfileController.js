@@ -32,7 +32,7 @@ class UserProfileController {
           userName: getUser.userName,
           email: getUser.email,
           bio: getUser.bio,
-          twiiter: getUser.twitterUrl,
+          twitter: getUser.twitterUrl,
           facebook: getUser.facebookUrl,
           image: getUser.imageUrl,
           gender: getUser.gender,

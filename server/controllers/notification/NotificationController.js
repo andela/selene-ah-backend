@@ -153,9 +153,11 @@ class Notifications {
       data
     }));
 
-    usersForEmailNotification.map(email => {
-      mailTransport(email, emailTemplate, emailTemplate.link);
-    });
+    if (usersForEmailNotification.length >= 2) {
+      usersForEmailNotification.map(email => {
+        mailTransport(email, emailTemplate, emailTemplate.link);
+      });
+    }
 
     await Notification.bulkCreate(dbEntryBatch);
     pusher.triggerBatch(batchEvents);
