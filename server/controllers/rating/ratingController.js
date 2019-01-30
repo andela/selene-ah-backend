@@ -22,16 +22,33 @@ class RatingController{
       const { articleRating } = req.body;
       const { articleId } = req.params;
       const userId = req.user.id;
-      const ratedArticle = await Rating.create({
-        userId,
-        articleId,
-        articleRating
-      });
-      return res.status(201).json({
-        success: true,
-        message: SUCCESSFUL_RATING,
-        ratedArticle
-      });
+
+      const existingUser = await Rating.findOne(
+        { where: {userId, articleId }}
+      );
+
+      if (existingUser) {
+        const ratedArticle = await Rating.update(
+          { articleRating },
+          { where: {userId, articleId }}
+        );
+        return res.status(200).json({
+          success: true,
+          message: SUCCESSFUL_RATING_UPDATE,
+          ratedArticle
+        });
+      } else {
+          const ratedArticle = await Rating.create({
+            userId,
+            articleId,
+            articleRating
+          });
+          return res.status(201).json({
+            success: true,
+            message: SUCCESSFUL_RATING,
+            ratedArticle
+          });
+    }
     } catch(err) {
       return next(err);
     }
