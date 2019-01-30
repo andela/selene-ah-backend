@@ -44,7 +44,7 @@ class BookmarkController {
    */
   static async getUsersBookmarks(req, res) {
     const userId = req.user.id;
-    const dbResult = await Bookmark.findAll({
+    const dbResult = await Bookmark.findAndCountAll({
       where: { userId }
     });
 

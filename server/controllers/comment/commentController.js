@@ -83,6 +83,25 @@ export default class CommentController {
     }
   }
 
+    /**
+   * @param {object} req - req from route
+   * @param {object} res - respose to route
+   * @param {object} next - callback function
+   * @returns {object} a response object
+   */
+  static async getUserComment(req, res, next) {
+    const { user: { id }} = req;
+    try {
+      const comments = await Comment.findAndCountAll({where: { userId: id }});
+      return  res.status(200).json({
+        success: true,
+        data: comments,
+      });
+    }catch(error){
+      return next(error);
+    }
+  }
+
   /**
    * @param {object} req - req from route
    * @param {object} res - respose to route

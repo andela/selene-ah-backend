@@ -87,7 +87,7 @@ describe('BookmarkController Test', () => {
     // eslint-disable-next-line max-len
     it(`should return ${NO_BOOKMARK_MSG} when user has does not have a bookmarked article`,
     async() => {
-      sinon.stub(Bookmark, 'findAll').returns(false);
+      sinon.stub(Bookmark, 'findAndCountAll').returns(false);
       const req = { user: { id: 1 }};
       const response = await BookmarkController
                       .getUsersBookmarks(req, fakeResponse);

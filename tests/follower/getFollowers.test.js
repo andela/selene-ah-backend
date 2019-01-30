@@ -82,7 +82,7 @@ describe('GET /followers/:id', () => {
     .set('Authorization', `Bearer ${token}`);
     expect(res).to.have.status(200);
     expect(res.body).to.be.an('object');
-    expect(res.body.message).to.be.equal('Followers returned successfully');
+    expect(res.body.followers.count).to.be.equal(1);
   });
 
   it('should return no followers if a there is no follower', async () => {

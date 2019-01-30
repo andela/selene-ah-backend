@@ -15,7 +15,7 @@ bookmarkRouter.post(
 );
 
 bookmarkRouter.get(
-  '/bookmark/',
+  '/bookmark',
   JWTAuthentication.authenticateUser,
   BookmarkController.getUsersBookmarks
 );

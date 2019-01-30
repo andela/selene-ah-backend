@@ -33,6 +33,15 @@ router.get('/article/:articleId/comments',
 router.get('/comment/:id',
   commentController.getSingleComment);
 
+  /**
+ * @description get a user comment count
+ * @param {string}
+ * @param {function} commentController.getUserComment
+ */
+router.get('/comments/user/count',
+JWTAuthentication.authenticateUser,
+commentController.getUserComment);
+
 /**
  * @description get a comment history for a comment
  * @param {string}
@@ -50,7 +59,6 @@ router.get('/comment/history/:commentId',
  * @param {function} commentController.postComment
  */
 router.post('/article/:articleId/comment', JWTAuthentication.authenticateUser,
-  validateUUID,
   AricleValidator.articleExistInDatabase,
   validateCommentContent,
   commentController.postComment);

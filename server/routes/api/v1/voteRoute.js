@@ -23,6 +23,17 @@ voteRouter.get(
   VoteController.articleLikedByUser,
 );
 
+/**
+ * @description get the total number of like count for a user
+ * @param {string}
+ * @param {function}
+ */
+voteRouter.get(
+  '/votes/user',
+  JWTAuthentication.authenticateUser,
+  VoteController.userLikeCount,
+);
+
 voteRouter.post(
   '/votes/:articleId/like',
   JWTAuthentication.authenticateUser,
