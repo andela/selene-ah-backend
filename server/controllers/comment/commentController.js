@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import db from '../../models';
 import Notification from '../notification/NotificationController';
 import LikesCount from '../../helpers/vote/LikesCount';
@@ -18,14 +17,12 @@ export default class CommentController {
    */
   static async postComment(req, res, next) {
     const { user: { id }, body:{ content }, params:{ articleId }} = req;
-    console.log('request body------------------------->' ,req.body);
     try {
       const commentCreated = await Comment.create({
         content: content.trim(),
         userId: id,
         articleId,
       });
-      console.log('comment created successfully----------->', commentCreated);
       delete commentCreated.dataValues.userId;
       await Notification.emitCommentArticleNotification(id, articleId);
       return res.status(201).send({
@@ -34,7 +31,6 @@ export default class CommentController {
         comment: commentCreated
       });
     } catch (error) {
-      console.log('comment error ------------------>', error);
       return next(error);
     }
   }

@@ -111,10 +111,7 @@ class AuthController {
          await User.update({verified: true},
           {where: {id: decodedToken.user.id}});
           sendEmail(email,confirmation);
-         return res.status(200).send({
-           success: true,
-           message: 'Email successfully confirmed',
-         });
+          return res.redirect(process.env.AH_CALLBACK_URL);
       }
     } catch(err) {
       return next(err);
