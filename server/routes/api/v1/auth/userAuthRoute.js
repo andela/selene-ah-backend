@@ -20,8 +20,6 @@ router.post('/auth/signin',
 
 router.get('/auth/verifyemail', authController.verifyEmail);
 
-router.get('/auth/verifyemail', authController.verifyEmail);
-
 /**
  * @description sends link for user to update password
  * @param {string}

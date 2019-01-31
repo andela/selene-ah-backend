@@ -95,7 +95,7 @@ class UserProfileController {
       await User.update(
         {
           firstName: req.body.firstName || getUser.firstName,
-          lastName: req.lastName || getUser.lastName,
+          lastName: req.body.lastName || getUser.lastName,
           gender: req.body.gender || getUser.gender,
           bio: req.body.bio || getUser.bio,
           imageUrl: req.body.image || getUser.imageUrl,
