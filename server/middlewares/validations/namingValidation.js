@@ -33,7 +33,7 @@ class NamingValidations {
 
   /**
    * @description - check if firstName and lastName is supplied
-  * @param {object} req - request to be sent to server
+   * @param {object} req - request to be sent to server
    * @param {object} res - responses gotton from server
    * @param {object} next - callback function
    * @returns {object} A response object from server

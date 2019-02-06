@@ -340,10 +340,6 @@ class ArticlesController {
     let articleSlug;
     let readTime;
 
-    if (title) {
-      articleSlug = ArticleHelper.generateUniqueSlug(title);
-    }
-
     if (body) {
       readTime = ArticleHelper.calculateArticleReadTime(body);
     }
@@ -352,7 +348,7 @@ class ArticlesController {
       const article = await Article.findOne({
         where: { id }
       });
-      await Article.update(
+      const updatedArticle = await Article.update(
         {
           title: title || article.title,
           slug: articleSlug || article.slug,
@@ -362,13 +358,16 @@ class ArticlesController {
           imageUrl: imageUrl || article.imageUrl
         },
         {
-          where: { id }
+          where: { id },
+          returning: true,
+          plain: true,
         }
       );
 
       return res.status(200).json({
         success: 'true',
         message: 'Article updated successfully',
+        updatedArticle,
       });
     } catch (error) {
       return next(error);
