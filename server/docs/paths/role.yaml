@@ -1,0 +1,170 @@
+paths:
+  /role:
+    post:
+      tags:
+        - Role
+      summary: Create a role
+      produces:
+      - application/json
+      security:
+        - Bearer: []
+      parameters:
+      - in: body
+        name: payload
+        description: The type of role
+        required: true
+        schema:
+          type: object
+          properties:
+            role:
+              type: 'string'
+      responses:
+        200:
+            description: Response for already existing role
+            schema:
+              type: 'object'
+              properties:
+                success:
+                  type: 'boolean'
+                  example: 'true'
+                message:
+                  type: string
+                  example: 'This role already exist.'
+        201:
+          description: Response for successful creation of role
+          schema:
+            type: 'object'
+            properties:
+              success:
+                type: 'boolean'
+                example: 'true'
+              message:
+                type: string
+                example: 'Successfully created'
+
+        400:
+          description: response for invalid type
+          schema:
+            type: 'object'
+            properties:
+              success:
+                type: 'boolean'
+                example: 'false'
+              message:
+                type: string
+                example: 'Invalid string provided'
+        401:
+          description: response for unauthorized access
+          schema:
+            type: 'object'
+            properties:
+              success:
+                type: 'boolean'
+                example: 'false'
+              message:
+                type: string
+                example: 'Authentication failed: Please supply a valid token'
+    get:
+      tags:
+        - Role
+      summary: Get all roles
+      produces:
+      - application/json
+      security:
+        - Bearer: []
+      responses:
+        200:
+            description: Response for successfully fetching roles
+            schema:
+              type: 'object'
+              properties:
+                data:
+                  type: 'object'
+                  example: [
+                  {
+                    id: 9,
+                    role: 'superAdmin',
+                    createdAt: "2016-02-18T03:22:56.637Z",
+                    updatedAt: "2016-02-18T03:48:35.824Z",
+                  }
+                ]
+        401:
+          description: response for unauthorized access
+          schema:
+            type: 'object'
+            properties:
+              success:
+                type: 'boolean'
+                example: 'false'
+              message:
+                type: string
+                example: 'Authentication failed: Please supply a valid token'
+    delete:
+      tags:
+        - Role
+      summary: Delete  role
+      produces:
+      - application/json
+      security:
+        - Bearer: []
+      responses:
+        200:
+            description: Response for successfully deleting a role
+            schema:
+              type: 'object'
+              properties:
+                message:
+                  type: 'string'
+                  example: 'Successfully deleted'
+        400:
+          description: response for invalid type
+          schema:
+            type: 'object'
+            properties:
+              success:
+                type: 'boolean'
+                example: 'false'
+              message:
+                type: string
+                example: 'Invalid string provided'
+        401:
+          description: response for unauthorized access
+          schema:
+            type: 'object'
+            properties:
+              success:
+                type: 'boolean'
+                example: 'false'
+              message:
+                type: string
+                example: 'Authentication failed: Please supply a valid token'
+
+
+  /role/user/:id:
+    put:
+      tags:
+        - Role
+      summary: Update a role
+      produces:
+      - application/json
+      security:
+        - Bearer: []
+      parameters:
+      - in: path
+        name: payload
+        description: The id of the user
+        required: true
+        schema:
+          type: object
+          properties:
+            id:
+              type: 'string'
+      - in: body
+        name: payload
+        description: The role of the user
+        required: true
+        schema:
+          type: object
+          properties:
+            role:
+              type: 'string'
