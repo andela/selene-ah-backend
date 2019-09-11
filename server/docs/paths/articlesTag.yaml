@@ -1,0 +1,79 @@
+paths:
+  /tags/{articleId}/{tagId}:                
+    delete:
+      tags:
+        - Tags
+      summary: Endpoint to delete tags
+      produces:
+      - application/json
+      security:
+        - Bearer: []
+      responses:
+        201:
+          description: Response for success
+          schema:
+            type: 'object'
+            properties:
+              status:
+                type: 'boolean'
+                format: 'false'
+              message:
+                type: string
+                example: 'Article deleted successfully'
+        400:
+          description: response for bad request(syntax)
+          schema:
+            type: 'object'
+            properties:
+              status:
+                type: 'boolean'
+                example: 'false'
+              message: 
+                type: string
+                example: 'Articles does not exist'
+  /tags:                
+    get:
+      tags:
+        - Tags
+      summary: Endpoint to  get all tags
+      produces:
+      - application/json
+      responses:
+        201:
+          description: Response for success
+          schema:
+            type: 'object'
+            properties:
+              status:
+                type: 'boolean'
+                format: 'false'
+              message:
+                type: string
+                example: 'Retrieved tags successfully'
+        400:
+          description: response for bad request(syntax)
+          schema:
+            type: 'object'
+            properties:
+              status:
+                type: 'boolean'
+                example: 'false'
+              message: 
+                type: string
+                example: 'Failed to get tags'
+        404:
+          description: response for bad request(syntax)
+          schema:
+            type: 'object'
+            properties:
+              status:
+                type: 'boolean'
+                example: 'false'
+              message: 
+                type: string
+                example: 'No tags created yet'
+                
+  
+  
+       
+       

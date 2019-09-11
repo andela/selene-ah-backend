@@ -1,0 +1,252 @@
+paths:
+  /article:                
+    post:
+      tags:
+        - Article
+      summary: Endpoint to create articles
+      produces:
+      - application/json
+      security:
+        - Bearer: []
+      parameters:
+      - in: body
+        name: payload
+        description: Object to create articles
+        required: true
+        schema:
+          type: object
+          properties:
+            categoryId:
+              type: 'string'
+              format: 'uuid'
+            title:
+              type: 'string'
+              example: 'An example title'
+            body:
+              type: 'string'
+              example: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.'
+      responses:
+        201:
+          description: Response for success
+          schema:
+            type: 'object'
+            properties:
+              status:
+                type: 'boolean'
+                format: 'false'
+              message:
+                type: string
+                example: 'Article created successfully'
+        400:
+          description: response for bad request(syntax)
+          schema:
+            type: 'object'
+            properties:
+              status:
+                type: 'boolean'
+                example: 'false'
+              message: 
+                type: string
+                example: 'Articles not created'
+  /articles:                
+    get:
+      tags:
+        - Article
+      summary: Endpoint to  get all articles
+      produces:
+      - application/json
+      responses:
+        201:
+          description: Response for success
+          schema:
+            type: 'object'
+            properties:
+              status:
+                type: 'boolean'
+                format: 'false'
+              message:
+                type: string
+                example: 'Retrieved article successfully'
+        400:
+          description: response for bad request(syntax)
+          schema:
+            type: 'object'
+            properties:
+              status:
+                type: 'boolean'
+                example: 'false'
+              message: 
+                type: string
+                example: 'Failed to get article'
+        404:
+          description: response for bad request(syntax)
+          schema:
+            type: 'object'
+            properties:
+              status:
+                type: 'boolean'
+                example: 'false'
+              message: 
+                type: string
+                example: 'No articles created yet'
+                
+  /article/{id}:             
+    get:
+      tags:
+        - Article
+      summary: Endpoint to  get one  article
+      produces:
+      - application/json
+      security:
+        - Bearer: []
+      parameters:
+      - in: path
+        name: id
+        description: 'The id of the article you want to retrieve'
+        required: true
+        schema:
+          type: string
+          format: uuid
+      responses:
+        201:
+          description: Response for success
+          schema:
+            type: 'object'
+            properties:
+              status:
+                type: 'boolean'
+                format: 'false'
+              message:
+                type: string
+                example: 'Retrieved article successfully'
+        400:
+          description: response for bad request(syntax)
+          schema:
+            type: 'object'
+            properties:
+              status:
+                type: 'boolean'
+                example: 'false'
+              message: 
+                type: string
+                example: 'Failed to get article'
+        404:
+          description: response for bad request(syntax)
+          schema:
+            type: 'object'
+            properties:
+              status:
+                type: 'boolean'
+                example: 'false'
+              message: 
+                type: string
+                example: 'article not found'
+
+  /article/#/{id}/:             
+    delete:
+      tags:
+        - Article
+      summary: Endpoint to delete an article
+      produces:
+      - application/json
+      security:
+        - Bearer: []
+      parameters:
+      - in: path
+        name: id
+        description: 'The id of the article you want to delete'
+        required: true
+        schema:
+          type: string
+          format: uuid
+      responses:
+        201:
+          description: Response for success
+          schema:
+            type: 'object'
+            properties:
+              status:
+                type: 'boolean'
+                format: 'false'
+              message:
+                type: string
+                example: 'Article deleted successfully'
+        400:
+          description: response for bad request(syntax)
+          schema:
+            type: 'object'
+            properties:
+              status:
+                type: 'boolean'
+                example: 'false'
+              message: 
+                type: string
+                example: 'Failed to delete article'
+        404:
+          description: response for bad request(syntax)
+          schema:
+            type: 'object'
+            properties:
+              status:
+                type: 'boolean'
+                example: 'false'
+              message: 
+                type: string
+                example: 'article not found'
+
+  /article/author/{authorId}/:             
+    get:
+      tags:
+        - Article
+      summary: Endpoint to get articles by an author
+      produces:
+      - application/json
+      security:
+        - Bearer: []
+      parameters:
+      - in: path
+        name: authorId
+        description: 'The id of the author who owns the article'
+        required: true
+        schema:
+          type: string
+          format: uuid
+      responses:
+        201:
+          description: Response for success
+          schema:
+            type: 'object'
+            properties:
+              status:
+                type: 'boolean'
+                format: 'false'
+              message:
+                type: string
+                example: 'Article deleted successfully'
+        400:
+          description: response for bad request(syntax)
+          schema:
+            type: 'object'
+            properties:
+              status:
+                type: 'boolean'
+                example: 'false'
+              message: 
+                type: string
+                example: 'Failed to delete article'
+        404:
+          description: response for bad request(syntax)
+          schema:
+            type: 'object'
+            properties:
+              status:
+                type: 'boolean'
+                example: 'false'
+              message: 
+                type: string
+                example: 'article not found'      
+        
+      
+  
+       
+       
