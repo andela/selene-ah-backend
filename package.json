@@ -63,7 +63,7 @@
     "slug": "^0.9.3",
     "swagger-jsdoc": "^3.2.6",
     "swagger-ui-express": "^4.0.2",
-    "underscore": "^1.9.1"
+    "underscore": "^1.12.1"
   },
   "devDependencies": {
     "@babel/core": "^7.2.0",
